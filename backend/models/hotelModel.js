@@ -1,0 +1,32 @@
+const mongoose = require('mongoose')
+
+const hotelModel = new mongoose.Schema({
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        required: true
+    },
+    hotelName : {
+        type: String,
+        required: true,
+        trim: true
+    },
+    description : {
+        type: String,
+        required: true,
+        trim: true
+    },
+    city: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    location : {
+        type: String,
+        required: true,
+        trim: true
+    }
+}, {timestamps: true})
+
+
+module.exports = mongoose.model('Hotel', hotelModel)
