@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const userModel = new mongoose.Schema({
+    image: {
+        type: String,
+        require: true,
+        default: ''
+    },
     name: {
         type: String,
         require: true
@@ -40,7 +45,6 @@ const userModel = new mongoose.Schema({
         type: Number,
         default: 0
     }
-
 })
 
 module.exports = mongoose.model("users", userModel)

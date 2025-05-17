@@ -8,7 +8,6 @@ const {EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE} = require("../config/emai
 
 const register = async (req, res) => {
     const {name, email, password, role} = req.body
-    
     try {
         const existUser = await users.findOne({email: email})        
         if(!name || !email || !password) {
@@ -28,6 +27,7 @@ const register = async (req, res) => {
         const hashPassword = await bcrypt.hash(password, 10)
         
         const user = new users({
+            image: req.image,
             name,
             email, 
             role,
@@ -196,6 +196,34 @@ const isAuthenticated = async (req, res) => {
     }
 }
 
+const updateUser = async (req, res) => {
+    const {newName, newPassword} = req.body
+    try {
+        const user = await users.findById(req.user.id)
+        if(!user) {
+            return res.json({Success: false, message: "user not found"})
+        }
+        const names = await users.findOne({name: newName})
+        if (names) {
+            return res.json({Success: false, message: "Name already used"})
+        } 
+
+        const samePassword = await bcrypt.compare(newPassword, user.password)
+        if(!samePassword) {
+            return res.json({Success: false, message: 'Please Check Your Old Password'})
+        }
+        user.image = req.image
+        user.name = newName
+        user.password = newPassword
+        
+        await user.save()
+        return res.json({Success: true, message: "User Updated Successfully"})
+
+    } catch (error) {
+        return res.json({Success: false, message: error.message})
+    }
+}
+
 module.exports = {
     register,
     login,
@@ -205,5 +233,6 @@ module.exports = {
     sendResetOtp,
     resetPassword,
     userData,
-    isAuthenticated
+    isAuthenticated,
+    updateUser
 }
