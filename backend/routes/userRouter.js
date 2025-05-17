@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
+
 const userController = require('../controllers/userController')
 const verifyToken = require("../middlewares/verifyToken")
 const multer  = require('multer'); 
-const setFileUrl = require("../middlewares/setFileUrl")
+const setImage = require("../middlewares/setImage")
 
 
 const diskStorage = multer.diskStorage({
@@ -30,7 +31,7 @@ const upload = multer({
     fileFilter
 })
 
-router.route('/register').post(upload.single('image'), setFileUrl, userController.register)
+router.route('/register').post(upload.single('image'), setImage.setUserImage, userController.register)
 
 router.route('/login').post(userController.login)
 
@@ -46,7 +47,7 @@ router.route('/user').get(verifyToken, userController.userData)
 
 router.route('/is-auth').get(verifyToken, userController.isAuthenticated)
 
-router.route('/update-user').patch(verifyToken, upload.single('image'), setFileUrl, userController.updateUser)
+router.route('/update-user').patch(verifyToken, upload.single('image'), setImage.setUserImage, userController.updateUser)
 
 router.route('/search-history').post(verifyToken, userController.searchHistory)
 
