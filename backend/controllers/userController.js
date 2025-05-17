@@ -181,8 +181,6 @@ const userData = async (req, res) => {
         }
     
         return res.json({Success: true, userData: user})
-        
-        
     } catch (error) {
         return res.json({Success: false, message: error.message})
     }
@@ -224,6 +222,27 @@ const updateUser = async (req, res) => {
     }
 }
 
+const searchHistory = async (req, res) => {
+    const {search}  = req.body
+    try {
+        const user = await users.findById(req.user.id)
+        if (!user) {
+            return res.json({Success: false, message: "User not found"})
+        }
+        if (user.searchHistory.length < 3 ) {
+            user.searchHistory.push(search)
+        } else {
+            user.searchHistory.shift()
+            user.searchHistory.push(search)
+        }
+
+        await user.save()
+        return res.json({Success: true, message: "Search History Added Successfully"})
+    } catch (error) {
+        return res.json({Success: false, message: error.message})
+    }
+}
+
 module.exports = {
     register,
     login,
@@ -234,5 +253,6 @@ module.exports = {
     resetPassword,
     userData,
     isAuthenticated,
-    updateUser
+    updateUser,
+    searchHistory
 }

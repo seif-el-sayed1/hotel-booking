@@ -48,5 +48,6 @@ router.route('/is-auth').get(verifyToken, userController.isAuthenticated)
 
 router.route('/update-user').patch(verifyToken, upload.single('image'), setFileUrl, userController.updateUser)
 
+router.route('/search-history').post(verifyToken, userController.searchHistory)
 
 module.exports = router;

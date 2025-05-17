@@ -25,6 +25,8 @@ const userModel = new mongoose.Schema({
         type: String,
         require: true
     },
+    searchHistory: [{type: String, require: true}],
+    
     verifyOtp: {
         type: Number,
         default: ''
@@ -45,6 +47,6 @@ const userModel = new mongoose.Schema({
         type: Number,
         default: 0
     }
-})
+}, {timestamps: true})
 
 module.exports = mongoose.model("users", userModel)
