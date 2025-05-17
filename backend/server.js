@@ -4,7 +4,9 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
+
 const userRouter = require('./routes/userRouter')
+const ownerHotelRouter = require('./routes/ownerHotelRouter') 
 
 app.use(express.json())
 const allowedOrigins = ["http://localhost:5173"] 
@@ -14,7 +16,8 @@ app.use(cors({
 }))
 app.use(cookieParser())
 
-app.use("/api", userRouter)
+app.use("/api/user", userRouter)
+app.use("/api/ownerHotel", ownerHotelRouter)
 
 mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log("Connected to MongoDB"))
