@@ -22,7 +22,7 @@ const fileFilter = (req, file, cb) => {
     if(imageType === 'image') {
         return cb(null, true)
     } else {
-        return cb(appError.create('file must be an image', 400), false)
+        return cb(new Error('file must be an image'), false);
     }
 }
 
