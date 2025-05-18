@@ -1,5 +1,6 @@
 const hotelModel = require('../models/hotelModel')
 const roomModel = require('../models/roomModel')
+const bookingModel = require('../models/bookingModel')
 
 // Hotel controller 
 const registerHotel = async (req, res) => {
@@ -42,6 +43,26 @@ const updateHotelDetails = async (req, res) => {
 
         await hotel.save()
         return res.json({success: true, message: 'Hotel updated successfully'})
+    } catch (error) {
+        return res.json({success: false, message: error.message})
+    }
+}
+
+const getHotelBooking = async (req, res) => {
+    try {
+        const hotel = await hotelModel.findOne({owner: req.user.id})
+        if (!hotel) {
+            return res.json({success: false, message: 'Hotel not found'})
+        }
+        const bookings = await bookingModel.find({hotel: hotel._id}).populate("room hotel user").sort({createdAt: -1})
+        if (bookings.length === 0) {
+            return res.json({success: false, message: 'No bookings found'})
+        }
+
+        const totalBookings = bookings.length
+        const totalEarnings = bookings.reduce((acc, booking) => acc + booking.totalPrice, 0)
+
+        return res.json({success: true, data: bookings, totalBookings, totalEarnings})
     } catch (error) {
         return res.json({success: false, message: error.message})
     }
@@ -123,11 +144,29 @@ const toggleRoomAvailability = async (req, res) => {
     }
 }
 
+const getAllRooms = async (req, res) => {
+    try {
+        const rooms = await roomModel.find({issAvailable: true}).populate({
+            path: 'hotel',
+            populate: {
+                path: 'owner',
+                select: 'name'
+            }
+        }).sort({createdAt: -1})
+        return res.json({success: true, data: rooms})
+
+    } catch (error) {
+        return res.json({success: false, message: error.message})
+    }
+}
+
 module.exports = {
     registerHotel,
     updateHotelDetails,
+    getHotelBooking,
     addRoom,
     getOwnerRooms,
     updateRoom,
-    toggleRoomAvailability
+    toggleRoomAvailability,
+    getAllRooms
 }

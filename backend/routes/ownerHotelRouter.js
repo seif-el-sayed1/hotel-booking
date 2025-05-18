@@ -22,7 +22,7 @@ const fileFilter = (req, file, cb) => {
     if(imageType === 'image') {
         return cb(null, true)
     } else {
-        return cb(appError.create('file must be an image', 400), false)
+        return cb(new Error('file must be an image'), false);
     }
 }
 
@@ -35,6 +35,8 @@ const upload = multer({
 router.post('/register', verifyToken, ownerHotelController.registerHotel);
 // Route to update hotel details
 router.put('/update', verifyToken, ownerHotelController.updateHotelDetails);
+// Route to get hotel bookings
+router.get('/bookings', verifyToken, ownerHotelController.getHotelBooking);
 
 // Route to add a room
 router.post('/add-room', verifyToken, 
@@ -45,5 +47,8 @@ router.get('/rooms', verifyToken, ownerHotelController.getOwnerRooms);
 router.put('/update-room', verifyToken, upload.array('images', 4), setImage.setRoomImages, ownerHotelController.updateRoom);
 // Route to toggle room availability
 router.put('/toggle-availability', verifyToken, ownerHotelController.toggleRoomAvailability);
+
+// Route to get all rooms 
+router.get('/get-rooms', ownerHotelController.getAllRooms)
 
 module.exports = router;
