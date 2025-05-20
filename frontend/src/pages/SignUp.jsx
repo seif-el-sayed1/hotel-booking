@@ -125,7 +125,6 @@ export const SignUp = () => {
                         value={password}
                         required
                     />
-                    {/* شلت الـ checkbox بتاع remember me */}
 
                     <div className="flex items-center justify-between mb-4 text-sm">
                         <Link to={"/resetPassword"} className="text-black-300 hover:underline">Forgot password?</Link>
