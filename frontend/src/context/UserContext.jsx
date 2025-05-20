@@ -23,7 +23,6 @@ export const UserContextProvider = (props) => {
                 setIsLoggedin(true)
                 getUserData()
             } else {
-                navigate("/")
                 setUserData(false)
             }
         } catch (error) {
