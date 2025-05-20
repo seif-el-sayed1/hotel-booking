@@ -13,7 +13,7 @@ const diskStorage = multer.diskStorage({
     },
     filename: function(req, file, cb) {
         const ext = file.mimetype.split('/')[1];
-        const fileName = `food-${Date.now()}.${ext}`;
+        const fileName = `user-${Date.now()}.${ext}`;
         cb(null, fileName);
     }
 })
@@ -43,7 +43,7 @@ router.route('/verify-email').post(verifyToken, userController.verifyEmail)
 router.route('/send-reset-otp').post(userController.sendResetOtp)
 router.route('/reset-password').post(userController.resetPassword)
 
-router.route('/user').get(verifyToken, userController.userData)
+router.route('/getUser').get(verifyToken, userController.userData)
 
 router.route('/is-auth').get(verifyToken, userController.isAuthenticated)
 
