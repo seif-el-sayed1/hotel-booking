@@ -6,6 +6,11 @@ import { Home } from './pages/Home.jsx'
 import { SignUp } from './pages/SignUp.jsx'
 import { VerifyEmail } from './pages/VerifyEmail.jsx'
 import { ResetPassword } from './pages/ResetPassword.jsx'
+import { FeaturedDestination } from './components/FeaturedDestination.jsx'
+import { ExclusiveOffers } from './components/ExclusiveOffers.jsx'
+import { Testimonials } from './components/Testimonials.jsx'
+import { NewsLetter } from './components/NewsLetter.jsx'
+import { Footer } from './components/Footer.jsx'
 
 
 function App() {
@@ -17,6 +22,11 @@ function App() {
         <>
           <Navbar />
           <Home />
+          <FeaturedDestination />
+          <ExclusiveOffers />
+          <Testimonials />
+          <NewsLetter />
+          <Footer />
         </>
       } />
       <Route path='/signUp' element={<SignUp />} />
