@@ -1,6 +1,8 @@
 import React from 'react'
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../context/UserContext';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 import {Link} from 'react-router-dom'
 import { assets } from '../assets/assets';
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +10,36 @@ import { useNavigate } from 'react-router-dom';
 export const Navbar = () => {
     const navigate = useNavigate();
 
-    const { isLoggedin, setIsLoggedin, userData  } = useContext(UserContext);
+    const{setIsLoggedin, userData, setUserData, backendUrl} = useContext(UserContext)
     
+    const logout = async () => {
+            try {
+                axios.defaults.withCredentials = true
+                const {data} = await axios.post(backendUrl + "user/logout")
+                if(data.Success) {
+                    toast.success(data.message,{position: "top-center"})
+                    setUserData(false)
+                    setIsLoggedin(false)
+                }
+            } catch (error) {
+                toast.error(error.message,{position: "top-center"})
+            }
+        }
+    const sentVerifyOtp = async () => {
+        try {
+            axios.defaults.withCredentials = true
+            const {data} = await axios.post(backendUrl + "user/send-verify-otp")
+            if(data.Success) {
+                navigate('/verifyEmail')
+                toast.success(data.message, {position: "top-center"})
+            } else {
+                toast.error(data.message, {position: "top-center"})
+            }
+        } catch (error) {
+            toast.error(error.message, {position: "top-center"})
+        }
+    }
+
     const navLinks = [
         { name: 'Home', path: '/' },
         { name: 'Hotels', path: '/rooms' },
@@ -18,6 +48,7 @@ export const Navbar = () => {
     ];
 
     // const ref = React.useRef(null)
+    const [menu, setMenu] = useState(false);
 
     const [isScrolled, setIsScrolled] = React.useState(false);
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -61,7 +92,37 @@ export const Navbar = () => {
                         alt="search icon" className={`h-8 w-8 cursor-pointer ${isScrolled ? "invert" : ""}`}/>
 
                 {userData ? 
-                    <img className='w-10 cursor-pointer rounded-full ' src={userData.image} alt="user image" />
+                    <>
+                        <img onClick={() => setMenu(!menu)}
+                            className='w-10 cursor-pointer rounded-full ' src={userData.image} alt="user image" />
+                            {menu &&
+                                <div className='flex flex-col absolute top-18 right-20 bg-white 
+                                        shadow-md  rounded-lg'>
+                                    <p className='text-sm font-bold text-gray-500 px-2 pt-2 rounded-lg'>{userData.email}</p>
+                                    <div className='flex items-center gap-2 cursor-pointer rounded-lg
+                                        duration-500 px-2 py-2 hover:bg-gray-100  '>
+                                        <img className='w-4' src={assets.edit} alt="edit img" />
+                                        <p>Edit Profile</p>
+                                    </div>
+                                    {!userData.isVerified && 
+                                        <div onClick={() => sentVerifyOtp()}
+                                        className='flex items-center gap-2 cursor-pointer rounded-lg
+                                            duration-500 px-2 py-2 hover:bg-gray-100  '>
+                                            <img className='w-4 ' src={assets.verify} alt="edit img" />
+                                            <p>Verify Email</p>
+                                        </div>
+                                    }   
+                                    <div onClick={() => logout()}
+                                        className='flex items-center gap-2 cursor-pointer rounded-lg
+                                        duration-500 px-2 py-2 hover:bg-red-100  '>
+                                        <img className='w-4' src={assets.logOut} alt="edit img" />
+                                        <p  className='font-bold text-red-600'>Logout</p>
+                                    </div>                            
+                                </div>
+                            }
+                    </>
+                    
+
                 : 
                     <button onClick={() => navigate("/signUp")} className="bg-black text-white px-8 py-2.5 
                                     rounded-full ml-4 transition-all duration-500 cursor-pointer whitespace-nowrap">
@@ -94,10 +155,42 @@ export const Navbar = () => {
                     Dashboard
                 </button>
 
-                <button onClick={() => navigate("/signUp")} className="bg-black text-white px-8 py-2.5 rounded-full transition-all
-                    cursor-pointer duration-500">
-                    Login
-                </button>
+
+                {userData ? 
+                    <>
+                        <img className='w-15 cursor-pointer rounded-full ' src={userData.image} alt="user image" />
+                        <p className=' font-bold text-gray-500 px-2 pt-1 rounded-lg'>{userData.email}</p>
+                        <div className='flex items-center bg-white 
+                                    shadow-md  rounded-lg'>
+                                <div className='flex items-center gap-2 cursor-pointer rounded-lg
+                                    duration-500 px-2 py-2 hover:bg-gray-100  '>
+                                    <img className='w-4' src={assets.edit} alt="edit img" />
+                                    <p>Edit Profile</p>
+                                </div>
+                                {!userData.isVerified && 
+                                    <div onClick={() => sentVerifyOtp()} 
+                                        className='flex items-center gap-2 cursor-pointer rounded-lg
+                                        duration-500 px-2 py-2 hover:bg-gray-100  '>
+                                        <img className='w-4 ' src={assets.verify} alt="edit img" />
+                                        <p>Verify Email</p>
+                                    </div>
+                                }   
+                                <div onClick={() => logout()} 
+                                    className='flex items-center gap-2 cursor-pointer rounded-lg
+                                    duration-500 px-2 py-2 hover:bg-red-100  '>
+                                    <img className='w-4' src={assets.logOut} alt="edit img" />
+                                    <p className='font-bold text-red-600'>Logout</p>
+                                </div>                            
+                            </div>
+                    </>
+                    
+
+                : 
+                    <button onClick={() => navigate("/signUp")} className="bg-black text-white px-8 py-2.5 
+                                    rounded-full ml-4 transition-all duration-500 cursor-pointer whitespace-nowrap">
+                        Login
+                    </button>
+                }
             </div>
         </nav>
     );
