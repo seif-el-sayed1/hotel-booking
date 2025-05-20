@@ -1,8 +1,15 @@
 import React from 'react'
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 import {Link} from 'react-router-dom'
 import { assets } from '../assets/assets';
+import { useNavigate } from 'react-router-dom';
 
 export const Navbar = () => {
+    const navigate = useNavigate();
+
+    const { isLoggedin, setIsLoggedin, userData  } = useContext(UserContext);
+    
     const navLinks = [
         { name: 'Home', path: '/' },
         { name: 'Hotels', path: '/rooms' },
@@ -29,7 +36,7 @@ export const Navbar = () => {
                         ${isScrolled ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4" 
                             : "py-4 md:py-6"}`}>
                                 
-            <Link href="/" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
                 <img src={assets.logo} alt="logo" className={`h-9 ${isScrolled && "invert opacity-80"}`} />
             </Link>
 
@@ -52,10 +59,15 @@ export const Navbar = () => {
             <div className="hidden md:flex items-center gap-4">
                 <img src={assets.searchIcon} 
                         alt="search icon" className={`h-8 w-8 cursor-pointer ${isScrolled ? "invert" : ""}`}/>
-                <button className="bg-black text-white px-8 py-2.5 
-                                rounded-full ml-4 transition-all duration-500 cursor-pointer">
-                    get started
-                </button>
+
+                {userData ? 
+                    <img className='w-10 cursor-pointer rounded-full ' src={userData.image} alt="user image" />
+                : 
+                    <button onClick={() => navigate("/signUp")} className="bg-black text-white px-8 py-2.5 
+                                    rounded-full ml-4 transition-all duration-500 cursor-pointer whitespace-nowrap">
+                        Login
+                    </button>
+                }
             </div>
 
             <div className="flex items-center gap-3 md:hidden">
@@ -82,9 +94,9 @@ export const Navbar = () => {
                     Dashboard
                 </button>
 
-                <button className="bg-black text-white px-8 py-2.5 rounded-full transition-all
+                <button onClick={() => navigate("/signUp")} className="bg-black text-white px-8 py-2.5 rounded-full transition-all
                     cursor-pointer duration-500">
-                    get started
+                    Login
                 </button>
             </div>
         </nav>
