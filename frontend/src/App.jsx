@@ -11,6 +11,7 @@ import { ExclusiveOffers } from './components/ExclusiveOffers.jsx'
 import { Testimonials } from './components/Testimonials.jsx'
 import { NewsLetter } from './components/NewsLetter.jsx'
 import { Footer } from './components/Footer.jsx'
+import { Rooms } from './pages/Rooms.jsx'
 
 
 function App() {
@@ -32,6 +33,13 @@ function App() {
       <Route path='/signUp' element={<SignUp />} />
       <Route path='/verifyEmail' element={<VerifyEmail />} />
       <Route path='/resetPassword' element={<ResetPassword />} />
+      <Route path='/rooms' element={
+        <>
+          <Navbar />
+          <Rooms /> 
+          <Footer />
+        </>
+      } />
     </Routes>
     </>
   )
