@@ -7,7 +7,7 @@ export const ExclusiveOffers = () => {
             <div className='flex flex-wrap gap-10 justify-center'>
                 <div>
                     <h1 className='font-light text-4xl mb-3'>Exclusive Offers</h1>
-                    <p className='text-gray-500 '>
+                    <p className='text-gray-500 pb-10'>
                         Take advantage of our limited-time offers and special packages to enhance your stay and create unforgettable memories.
                     </p>
                 </div>
@@ -41,7 +41,7 @@ export const ExclusiveOffers = () => {
                                         <img
                                             src={assets.arrowIcon}
                                             alt="arrow"
-                                            className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                                            className="w-4 h-4 invert transition-transform duration-300 group-hover:translate-x-1"
                                         />
                                     </div>
                                 </div>
