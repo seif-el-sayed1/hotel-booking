@@ -46,7 +46,7 @@ export const Rooms = () => {
     ]
 
     return (
-        <div className='pt-35 px-6 md:px-16 lg:px-24 pb-15 '>
+        <div className='pt-35 px-6 md:px-16 lg:px-24 xl:px-32 pb-15 '>
             <div>
                 <h1 className='font-light text-4xl mb-3'>Hotel Rooms</h1>
                 <p className='text-gray-500 pb-10'>
