@@ -85,7 +85,7 @@ export const Navbar = () => {
 
             <div className="hidden md:flex items-center gap-4">
                 <img src={assets.searchIcon}
-                    alt="search icon" className={`h-8 w-8 cursor-pointer ${isScrolled ? "invert" : ""}`} />
+                    alt="search icon" className={`h-8 w-8 cursor-pointer ${isScrolled || window.location.pathname !== "/" ? "invert" : ""}`} />
 
                 {userData && isLoggedin ?
                     <>
@@ -122,7 +122,7 @@ export const Navbar = () => {
 
             <div className="flex items-center gap-3 md:hidden">
                 <img src={assets.menuIcon} alt="menu" onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className={`h-6 w-6 cursor-pointer ${isScrolled ? "invert" : ""}`} />
+                    className={`h-6 w-6 cursor-pointer ${isScrolled || window.location.pathname !== "/" ? "invert" : ""}`} />
             </div>
 
             <div className={`fixed top-0 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden 
