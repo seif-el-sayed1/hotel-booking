@@ -12,6 +12,7 @@ import { Testimonials } from './components/Testimonials.jsx'
 import { NewsLetter } from './components/NewsLetter.jsx'
 import { Footer } from './components/Footer.jsx'
 import { Rooms } from './pages/Rooms.jsx'
+import { RoomDetails } from './pages/RoomDetails.jsx'
 
 
 function App() {
@@ -37,6 +38,13 @@ function App() {
         <>
           <Navbar />
           <Rooms /> 
+          <Footer />
+        </>
+      } />
+      <Route path='/rooms/:id' element={
+        <>
+          <Navbar />
+          <RoomDetails /> 
           <Footer />
         </>
       } />
