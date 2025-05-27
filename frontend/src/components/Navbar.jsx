@@ -143,7 +143,7 @@ export const Navbar = () => {
                     Dashboard
                 </button>
 
-                {userData ?
+                {userData && isLoggedin ?
                     <>
                         <img className='w-15 cursor-pointer rounded-full' src={userData.image} alt="user" />
                         <p className='font-bold text-gray-500 px-2 pt-1 rounded-lg'>{userData.email}</p>
