@@ -59,7 +59,7 @@ export const Navbar = () => {
 
     return (
         <nav className={`fixed top-0 left-0 w-full flex items-center justify-between px-4
-                        md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 
+                        md:px-16 lg:px-24 xl:px-32 transition-all duration-500  
                         ${isScrolled || window.location.pathname !== "/"? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4"
             : "py-4 md:py-6"}`}>
 
@@ -76,11 +76,13 @@ export const Navbar = () => {
                                             h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
                     </Link>
                 ))}
-                <button className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
-                                    font-light rounded-full cursor-pointer duration-500 text-nowrap
-                            ${isScrolled || window.location.pathname !== "/" ? 'text-black' : 'text-white'} transition-all`}>
-                    List Your Hotel
-                </button>
+                {userData && isLoggedin &&
+                    <button className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
+                                        font-light rounded-full cursor-pointer duration-500 text-nowrap
+                                ${isScrolled || window.location.pathname !== "/" ? 'text-black' : 'text-white'} transition-all`}>
+                        List Your Hotel
+                    </button>
+                }
             </div>
 
             <div className="hidden md:flex items-center gap-4">
@@ -144,10 +146,14 @@ export const Navbar = () => {
                     </Link>
                 ))}
 
-                <button className="border hover:bg-black duration-500 hover:text-white px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
-                    Dashboard
-                </button>
-
+                {userData && isLoggedin &&
+                    <button className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
+                                        font-light rounded-full cursor-pointer duration-500 text-nowrap
+                                ${isScrolled || window.location.pathname !== "/" ? 'text-black' : 'text-white'} transition-all`}>
+                        List Your Hotel
+                    </button>
+                }
+                
                 {userData && isLoggedin ?
                     <>
                         <img className='w-15 cursor-pointer rounded-full' src={userData.image} alt="user" />

@@ -14,12 +14,14 @@ import { Footer } from './components/Footer.jsx'
 import { Rooms } from './pages/Rooms.jsx'
 import { RoomDetails } from './pages/RoomDetails.jsx'
 import { Bookings } from './pages/Bookings.jsx'
+import { HotelRegister } from './components/HotelRegister.jsx'
 
 
 function App() {
   return (
     <>
     <ToastContainer />
+    {false && <HotelRegister />}
     <Routes>
       <Route path='/' element={
         <>
