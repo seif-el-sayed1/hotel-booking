@@ -40,10 +40,12 @@ import totalRevenueIcon from "./totalRevenueIcon.svg";
 import edit from "./edit.png";
 import verify from "./verify.png";
 import logOut from "./logout.png";
+import bookings from "./booking.svg"
 
 
 export const assets = {
     logo,
+    bookings,
     searchIcon,
     userIcon,
     calenderIcon,
