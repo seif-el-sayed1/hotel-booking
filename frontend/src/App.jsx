@@ -13,6 +13,7 @@ import { NewsLetter } from './components/NewsLetter.jsx'
 import { Footer } from './components/Footer.jsx'
 import { Rooms } from './pages/Rooms.jsx'
 import { RoomDetails } from './pages/RoomDetails.jsx'
+import { Bookings } from './pages/Bookings.jsx'
 
 
 function App() {
@@ -45,6 +46,13 @@ function App() {
         <>
           <Navbar />
           <RoomDetails /> 
+          <Footer />
+        </>
+      } />
+      <Route path='/my-bookings' element={
+        <>
+          <Navbar />
+          <Bookings /> 
           <Footer />
         </>
       } />
