@@ -77,9 +77,9 @@ export const Navbar = () => {
                     </Link>
                 ))}
                 <button className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
-                                    font-light rounded-full cursor-pointer duration-500
+                                    font-light rounded-full cursor-pointer duration-500 text-nowrap
                             ${isScrolled || window.location.pathname !== "/" ? 'text-black' : 'text-white'} transition-all`}>
-                    Dashboard
+                    List Your Hotel
                 </button>
             </div>
 
@@ -92,21 +92,26 @@ export const Navbar = () => {
                         <img onClick={() => setMenu(!menu)}
                             className='w-10 cursor-pointer rounded-full' src={userData.image} alt="user" />
                         {menu &&
-                            <div className='flex flex-col absolute top-18 right-20 bg-white shadow-md rounded-lg'>
-                                <p className='text-sm font-bold text-gray-500 px-2 pt-2 rounded-lg'>{userData.email}</p>
-                                <div className='flex items-center gap-2 cursor-pointer rounded-lg px-2 py-2 hover:bg-gray-100'>
-                                    <img className='w-4' src={assets.edit} alt="edit" />
+                            <div className='flex flex-col absolute top-18 right-20  bg-white shadow-md rounded-lg'>
+                                <p className='text-sm font-bold text-gray-500 pr-5 border-b-1 border-gray-200 pl-3 py-2 '>{userData.email}</p>
+                                <div className='flex items-center gap-2 border-b-1 border-gray-200 cursor-pointer  pr-5 pl-3 py-2 hover:bg-gray-100'>
+                                    <img className='w-4 invert ' src={assets.userIcon} alt="edit" />
                                     <p>Edit Profile</p>
+                                </div>
+                                <div  onClick={() => navigate("/my-bookings")}
+                                    className='flex items-center gap-2 border-b-1 border-gray-200 cursor-pointer  pr-5 pl-3 py-2 hover:bg-gray-100'>
+                                    <img className='w-4' src={assets.bookings} alt="edit" />
+                                    <p>My Bookings</p>
                                 </div>
                                 {!userData.isVerified &&
                                     <div onClick={sentVerifyOtp}
-                                        className='flex items-center gap-2 cursor-pointer rounded-lg px-2 py-2 hover:bg-gray-100'>
+                                        className='flex items-center gap-2 border-b-1 border-gray-200 cursor-pointer  pr-5 pl-3 py-2 hover:bg-gray-100'>
                                         <img className='w-4' src={assets.verify} alt="verify" />
                                         <p>Verify Email</p>
                                     </div>
                                 }
                                 <div onClick={logout}
-                                    className='flex items-center gap-2 cursor-pointer rounded-lg px-2 py-2 hover:bg-red-100'>
+                                    className='flex items-center gap-2 rounded-b-lg cursor-pointer  pr-5 pl-3 py-2 hover:bg-red-100'>
                                     <img className='w-4' src={assets.logOut} alt="logout" />
                                     <p className='font-bold text-red-600'>Logout</p>
                                 </div>
