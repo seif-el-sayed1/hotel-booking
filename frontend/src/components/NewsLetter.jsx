@@ -3,7 +3,7 @@ import { assets } from '../assets/assets';
 
 export const NewsLetter = () => {
     return (
-        <div className="flex flex-col items-center w-full max-w-5xl lg:w-full rounded-2xl px-4 py-12 md:py-16 mx-2 lg:mx-auto my-30 bg-gray-900 text-white">
+        <div className="flex flex-col items-center max-w-5xl lg:w-full rounded-2xl px-4 py-12 md:py-16 mx-2 lg:mx-auto my-30 bg-gray-900 text-white">
             <div className="flex flex-col justify-center items-center text-center">
                 <h1 className="text-4xl md:text-[40px]">Stay Inspired</h1>
                 <p className="text-sm md:text-base text-gray-500/90 mt-2 max-w-xl">Join our newsletter and be the first to discover new updates, exclusive offers, and inspiration.</p>
