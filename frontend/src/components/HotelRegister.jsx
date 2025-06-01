@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { assets, cities } from '../assets/assets'
+import { UserContext } from '../context/UserContext'
 
 export const HotelRegister = () => {
+    const {setOverlay, overlay  } = useContext(UserContext)
     return (
         <div className="text-gray-500 relative">
             <div className="fixed inset-0 z-40 bg-black/30"></div>
             <div className="z-50 flex fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white w-80 sm:w-100  md:w-185">
-                <img className=' absolute right-5 cursor-pointer top-5 ' src={assets.closeIcon} alt="close" />
+                <img  onClick={() => setOverlay(!overlay)}
+                    className=' absolute right-5 cursor-pointer top-5 ' src={assets.closeIcon} alt="close" />
                 <img className=" hidden md:block w-1/2 rounded-l-2xl object-cover" src={assets.regImage} alt="image" />
 
                 <form className="md:w-1/2 w-full ">
