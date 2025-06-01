@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import {ToastContainer} from "react-toastify"
 import { Navbar } from './components/Navbar.jsx'
@@ -15,13 +15,20 @@ import { Rooms } from './pages/Rooms.jsx'
 import { RoomDetails } from './pages/RoomDetails.jsx'
 import { Bookings } from './pages/Bookings.jsx'
 import { HotelRegister } from './components/HotelRegister.jsx'
+import { OwnerNavbar } from './components/owner/OwnerNavbar.jsx'
+import { SideBar } from './components/owner/SideBar.jsx'
+import { UserContext } from './context/UserContext.jsx'
 
 
 function App() {
+  const {overlay} = useContext(UserContext)
+
+  const isOwner = window.location.pathname.includes("/owner");
+
   return (
     <>
     <ToastContainer />
-    {false && <HotelRegister />}
+    {overlay && <HotelRegister />}
     <Routes>
       <Route path='/' element={
         <>
@@ -58,7 +65,21 @@ function App() {
           <Footer />
         </>
       } />
+      
+      
+
     </Routes>
+    {isOwner && 
+      <>
+        <OwnerNavbar />
+        <div className='flex'>
+          <SideBar />
+          {/* <Routes>
+            <Route path='/owner' element={<SideBar />} />
+          </Routes> */}
+        </div>
+      </>
+    } 
     </>
   )
 }
