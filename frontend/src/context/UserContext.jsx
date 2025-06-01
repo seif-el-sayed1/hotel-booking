@@ -15,6 +15,8 @@ export const UserContextProvider = (props) => {
     const [isLoggedin, setIsLoggedin] = useState(false);
     const [userData, setUserData] = useState({});
 
+    const [overlay, setOverlay] = useState(false)
+
 
     const authState = async () => {
         try {
@@ -44,7 +46,9 @@ export const UserContextProvider = (props) => {
         isLoggedin, setIsLoggedin,
         userData, setUserData,
         getUserData,
-        authState
+        authState,
+        overlay,
+        setOverlay,
     };
 
     useEffect(() => {
