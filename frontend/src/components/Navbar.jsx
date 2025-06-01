@@ -7,7 +7,7 @@ import { assets } from '../assets/assets';
 
 export const Navbar = () => {
     const navigate = useNavigate();
-    const { setIsLoggedin, isLoggedin, userData, setUserData, backendUrl } = useContext(UserContext);
+    const { setIsLoggedin, isLoggedin, userData, setUserData, backendUrl, overlay, setOverlay } = useContext(UserContext);
 
     const [menu, setMenu] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -77,7 +77,8 @@ export const Navbar = () => {
                     </Link>
                 ))}
                 {userData && isLoggedin &&
-                    <button className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
+                    <button onClick={() => setOverlay(!overlay)}
+                        className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
                                         font-light rounded-full cursor-pointer duration-500 text-nowrap
                                 ${isScrolled || window.location.pathname !== "/" ? 'text-black' : 'text-white'} transition-all`}>
                         List Your Hotel
