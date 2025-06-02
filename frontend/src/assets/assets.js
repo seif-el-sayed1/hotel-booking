@@ -213,7 +213,7 @@ export const userBookingsDummyData = [
         "checkOutDate": "2025-05-01T00:00:00.000Z",
         "totalPrice": 299,
         "guests": 1,
-        "status": "pending",
+        "status": "complete",
         "paymentMethod": "Stripe",
         "isPaid": true,
         "createdAt": "2025-04-10T06:42:01.529Z",
