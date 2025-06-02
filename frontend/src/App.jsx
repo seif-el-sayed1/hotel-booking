@@ -18,6 +18,7 @@ import { HotelRegister } from './components/HotelRegister.jsx'
 import { OwnerNavbar } from './components/owner/OwnerNavbar.jsx'
 import { SideBar } from './components/owner/SideBar.jsx'
 import { UserContext } from './context/UserContext.jsx'
+import { Dashboard } from './pages/owner/Dashboard.jsx'
 
 
 function App() {
@@ -74,9 +75,9 @@ function App() {
         <OwnerNavbar />
         <div className='flex'>
           <SideBar />
-          {/* <Routes>
-            <Route path='/owner' element={<SideBar />} />
-          </Routes> */}
+          <Routes>
+            <Route path='/owner' element={<Dashboard />} />
+          </Routes>
         </div>
       </>
     } 
