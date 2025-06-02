@@ -28,7 +28,7 @@ export const Dashboard = () => {
             </div>
             <div className='px-5 py-5'>
                 <h2 className='text-lg w-fit text-gray-700 py-5'>Recent Bookings</h2>
-                <div className='w-full border border-gray-200 rounded-xl overflow-hidden'>
+                <div className='w-full border border-gray-200 rounded-xl overflow-x-scroll sm:overflow-hidden'>
                     <table className='w-full'>
                         <thead>
                             <tr className='bg-gray-50 text-black/70 text-left'>
