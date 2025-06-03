@@ -26,37 +26,37 @@ export const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <div className='px-5 py-5'>
-                <h2 className='text-lg w-fit text-gray-700 py-5'>Recent Bookings</h2>
-                <div className='w-full border border-gray-200 rounded-xl overflow-x-scroll sm:overflow-hidden'>
-                    <table className='w-full'>
-                        <thead>
-                            <tr className='bg-gray-50 text-black/70 text-left'>
-                                <th className='py-3 pl-5'>User Name</th>
-                                <th className='py-3 pl-5 '>Room Type</th>
-                                <th className='py-3 pl-5 '>Total Amount</th>
-                                <th className='py-3 pl-5'>Payment Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {dashboardDummyData.bookings.map((ele, index) => {
-                                return (
-                                    <tr className='border-b-1 border-gray-200 text-gray-500' key={index}>
-                                        <td className=' text-sm pl-5 py-3 text-nowrap'>{ele.user.username}</td>
-                                        <td className=' text-sm pl-5 py-3 text-nowrap'>{ele.room.roomType}</td>
-                                        <td className=' text-sm pl-5 py-3 text-nowrap'>$ {ele.totalPrice}</td>
+                <div className='px-5 py-5'>
+                    <h2 className='text-lg w-fit text-gray-700 py-5'>Recent Bookings</h2>
+                    <div className='w-full border border-gray-200 rounded-xl overflow-x-auto hide-scrollbar'>
+                        <table className='w-full'>
+                            <thead>
+                                <tr className='bg-gray-50 text-black/70 text-left'>
+                                    <th className='py-3 pl-5'>User Name</th>
+                                    <th className='py-3 pl-5 hidden md:block'>Room Type</th>
+                                    <th className='py-3 pl-5 '>Total Amount</th>
+                                    <th className='py-3 px-5'>Payment Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {dashboardDummyData.bookings.map((ele, index) => {
+                                    return (
+                                        <tr className='border-b-1 border-gray-200 text-gray-500' key={index}>
+                                            <td className=' text-sm pl-5 py-3'>{ele.user.username}</td>
+                                            <td className=' text-sm pl-5 py-3 hidden md:block'>{ele.room.roomType}</td>
+                                            <td className=' text-sm pl-5 py-3'>$ {ele.totalPrice}</td>
 
-                                        <td className="text-sm py-5 px-5 text-nowrap">
-                                            <p className={`w-fit px-3 py-1  text-black/80 rounded-2xl ${ele.isPaid ? "bg-green-500" 
-                                                    : "bg-yellow-400"}`}>{ele.status}</p>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
+                                            <td className="text-sm py-5 px-5">
+                                                <p className={`w-fit px-3 py-1  text-black/80 rounded-2xl ${ele.isPaid ? "bg-green-500" 
+                                                        : "bg-yellow-400"}`}>{ele.status}</p>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
         </div>
     )
 }
