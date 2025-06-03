@@ -1,7 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { assets } from "../../assets/assets"
 
 export const AddRoom = () => {
+    const [images, setImages] = useState({
+        1: null,
+        2: null,
+        3: null,
+        4: null
+    })
+    const [inputs, setInputs] = useState({
+        roomType: "",
+        pricePerNight: 0,
+        amenities: {
+            "Free WiFi": false,
+            "Free Breakfast": false,
+            "Room Service": false,
+            "Mountain View": false,
+            "Pool Access": false
+        }
+    })
+
     const amenities = [
         "Free WiFi",
         "Free Breakfast",
@@ -21,13 +39,16 @@ export const AddRoom = () => {
             <form className='pb-5'>
                 <h2 className='pl-5 mb-2 text-black/80 text-lg'>Images</h2>
                 <div className='flex items-center flex-wrap gap-3 pl-5 mb-10'>
-                    {Array(4).fill(0).map((_, index) => {
+                    {Object.keys(images).map((ele) => {
                         return (
-                            <div key={index}>
-                                <label htmlFor="roomImage">
-                                    <img className='w-30 cursor-pointer' src={assets.uploadArea} alt="upload" />
+                            <div>
+                                <label htmlFor={`roomImages${ele}`}>
+                                    <img className='w-30 cursor-pointer' 
+                                        src={images[ele] ? URL.createObjectURL(images[ele]) : assets.uploadArea} alt="upload" />
                                 </label>
-                                <input id='roomImage' type="file" hidden required/>
+                                <input id={`roomImages${ele}`} 
+                                        onChange={e => setImages({ ...images, [ele]: e.target.files[0] })}
+                                        type="file" required hidden />
                             </div>
                         )
                     })}
@@ -35,7 +56,9 @@ export const AddRoom = () => {
                 <div className='flex items-center flex-wrap gap-5 pl-5'>
                     <div className='flex flex-col gap-2'>
                         <label className='text-lg text-black/80' htmlFor="types">Room Type</label>
-                        <input className='outline-none py-2 px-1 w-45 border border-gray-200 rounded'
+                        <input value={inputs.roomType} 
+                            onChange={(e) => setInputs({...inputs, roomType:e.target.value})}
+                            className='outline-none py-2 px-1 w-45 border border-gray-200 rounded'
                             list='types' type="text" placeholder='Select Room Type' required />
                         <datalist id='types' >
                             <option value="Single Bed"></option>
@@ -46,17 +69,23 @@ export const AddRoom = () => {
                     </div>
                     <div className='flex flex-col gap-2'>
                         <label className='text-lg text-black/80' htmlFor="price">Price</label>
-                        <input className='outline-none py-2 px-1 w-30 border border-gray-200 rounded'
+                        <input value={inputs.pricePerNight}
+                            onChange={(e) => setInputs({...inputs, pricePerNight:e.target.value})}
+                            className='outline-none py-2 px-1 w-30 border border-gray-200 rounded'
                             id='price' type="number" required placeholder='$'/>
                     </div>
                 </div>
                 <div>
-                    <h2 className=' pl-5  mb-2 mt-5 text-lg text-black/80'>Amenities</h2>
-                    {amenities.map((ele, index) => {
+                    <h2 className=' pl-5 mb-2 mt-5 text-lg text-black/80'>Amenities</h2>
+                    {Object.keys(inputs.amenities).map((ele, index) => {
                         return (
-                            <div key={index} className='flex items-center gap-2 pl-5'>
-                                <input type="checkbox" required id={ele}  />
-                                <label className=' text-black/80' htmlFor={ele}>{ele}</label>
+                            <div key={index} className='pl-5 flex items-center gap-2'>
+                                <input type="checkbox" required id={index + 1} 
+                                        onChange={() => setInputs({...inputs, 
+                                            amenities: {...inputs.amenities, [ele]: !inputs.amenities[ele]
+                                        }})}
+                                        checked={inputs.amenities[ele]} />
+                                <label className='text-black/50' htmlFor={index + 1}>{ele}</label>
                             </div>
                         )
                     })}
