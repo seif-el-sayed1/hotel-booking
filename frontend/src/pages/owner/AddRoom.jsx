@@ -19,15 +19,7 @@ export const AddRoom = () => {
             "Pool Access": false
         }
     })
-
-    const amenities = [
-        "Free WiFi",
-        "Free Breakfast",
-        "Room Service",
-        "Mountain View",
-        "Pool Access"
-    ]
-
+    
     return (
         <div className='w-4/5'>
             <div className='py-10 pl-5 text-center lg:text-start'>
@@ -39,9 +31,9 @@ export const AddRoom = () => {
             <form className='pb-5'>
                 <h2 className='pl-5 mb-2 text-black/80 text-lg'>Images</h2>
                 <div className='flex items-center flex-wrap gap-3 pl-5 mb-10'>
-                    {Object.keys(images).map((ele) => {
+                    {Object.keys(images).map((ele, index) => {
                         return (
-                            <div>
+                            <div key={index}>
                                 <label htmlFor={`roomImages${ele}`}>
                                     <img className='w-30 cursor-pointer' 
                                         src={images[ele] ? URL.createObjectURL(images[ele]) : assets.uploadArea} alt="upload" />
