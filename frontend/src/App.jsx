@@ -19,6 +19,7 @@ import { OwnerNavbar } from './components/owner/OwnerNavbar.jsx'
 import { SideBar } from './components/owner/SideBar.jsx'
 import { UserContext } from './context/UserContext.jsx'
 import { Dashboard } from './pages/owner/Dashboard.jsx'
+import { AddRoom } from './pages/owner/AddRoom.jsx'
 
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
           <SideBar />
           <Routes>
             <Route path='/owner' element={<Dashboard />} />
+            <Route path='/owner/add-room' element={<AddRoom />} />
           </Routes>
         </div>
       </>
