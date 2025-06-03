@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import {ToastContainer} from "react-toastify"
 import { Navbar } from './components/Navbar.jsx'
@@ -20,6 +20,7 @@ import { SideBar } from './components/owner/SideBar.jsx'
 import { UserContext } from './context/UserContext.jsx'
 import { Dashboard } from './pages/owner/Dashboard.jsx'
 import { AddRoom } from './pages/owner/AddRoom.jsx'
+import { ListRoom } from './pages/owner/ListRoom.jsx'
 
 
 function App() {
@@ -79,8 +80,10 @@ function App() {
           <Routes>
             <Route path='/owner' element={<Dashboard />} />
             <Route path='/owner/add-room' element={<AddRoom />} />
+            <Route path='/owner/list-room' element={<ListRoom />} />
           </Routes>
         </div>
+        <Footer />
       </>
     } 
     </>
