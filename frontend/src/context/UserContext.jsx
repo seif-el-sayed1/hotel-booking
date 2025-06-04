@@ -16,6 +16,8 @@ export const UserContextProvider = (props) => {
     const [userData, setUserData] = useState({});
     const [isOwner, setIsOwner] = useState(false)
     const [overlay, setOverlay] = useState(false)
+    
+    const [loading, setLoading] = useState(false);
 
 
     const authState = async () => {
@@ -51,7 +53,9 @@ export const UserContextProvider = (props) => {
         overlay,
         setOverlay,
         isOwner,
-        setIsOwner
+        setIsOwner,
+        loading,
+        setLoading
     };
 
     useEffect(() => {
