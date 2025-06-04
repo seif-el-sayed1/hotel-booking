@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 
 export const UserContext = createContext();
@@ -14,7 +14,7 @@ export const UserContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL; 
     const [isLoggedin, setIsLoggedin] = useState(false);
     const [userData, setUserData] = useState({});
-
+    const [isOwner, setIsOwner] = useState(false)
     const [overlay, setOverlay] = useState(false)
 
 
@@ -36,7 +36,7 @@ export const UserContextProvider = (props) => {
         const {data} = await axios.get(backendUrl + "user/getUser")
         if(data.Success) {
             setUserData(data.userData)
-            console.log(data.userData);
+            setIsOwner(data.role == "owner")
         } else {
             toast.error(data.message) 
         }
@@ -49,6 +49,8 @@ export const UserContextProvider = (props) => {
         authState,
         overlay,
         setOverlay,
+        isOwner,
+        setIsOwner
     };
 
     useEffect(() => {

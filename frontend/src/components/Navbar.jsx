@@ -1,13 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../context/UserContext';
-import { toast } from 'react-toastify';
+import toast from "react-hot-toast";
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { assets } from '../assets/assets';
 
 export const Navbar = () => {
     const navigate = useNavigate();
-    const { setIsLoggedin, isLoggedin, userData, setUserData, backendUrl, overlay, setOverlay } = useContext(UserContext);
+    const { setIsLoggedin, isLoggedin, userData, 
+            setUserData, backendUrl, overlay, 
+            setOverlay, isOwner} = useContext(UserContext);
 
     const [menu, setMenu] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -76,13 +78,15 @@ export const Navbar = () => {
                                             h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
                     </Link>
                 ))}
-                {userData && isLoggedin &&
-                    <button onClick={() => setOverlay(!overlay)}
+                {userData && (
+                    <button onClick={() => {  !isOwner ? setOverlay(!overlay) : navigate("/owner")}}
                         className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
                                         font-light rounded-full cursor-pointer duration-500 text-nowrap
                                 ${isScrolled || window.location.pathname !== "/" ? 'text-black' : 'text-white'} transition-all`}>
-                        List Your Hotel
+                        {isOwner ? "Dashboard" : "List Your Hotel"}
                     </button>
+                )
+                    
                 }
             </div>
 
@@ -148,10 +152,11 @@ export const Navbar = () => {
                 ))}
 
                 {userData && isLoggedin &&
-                    <button className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
+                    <button onClick={() => {  !isOwner ? setOverlay(!overlay) : navigate("/owner")}} 
+                        className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
                                         font-light rounded-full cursor-pointer duration-500 text-nowrap
                                 ${isScrolled || window.location.pathname !== "/" ? 'text-black' : 'text-white'} transition-all`}>
-                        List Your Hotel
+                        {isOwner ? "Dashboard" : "List Your Hotel"}
                     </button>
                 }
                 

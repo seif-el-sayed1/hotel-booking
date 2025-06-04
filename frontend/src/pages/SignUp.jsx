@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import axios from 'axios';
 import { UserContext } from "../context/UserContext";
-import { toast } from "react-toastify"
+import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom"
 import upload from "../assets/upload.png" 
 

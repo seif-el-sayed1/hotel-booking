@@ -21,16 +21,20 @@ import { UserContext } from './context/UserContext.jsx'
 import { Dashboard } from './pages/owner/Dashboard.jsx'
 import { AddRoom } from './pages/owner/AddRoom.jsx'
 import { ListRoom } from './pages/owner/ListRoom.jsx'
+import { Toaster } from "react-hot-toast";
 
 
 function App() {
-  const {overlay} = useContext(UserContext)
+  const { overlay } = useContext(UserContext)
 
   const isOwner = window.location.pathname.includes("/owner");
 
   return (
     <>
-    <ToastContainer />
+    <Toaster
+      position="top-center"
+      reverseOrder={false}
+    />
     {overlay && <HotelRegister />}
     <Routes>
       <Route path='/' element={
