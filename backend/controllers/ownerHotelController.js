@@ -82,20 +82,24 @@ const getHotelBooking = async (req, res) => {
 
 // Rooms Controller
 const addRoom = async (req, res) => {
-    const {roomType, pricePerNight, services} = req.body
+    const {roomType, pricePerNight, amenities} = req.body
     try {
         const hotel = await hotelModel.findOne({owner: req.user.id})
         if (!hotel) {
             return res.json({success: false, message: 'Hotel not found'})
         }
+        if(!roomType || !pricePerNight) {
+            return res.json({success: false, message: 'Please fill all the fields'})
+        }
         if (req.images.length !== 4) {
             return res.json({success: false, message: 'Please upload 4 images'})
         }
+        const parsedAmenities = JSON.parse(amenities);
         const room = new roomModel({
             hotel: hotel._id,
             roomType,
             pricePerNight,
-            services,
+            amenities: parsedAmenities,
             images: req.images,
         })
         await room.save()
