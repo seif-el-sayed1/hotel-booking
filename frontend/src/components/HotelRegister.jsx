@@ -1,9 +1,33 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { assets, cities } from '../assets/assets'
 import { UserContext } from '../context/UserContext'
+import toast from "react-hot-toast";
+import axios from 'axios';
 
 export const HotelRegister = () => {
-    const {setOverlay, overlay  } = useContext(UserContext)
+    const {setOverlay, overlay, backendUrl, setIsOwner} = useContext(UserContext)
+
+    const [hotelName, setHotelName] = useState('')
+    const [contact, setContact] = useState('')
+    const [address, setAddress] = useState('')
+    const [city, setCity] = useState('')
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const {data} = await axios.post(backendUrl + 'ownerHotel/register', {hotelName, contact, city, address}) 
+            if (data.success) {
+                toast.success(data.message)
+                setOverlay(!overlay)
+                setIsOwner(true)
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     return (
         <div className="text-gray-500 relative">
             <div className="fixed inset-0 z-40 bg-black/30"></div>
@@ -12,14 +36,15 @@ export const HotelRegister = () => {
                     className=' absolute right-5 cursor-pointer top-5 ' src={assets.closeIcon} alt="close" />
                 <img className=" hidden md:block w-1/2 rounded-l-2xl object-cover" src={assets.regImage} alt="image" />
 
-                <form className="md:w-1/2 w-full ">
+                <form onSubmit={handleSubmit}  
+                    className="md:w-1/2 w-full ">
                     <h2 className="text-xl font-bold text-black text-center mt-10 mb-5">
                         Register Your Hotel
                     </h2>
 
                     <div className="flex flex-col gap-1 px-10 mb-5">
                         <label htmlFor="name">Hotel Name</label>
-                        <input
+                        <input onChange={(e) => setHotelName(e.target.value)}
                             className="outline-blue-600 py-2 rounded px-2 border border-gray-200 w-full"
                             id="name"
                             type="text"
@@ -30,7 +55,7 @@ export const HotelRegister = () => {
 
                     <div className="flex flex-col gap-1 px-10 mb-5">
                         <label htmlFor="phone">Phone</label>
-                        <input
+                        <input onChange={(e) => setContact(e.target.value)}
                             className="outline-blue-600 py-2 rounded px-2 border border-gray-200 w-full"
                             id="phone"
                             type="text"
@@ -41,7 +66,7 @@ export const HotelRegister = () => {
 
                     <div className="flex flex-col gap-1 px-10 mb-5">
                         <label htmlFor="address">Address</label>
-                        <input
+                        <input onChange={(e) => setAddress(e.target.value)}
                             className="pb-10 pt-2 rounded px-2 outline-blue-600 border border-gray-200 w-full"
                             id="address"
                             type="text"
@@ -52,13 +77,12 @@ export const HotelRegister = () => {
 
                     <div className="flex flex-col gap-1 px-10 mb-5">
                         <label htmlFor="city">City</label>
-                        <input
+                        <input  onChange={(e) => setCity(e.target.value)}
                             list="destinations"
                             id="destinationInput"
                             type="text"
                             className="py-2 rounded px-2 outline-blue-600 border border-gray-200 w-40"
                             placeholder="Select City"
-                            required
                         />
                         <datalist id="destinations">
                             {cities.map((city, index) => (
@@ -68,7 +92,8 @@ export const HotelRegister = () => {
                     </div>
 
                     <div className="flex flex-col gap-1 px-10 mb-5">
-                        <button className="px-3 py-2 bg-blue-600 text-white cursor-pointer w-30 rounded hover:bg-blue-700 transition">
+                        <button
+                            className="px-3 py-2 bg-blue-600 text-white cursor-pointer w-30 rounded hover:bg-blue-700 transition">
                             Register
                         </button>
                     </div>

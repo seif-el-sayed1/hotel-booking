@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
-import toast from "react-hot-toast";
+import { toast } from "react-toastify";
 
 
 export const UserContext = createContext();
@@ -26,6 +26,7 @@ export const UserContextProvider = (props) => {
                 getUserData()
             } else {
                 setUserData(false)
+                navigate("/")
             }
         } catch (error) {
             console.log(error.message);
@@ -36,7 +37,7 @@ export const UserContextProvider = (props) => {
         const {data} = await axios.get(backendUrl + "user/getUser")
         if(data.Success) {
             setUserData(data.userData)
-            setIsOwner(data.role == "owner")
+            setIsOwner(data.userData.role == "owner");
         } else {
             toast.error(data.message) 
         }

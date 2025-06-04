@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { assets, dashboardDummyData } from '../../assets/assets'
+import { useContext } from 'react'
+import { UserContext } from '../../context/UserContext'
 
 export const Dashboard = () => {
+    const {authState} = useContext(UserContext)
+
+    useEffect(() => {
+        authState();
+    }, []);
+    
     return (
         <div className='w-4/5'>
             <div className='py-10 pl-5 text-center lg:text-start'>

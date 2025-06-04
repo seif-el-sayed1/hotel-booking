@@ -8,8 +8,8 @@ import { assets } from '../assets/assets';
 export const Navbar = () => {
     const navigate = useNavigate();
     const { setIsLoggedin, isLoggedin, userData, 
-            setUserData, backendUrl, overlay, 
-            setOverlay, isOwner} = useContext(UserContext);
+            setUserData, backendUrl, 
+            overlay, setOverlay, isOwner} = useContext(UserContext);
 
     const [menu, setMenu] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -30,6 +30,7 @@ export const Navbar = () => {
                 toast.success(data.message, { position: "top-center" });
                 setUserData(false);
                 setIsLoggedin(false);
+                navigate("/");
             }
         } catch (error) {
             toast.error(error.message, { position: "top-center" });
@@ -79,11 +80,11 @@ export const Navbar = () => {
                     </Link>
                 ))}
                 {userData && (
-                    <button onClick={() => {  !isOwner ? setOverlay(!overlay) : navigate("/owner")}}
+                    <button onClick={() => {isOwner ?  navigate("/owner") : setOverlay(!overlay)}}
                         className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
                                         font-light rounded-full cursor-pointer duration-500 text-nowrap
                                 ${isScrolled || window.location.pathname !== "/" ? 'text-black' : 'text-white'} transition-all`}>
-                        {isOwner ? "Dashboard" : "List Your Hotel"}
+                        {isOwner  ? "Dashboard" : "List Your Hotel"}
                     </button>
                 )
                     
@@ -95,7 +96,7 @@ export const Navbar = () => {
                     alt="search icon" className={`h-8 w-8 cursor-pointer ${isScrolled || window.location.pathname !== "/" ? "invert" : ""}`} />
 
                 {userData && isLoggedin ?
-                    <>
+                    (<>
                         <img onClick={() => setMenu(!menu)}
                             className='w-10 cursor-pointer rounded-full' src={userData.image} alt="user" />
                         {menu &&
@@ -124,14 +125,15 @@ export const Navbar = () => {
                                 </div>
                             </div>
                         }
-                    </>
+                    </>)
                     :
-                    <button onClick={() => navigate("/signUp")} className="bg-black text-white px-8 py-2.5 rounded-full ml-4 transition-all duration-500 cursor-pointer whitespace-nowrap">
+                    (<button onClick={() => navigate("/signUp")} className="bg-black text-white px-8 py-2.5 rounded-full ml-4 transition-all duration-500 cursor-pointer whitespace-nowrap">
                         Login
-                    </button>
+                    </button>)
                 }
             </div>
 
+            {/* Mobil Screen */}
             <div className="flex items-center gap-3 md:hidden">
                 <img src={assets.menuIcon} alt="menu" onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className={`h-6 w-6 cursor-pointer ${isScrolled || window.location.pathname !== "/" ? "invert" : ""}`} />
@@ -152,11 +154,11 @@ export const Navbar = () => {
                 ))}
 
                 {userData && isLoggedin &&
-                    <button onClick={() => {  !isOwner ? setOverlay(!overlay) : navigate("/owner")}} 
+                    <button onClick={() => {isOwner ?  navigate("/owner") : setOverlay(!overlay)}} 
                         className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
                                         font-light rounded-full cursor-pointer duration-500 text-nowrap
                                 ${isScrolled || window.location.pathname !== "/" ? 'text-black' : 'text-white'} transition-all`}>
-                        {isOwner ? "Dashboard" : "List Your Hotel"}
+                        {isOwner  ? "Dashboard" : "List Your Hotel"}
                     </button>
                 }
                 

@@ -25,7 +25,7 @@ import { Toaster } from "react-hot-toast";
 
 
 function App() {
-  const { overlay } = useContext(UserContext)
+  const { overlay, userData } = useContext(UserContext)
 
   const isOwner = window.location.pathname.includes("/owner");
 
@@ -76,7 +76,7 @@ function App() {
       
 
     </Routes>
-    {isOwner && 
+    {isOwner &&  userData.role == "owner" &&
       <>
         <OwnerNavbar />
         <div className='flex'>
