@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import axios from 'axios';
 
 export const HotelRegister = () => {
-    const {setOverlay, overlay, backendUrl, setIsOwner} = useContext(UserContext)
+    const {setOverlay, overlay, backendUrl, setIsOwner, loading, setLoading} = useContext(UserContext)
 
     const [hotelName, setHotelName] = useState('')
     const [contact, setContact] = useState('')
@@ -14,6 +14,7 @@ export const HotelRegister = () => {
     
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true)
         try {
             const {data} = await axios.post(backendUrl + 'ownerHotel/register', {hotelName, contact, city, address}) 
             if (data.success) {
@@ -25,17 +26,30 @@ export const HotelRegister = () => {
             }
         } catch (error) {
             toast.error(error.message)
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
         <div className="text-gray-500 relative">
             <div className="fixed inset-0 z-40 bg-black/30"></div>
+
+            {loading &&
+                <div className="fixed z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div className="flex flex-row gap-2">
+                        <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                        <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]" />
+                        <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                    </div>
+                </div>
+            }
+
             <div className="z-50 flex fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white w-80 sm:w-100  md:w-185">
                 <img  onClick={() => setOverlay(!overlay)}
                     className=' absolute right-5 cursor-pointer top-5 ' src={assets.closeIcon} alt="close" />
                 <img className=" hidden md:block w-1/2 rounded-l-2xl object-cover" src={assets.regImage} alt="image" />
-
+                
                 <form onSubmit={handleSubmit}  
                     className="md:w-1/2 w-full ">
                     <h2 className="text-xl font-bold text-black text-center mt-10 mb-5">
