@@ -14,7 +14,7 @@ const roomModel = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    services: [{type: String, required: true}],
+    amenities: [{type: String, required: true}],
     images: [{type: String, required: true}],
     isAvailable: {
         type: Boolean,
