@@ -11,17 +11,16 @@ const hotelModel = new mongoose.Schema({
         required: true,
         trim: true
     },
-    description : {
-        type: String,
-        required: true,
-        trim: true
+    contact: {
+        type: Number,
+        require: true,
     },
     city: {
         type: String,
         required: true,
         trim: true
     },
-    location : {
+    address : {
         type: String,
         required: true,
         trim: true
