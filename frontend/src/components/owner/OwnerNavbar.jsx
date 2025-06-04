@@ -20,6 +20,7 @@ export const OwnerNavbar = () => {
                 toast.success(data.message, { position: "top-center" });
                 setUserData(false);
                 setIsLoggedin(false);
+                navigate("/");
             }
         } catch (error) {
             toast.error(error.message, { position: "top-center" });
