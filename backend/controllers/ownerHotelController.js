@@ -1,25 +1,37 @@
 const hotelModel = require('../models/hotelModel')
 const roomModel = require('../models/roomModel')
 const bookingModel = require('../models/bookingModel')
+const users = require('../models/userModels')
 
 // Hotel controller 
 const registerHotel = async (req, res) => {
-    const {hotelName, description, city, location} = req.body
+    const {hotelName, city, contact, address} = req.body
     const owner = req.user.id
     try {
         const hotel = await hotelModel.findOne({owner})
-        
+        const user = await users.findById(req.user.id)
+        if(!hotelName || !city || !contact || !address) {
+            return res.json({success: false, message: 'Please fill all the fields'})
+        }
+        if(!user) {
+            return res.json({success: false, message: 'User not found'})
+        }
+
         if (hotel) {
             return res.json({success: false, message: 'Hotel already registered'})
         }
         const newHotel = new hotelModel({
             owner: req.user.id,
             hotelName,
-            description,
+            contact,
             city,
-            location,
+            address,
         })
-        await hotelModel.save()
+
+        user.role = 'owner'
+        await user.save()
+        
+        await newHotel.save()
         return res.json({success: true, message: 'Hotel added successfully', hotel: newHotel})
         
     } catch (error) {
