@@ -13,7 +13,6 @@ export const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [image, setImage] = useState(null);
-
     const { backendUrl, setIsLoggedin, getUserData } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
