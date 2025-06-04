@@ -13,7 +13,6 @@ export const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [image, setImage] = useState(null);
-    const [role, setRole] = useState("user"); 
 
     const { backendUrl, setIsLoggedin, getUserData } = useContext(UserContext)
 
@@ -27,7 +26,6 @@ export const SignUp = () => {
                 formData.append("email", email);
                 formData.append("password", password);
                 formData.append("image", image);
-                formData.append("role", role);
 
                 const { data } = await axios.post(backendUrl + "user/register", formData);
                 if (data.Success) {
@@ -83,30 +81,6 @@ export const SignUp = () => {
                                 value={name}
                                 required
                             />
-                            <div className="flex items-center justify-center gap-6 mb-4 text-white text-lg">
-                                <label className="flex items-center gap-2 cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="role"
-                                        value="user"
-                                        checked={role === "user"}
-                                        onChange={(e) => setRole(e.target.value)}
-                                        className="accent-yellow-400"
-                                    />
-                                    <span>User</span>
-                                </label>
-                                <label className="flex items-center gap-2 cursor-pointer">
-                                    <input
-                                        type="radio"
-                                        name="role"
-                                        value="owner"
-                                        checked={role === "owner"}
-                                        onChange={(e) => setRole(e.target.value)}
-                                        className="accent-yellow-400"
-                                    />
-                                    <span>Owner</span>
-                                </label>
-                            </div>
                         </>
                     )}
                     <input
