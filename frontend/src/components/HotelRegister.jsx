@@ -21,6 +21,7 @@ export const HotelRegister = () => {
                 toast.success(data.message)
                 setOverlay(!overlay)
                 setIsOwner(true)
+                window.location.reload()
             } else {
                 toast.error(data.message)
             }
