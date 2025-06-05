@@ -74,7 +74,7 @@ const getHotelBooking = async (req, res) => {
         const totalBookings = bookings.length
         const totalEarnings = bookings.reduce((acc, booking) => acc + booking.totalPrice, 0)
 
-        return res.json({success: true, data: bookings, totalBookings, totalEarnings})
+        return res.json({success: true, bookings, totalBookings, totalRevenue: totalEarnings})
     } catch (error) {
         return res.json({success: false, message: error.message})
     }
