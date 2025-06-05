@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import { assets, facilityIcons ,roomCommonData,roomsDummyData } from '../assets/assets'
+import { assets, facilityIcons ,roomCommonData, roomsDummyData } from '../assets/assets'
+import { AppContext } from '../context/AppContext'
 
 export const RoomDetails = () => {
     const {id} = useParams()
     const [room, setRoom] = useState(null)
     const [mainImage, setMainImage] = useState(null)
+    const {allRooms} = useContext(AppContext)
 
     useEffect(() => {
-        const room = roomsDummyData.find(room => room._id == id)
+        const room = allRooms.find(room => room._id == id)
         room && setRoom(room)
         room && setMainImage(room.images[0])
     },[])
