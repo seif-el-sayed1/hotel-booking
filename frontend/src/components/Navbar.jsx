@@ -79,7 +79,7 @@ export const Navbar = () => {
                                             h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
                     </Link>
                 ))}
-                {userData && (
+                {userData && isLoggedin && (
                     <button onClick={() => {isOwner ?  navigate("/owner") : setOverlay(!overlay)}}
                         className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
                                         font-light rounded-full cursor-pointer duration-500 text-nowrap
