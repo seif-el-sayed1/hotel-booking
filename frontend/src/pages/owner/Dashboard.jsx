@@ -1,13 +1,42 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { assets, dashboardDummyData } from '../../assets/assets'
 import { useContext } from 'react'
 import { UserContext } from '../../context/UserContext'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 export const Dashboard = () => {
-    const {authState} = useContext(UserContext)
+    const {authState, backendUrl, loading, setLoading} = useContext(UserContext)
+
+    const [dashboard, setDashboard] = useState({
+        bookings: [],
+        totalBookings: 0,
+        totalRevenue: 0
+    })
+
+    const getDashboardData = async () => {
+        try {
+            setLoading(true)
+            const {data} = await axios.get(backendUrl + 'ownerHotel/bookings')
+            if (data.success) {
+                setDashboard({
+                    bookings: data.bookings,
+                    totalBookings: data.totalBookings,
+                    totalRevenue: data.totalRevenue
+                })
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
         authState();
+        getDashboardData()
     }, []);
     
     return (
@@ -23,14 +52,14 @@ export const Dashboard = () => {
                     <img className='hidden md:block h-10' src={assets.totalBookingIcon} alt="total booking" />
                     <div>
                         <p className='text-blue-500 text-lg'>Total Bookings</p>
-                        <span className='text-gray-500 font-bold'>{dashboardDummyData.totalBookings}</span>
+                        <span className='text-gray-500 font-bold'>{dashboard.totalBookings}</span>
                     </div>
                 </div>
                 <div className='flex  gap-5 px-5 py-5 bg-blue-50/40 border border-gray-200 rounded'>
                     <img className='hidden md:block h-10' src={assets.totalRevenueIcon} alt="total revenue" />
                     <div>
                         <p className='text-blue-500 text-lg'>Total Revenue</p>
-                        <span className='text-gray-500 font-bold'>$ {dashboardDummyData.totalRevenue}</span>
+                        <span className='text-gray-500 font-bold'>$ {dashboard.totalRevenue}</span>
                     </div>
                 </div>
             </div>
@@ -47,8 +76,21 @@ export const Dashboard = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {dashboardDummyData.bookings.map((ele, index) => {
-                                    return (
+                                {loading ? (
+                                <tr>
+                                    <td colSpan={4}>
+                                        <div className="flex justify-center py-10">
+                                            <div className="flex flex-row gap-2">
+                                                <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                                                <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]" />
+                                                <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ) : (
+                                dashboard.bookings.map((ele, index) => (
+                                    
                                         <tr className='border-b-1 border-gray-200 text-gray-500' key={index}>
                                             <td className=' text-sm pl-5 py-3'>{ele.user.username}</td>
                                             <td className=' text-sm pl-5 py-3 hidden md:block'>{ele.room.roomType}</td>
@@ -60,7 +102,8 @@ export const Dashboard = () => {
                                             </td>
                                         </tr>
                                     )
-                                })}
+                                )
+                            )}
                             </tbody>
                         </table>
                     </div>
