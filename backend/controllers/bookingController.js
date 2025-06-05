@@ -57,6 +57,7 @@ const createBooking = async (req, res) => {
             checkOutDate,
             totalPrice,
         })
+        await newBooking.save()
         return res.json({success: true, message: 'Booking created successfully'})
     } catch (error) {
         return res.json({success:false, message: error.message})
