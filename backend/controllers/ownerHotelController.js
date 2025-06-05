@@ -162,14 +162,14 @@ const toggleRoomAvailability = async (req, res) => {
 
 const getAllRooms = async (req, res) => {
     try {
-        const rooms = await roomModel.find({issAvailable: true}).populate({
+        const rooms = await roomModel.find({isAvailable: true}).populate({
             path: 'hotel',
             populate: {
                 path: 'owner',
                 select: 'name'
             }
         }).sort({createdAt: -1})
-        return res.json({success: true, data: rooms})
+        return res.json({success: true, rooms})
 
     } catch (error) {
         return res.json({success: false, message: error.message})
