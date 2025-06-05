@@ -5,13 +5,16 @@ import './index.css'
 import { UserContextProvider } from "./context/UserContext.jsx";
 
 import App from './App.jsx'
+import { AppContextProvider } from './context/AppContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <UserContextProvider>
-        <App />
-      </UserContextProvider>
+      <AppContextProvider>
+        <UserContextProvider>
+          <App />
+        </UserContextProvider>
+      </AppContextProvider>
     </BrowserRouter>
   </StrictMode>
 )
