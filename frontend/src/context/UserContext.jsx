@@ -8,15 +8,15 @@ import { toast } from "react-toastify";
 export const UserContext = createContext();
 
 export const UserContextProvider = (props) => {
-    axios.defaults.withCredentials = true
+    axios.defaults.withCredentials = true   
     const navigate = useNavigate()
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL; 
     const [isLoggedin, setIsLoggedin] = useState(false);
     const [userData, setUserData] = useState({});
     const [isOwner, setIsOwner] = useState(false)
+
     const [overlay, setOverlay] = useState(false)
-    
     const [loading, setLoading] = useState(false);
 
 
