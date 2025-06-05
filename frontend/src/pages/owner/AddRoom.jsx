@@ -88,15 +88,15 @@ export const AddRoom = () => {
                     Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience.
                 </p>
             </div>
-            {loading &&
-                <div className="fixed z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <div className="flex flex-row gap-2">
-                        <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
-                        <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]" />
-                        <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                {loading &&
+                    <div className="fixed z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        <div className="flex flex-row gap-2">
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]" />
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                        </div>
                     </div>
-                </div>
-            }
+                }
             <form  onSubmit={handleSubmit} className='pb-5'>
                 <h2 className='pl-5 mb-2 text-black/80 text-lg'>Images</h2>
                 <div className='flex items-center flex-wrap gap-3 pl-5 mb-10'>
