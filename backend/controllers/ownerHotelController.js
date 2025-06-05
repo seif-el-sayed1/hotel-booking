@@ -118,7 +118,7 @@ const getOwnerRooms = async (req, res) => {
             return res.json({success: false, message: 'Hotel not found'})
         }
         const rooms = await roomModel.find({hotel: hotel._id})
-        return res.json({success: true, data: rooms})
+        return res.json({success: true, rooms})
     } catch (error) {
         return res.json({success: false, message: error.message})
     }
