@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { assets, roomsDummyData } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
+import { AppContext } from  '../context/AppContext'
 
 export const FeaturedDestination = () => {
+    
+    const { allRooms } = useContext(AppContext)
+
     const navigate = useNavigate()
     return (
         <div className='pt-20 flex flex-col items-center justify-center bg-slate-50 ' >
@@ -12,7 +16,7 @@ export const FeaturedDestination = () => {
                     properties around the world, offering unparalleled luxury and unforgettable experiences.</p>
             </div>
             <div className='flex flex-wrap items-center justify-center gap-5'>
-                {roomsDummyData.slice(0, 4).map((room) => {
+                {allRooms.slice(0, 4).map((room) => {
                     return (
                         <div key={room._id} className='rounded-lg shadow-lg bg-white'>
                             <img className='w-80 rounded-t-lg' src={room.images[0]} alt="room image" />
@@ -39,7 +43,7 @@ export const FeaturedDestination = () => {
                 })
                 }
             </div>
-            <button onClick={() => navigate('/rooms')}
+            <button onClick={() => {navigate('/rooms'); window.scrollTo({ top: 0, behavior: 'smooth' })}}
                 className='text-sm border-1 border-gray-300 hover:bg-gray-200 duration-200 px-2 py-1 
                                 cursor-pointer my-10 font-bold '>
                 View All Destinations
