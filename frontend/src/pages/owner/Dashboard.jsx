@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { assets, dashboardDummyData } from '../../assets/assets'
+import { assets } from '../../assets/assets'
 import { useContext } from 'react'
 import { UserContext } from '../../context/UserContext'
 import axios from 'axios'
