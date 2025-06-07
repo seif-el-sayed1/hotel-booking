@@ -28,6 +28,7 @@ export const Navbar = () => {
             const { data } = await axios.post(backendUrl + "user/logout");
             if (data.Success) {
                 toast.success(data.message, { position: "top-center" });
+                window.location.reload();
                 setUserData(false);
                 setIsLoggedin(false);
                 navigate("/");
