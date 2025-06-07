@@ -38,7 +38,7 @@ export const AppContextProvider = (props) => {
     }
     useEffect(() => {
         getRoomsData();
-    }, [])
+    }, [allRooms])
 
     return (
         <AppContext.Provider value={value}>
