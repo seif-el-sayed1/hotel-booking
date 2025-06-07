@@ -15,6 +15,7 @@ export const UserContextProvider = (props) => {
     const [isLoggedin, setIsLoggedin] = useState(false);
     const [userData, setUserData] = useState({});
     const [isOwner, setIsOwner] = useState(false)
+    const [searchHistory, setSearchHistory] = useState([])
 
     const [overlay, setOverlay] = useState(false)
     const [loading, setLoading] = useState(false);
@@ -40,6 +41,7 @@ export const UserContextProvider = (props) => {
         if(data.Success) {
             setUserData(data.userData)
             setIsOwner(data.userData.role == "owner");
+            setSearchHistory(data.userData.searchHistory)
         } else {
             toast.error(data.message) 
         }
@@ -55,7 +57,9 @@ export const UserContextProvider = (props) => {
         isOwner,
         setIsOwner,
         loading,
-        setLoading
+        setLoading,
+        searchHistory,
+        setSearchHistory
     };
 
     useEffect(() => {
