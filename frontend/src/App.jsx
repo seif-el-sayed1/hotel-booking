@@ -22,6 +22,7 @@ import { Dashboard } from './pages/owner/Dashboard.jsx'
 import { AddRoom } from './pages/owner/AddRoom.jsx'
 import { ListRoom } from './pages/owner/ListRoom.jsx'
 import { Toaster } from "react-hot-toast";
+import { Recommended } from './components/Recommended.jsx'
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <>
           <Navbar />
           <Home />
+          <Recommended />
           <FeaturedDestination />
           <ExclusiveOffers />
           <Testimonials />
