@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { assets, roomsDummyData } from '../assets/assets'
+import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from  '../context/AppContext'
 
