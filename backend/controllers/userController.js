@@ -223,17 +223,17 @@ const updateUser = async (req, res) => {
 }
 
 const searchHistory = async (req, res) => {
-    const {search}  = req.body
+    const {destination}  = req.body
     try {
         const user = await users.findById(req.user.id)
         if (!user) {
             return res.json({Success: false, message: "User not found"})
         }
         if (user.searchHistory.length < 3 ) {
-            user.searchHistory.push(search)
+            user.searchHistory.push(destination)
         } else {
             user.searchHistory.shift()
-            user.searchHistory.push(search)
+            user.searchHistory.push(destination)
         }
 
         await user.save()
