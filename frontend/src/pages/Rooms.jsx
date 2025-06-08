@@ -1,5 +1,5 @@
 import React, { useState,useContext, useMemo, useEffect } from 'react'
-import { assets,  facilityIcons,  roomsDummyData } from '../assets/assets'
+import { assets,  facilityIcons } from '../assets/assets'
 import { Link, useSearchParams } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
 
@@ -136,8 +136,8 @@ export const Rooms = () => {
                 <div>
                     {filteredRooms.map((room) => {
                         return (
-                            <Link to={`/rooms/${room._id}`}>
-                                <div key={room._id} className='flex flex-col sm:flex-row gap-10 pt-5 pb-10 border-b-1 border-gray-200'>
+                            <Link key={room._id} to={`/rooms/${room._id}`}>
+                                <div className='flex flex-col sm:flex-row gap-10 pt-5 pb-10 border-b-1 border-gray-200'>
                                     <img className='max-h-65 max-w-90 rounded-xl' src={room.images[0]} alt="room image" />
                                     <div>
                                         <h2 className='text-gray-500 mb-3'>{room.hotel.city}</h2>
