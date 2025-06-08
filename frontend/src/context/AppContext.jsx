@@ -34,7 +34,8 @@ export const AppContextProvider = (props) => {
     const value = {
         getRoomsData,
         allRooms,
-        loading
+        loading,
+        setLoading
     }
     useEffect(() => {
         getRoomsData();
