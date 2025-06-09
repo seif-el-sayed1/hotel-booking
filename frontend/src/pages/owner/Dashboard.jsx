@@ -13,7 +13,7 @@ export const Dashboard = () => {
         totalBookings: 0,
         totalRevenue: 0
     })
-
+    
     const getDashboardData = async () => {
         try {
             setLoading(true)
@@ -35,7 +35,6 @@ export const Dashboard = () => {
     }
 
     useEffect(() => {
-        authState();
         getDashboardData()
     }, []);
     
@@ -92,11 +91,11 @@ export const Dashboard = () => {
                                 dashboard.bookings.map((ele, index) => (
                                     
                                         <tr className='border-b-1 border-gray-200 text-gray-500' key={index}>
-                                            <td className=' text-sm pl-5 py-3'>{ele.user.username}</td>
-                                            <td className=' text-sm pl-5 py-3 hidden md:block'>{ele.room.roomType}</td>
-                                            <td className=' text-sm pl-5 py-3'>$ {ele.totalPrice}</td>
+                                            <td className=' text-sm pl-5 py-2'>{ele.user.name}</td>
+                                            <td className=' text-sm pl-5 py-2 hidden md:block'>{ele.room.roomType}</td>
+                                            <td className=' text-sm pl-5 py-2'>$ {ele.totalPrice}</td>
 
-                                            <td className="text-sm py-5 px-5">
+                                            <td className="text-sm py-2 px-5">
                                                 <p className={`w-fit px-3 py-1  text-black/80 rounded-2xl ${ele.isPaid ? "bg-green-500" 
                                                         : "bg-yellow-400"}`}>{ele.status}</p>
                                             </td>
