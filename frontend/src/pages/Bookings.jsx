@@ -1,7 +1,14 @@
-import React from 'react';
-import { assets, userBookingsDummyData } from '../assets/assets';
+import React, { useContext, useEffect } from 'react';
+import { assets } from '../assets/assets';
+import { AppContext } from '../context/AppContext';
 
 export const Bookings = () => {
+    const {loading, getUserBookings, bookings} = useContext(AppContext)
+    
+    useEffect(() => {
+        getUserBookings()
+    },[bookings])
+    
     return (
         <div className="pt-35 px-6 md:px-16 lg:px-24 xl:px-32 pb-15">
             <div>
@@ -11,6 +18,15 @@ export const Bookings = () => {
                 </p>
 
                 <div className="w-full overflow-x-auto">
+                    {loading &&
+                        <div className="fixed z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            <div className="flex flex-row gap-2">
+                                <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                                <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]" />
+                                <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                            </div>
+                        </div>
+                    }
                     <table className="hidden md:table w-full">
                         <thead>
                             <tr className="border-b-1 border-gray-200">
@@ -20,7 +36,7 @@ export const Bookings = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {userBookingsDummyData.map((item, index) => (
+                            {bookings.map((item, index) => (
                                 <tr key={index}>
                                     <td className="py-5 border-b-1 border-gray-200">
                                         <div className="flex gap-5">
@@ -89,7 +105,7 @@ export const Bookings = () => {
                     </table>
 
                     <div className="md:hidden flex flex-col gap-5">
-                        {userBookingsDummyData.map((item, index) => (
+                        {bookings.map((item, index) => (
                             <div key={index} className="border-b border-gray-300 p-4 ">
                                 <img
                                     className="w-fit mb-5 rounded object-cover"
