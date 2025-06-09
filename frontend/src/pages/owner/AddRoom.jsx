@@ -1,19 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { assets } from "../../assets/assets"
 import { UserContext } from "../../context/UserContext"
 import axios from "axios"
 import toast from "react-hot-toast"
 
 export const AddRoom = () => {
-    const {authState, backendUrl, loading, setLoading} = useContext(UserContext)
-    // const navigate = useNavigate()
-
-    useEffect(() => {
-        authState()    
-    },[])
-
-    
+    const {backendUrl, loading, setLoading} = useContext(UserContext)
 
     const [images, setImages] = useState({
         1: null,
