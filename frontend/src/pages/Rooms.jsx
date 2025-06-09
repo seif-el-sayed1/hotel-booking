@@ -5,7 +5,7 @@ import { AppContext } from '../context/AppContext'
 
 
 export const Rooms = () => {
-    const {allRooms, getRoomsData} = useContext(AppContext)
+    const {allRooms, getRoomsData, loading} = useContext(AppContext)
     const [searchParam, setSearchParam] = useSearchParams()
     
     const [openFilters, setOpenFilters] = useState(false)
@@ -133,6 +133,15 @@ export const Rooms = () => {
                 </p>
             </div>
             <div className=' flex justify-between flex-col-reverse lg:flex-row gap-10 '> 
+                {loading &&
+                    <div className="fixed z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        <div className="flex flex-row gap-2">
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]" />
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                        </div>
+                    </div>
+                }
                 <div>
                     {filteredRooms.map((room) => {
                         return (
