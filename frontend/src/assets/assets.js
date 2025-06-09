@@ -41,6 +41,7 @@ import edit from "./edit.png";
 import verify from "./verify.png";
 import logOut from "./logout.png";
 import bookings from "./booking.svg"
+import avatar from "./avatar.png";
 
 
 export const assets = {
@@ -79,7 +80,8 @@ export const assets = {
     totalRevenueIcon,
     edit,
     verify,
-    logOut
+    logOut,
+    avatar
 }
 
 export const cities = [
