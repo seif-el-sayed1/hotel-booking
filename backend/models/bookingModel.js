@@ -40,13 +40,12 @@ const bookingModel  = new mongoose.Schema({
     paymentMethod: {
         type: String,
         required: true,
-        default: 'cash'
+        default: 'Pay At Hotel'
     },
     isPaid: {
         type: Boolean,
         default: false
     },
 },{timestamps: true});
-// Create a compound index on hotel, room, checkInDate, and checkOutDate
 
 module.exports = mongoose.model('Booking', bookingModel);
