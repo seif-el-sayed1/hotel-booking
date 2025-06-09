@@ -10,14 +10,13 @@ export const AppContext = createContext();
 export const AppContextProvider = (props) => {
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const [allRooms, setAllRooms] = useState([])
+    const [bookings, setBookings] = useState([])
     
     const getRoomsData = async () => {
-
         try {
-            setLoading(true);
             const { data } = await axios.get(backendUrl + "ownerHotel/get-rooms");
             if (data.success) {
                 setAllRooms(data.rooms);
@@ -30,12 +29,30 @@ export const AppContextProvider = (props) => {
             setLoading(false);
         }
     }
-``
+
+    const getUserBookings = async () => {
+        try {
+            const {data} = await axios.get(backendUrl + "booking/get-bookings");    
+            if (data.success) {
+                setBookings(data.bookings);
+            } else {
+                toast.error(data.message);
+            }
+            
+        } catch (error) {
+            toast.error(error.message);
+        } finally {
+            setLoading(false);
+        }
+    }  
+
     const value = {
         getRoomsData,
         allRooms,
         loading,
-        setLoading
+        setLoading,
+        getUserBookings,
+        bookings
     }
     useEffect(() => {
         getRoomsData();
