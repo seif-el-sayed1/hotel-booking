@@ -5,7 +5,7 @@ import { AppContext } from  '../context/AppContext'
 
 export const FeaturedDestination = () => {
     
-    const { allRooms } = useContext(AppContext)
+    const { allRooms, loading } = useContext(AppContext)
 
     const navigate = useNavigate()
     return (
@@ -16,6 +16,15 @@ export const FeaturedDestination = () => {
                     properties around the world, offering unparalleled luxury and unforgettable experiences.</p>
             </div>
             <div className='flex flex-wrap items-center justify-center gap-5'>
+                {loading &&
+                    <div className="fixed z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        <div className="flex flex-row gap-2">
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]" />
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                        </div>
+                    </div>
+                }
                 {allRooms.slice(0, 4).map((room) => {
                     return (
                         <div key={room._id} className='rounded-lg shadow-lg bg-white'>
