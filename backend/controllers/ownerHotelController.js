@@ -166,7 +166,6 @@ const getAllRooms = async (req, res) => {
             path: 'hotel',
             populate: {
                 path: 'owner',
-                select: 'name'
             }
         }).sort({createdAt: -1})
         return res.json({success: true, rooms})
