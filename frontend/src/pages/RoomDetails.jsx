@@ -10,7 +10,7 @@ import axios from 'axios'
 export const RoomDetails = () => {
     const navigate = useNavigate()
     const {id} = useParams()
-    const {allRooms} = useContext(AppContext)
+    const {allRooms, loading, setLoading} = useContext(AppContext)
     const {backendUrl} = useContext(UserContext)
     const [room, setRoom] = useState(null)
     const [mainImage, setMainImage] = useState(null)
@@ -67,6 +67,8 @@ export const RoomDetails = () => {
             }
         } catch (error) {
             toast.error(error.message)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -87,6 +89,7 @@ export const RoomDetails = () => {
                 </div>
                 <p>200+ reviews</p>
             </div>
+            
             <div className='flex items-center gap-1 text-gray-500 mt-4'>
                 <img src={assets.locationIcon} alt="location " />
                 <p>{room.hotel.address}</p>
@@ -108,6 +111,15 @@ export const RoomDetails = () => {
                 </div>
             </div>
             <div className='flex flex-wrap justify-between mt-7'>
+                {loading &&
+                    <div className="fixed z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        <div className="flex flex-row gap-2">
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]" />
+                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                        </div>
+                    </div>
+                }
                 <div>
                     <h1 className='mb-5 text-2xl'>Experience Luxury Like Never Before</h1>
                     <div className='flex items-center gap-3 mb-5 flex-wrap'>
