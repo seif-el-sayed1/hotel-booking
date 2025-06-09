@@ -99,7 +99,7 @@ export const Navbar = () => {
                 {userData && isLoggedin ?
                     (<>
                         <img onClick={() => setMenu(!menu)}
-                            className='w-10 cursor-pointer rounded-full' src={userData.image} alt="user" />
+                            className='w-10 cursor-pointer rounded-full' src={userData.image || assets.avatar} alt="user" />
                         {menu &&
                             <div className='flex flex-col absolute top-18 right-20  bg-white shadow-md rounded-lg'>
                                 <p className='text-sm font-bold text-gray-500 pr-5 border-b-1 border-gray-200 pl-3 py-2 '>{userData.email}</p>
@@ -165,7 +165,7 @@ export const Navbar = () => {
                 
                 {userData && isLoggedin ?
                     <>
-                        <img className='w-15 cursor-pointer rounded-full' src={userData.image} alt="user" />
+                        <img className='w-15 cursor-pointer rounded-full' src={userData.image || assets.avatar} alt="user" />
                         <p className='font-bold text-gray-500 px-2 pt-1 rounded-lg'>{userData.email}</p>
                         <div className='flex items-center bg-white shadow-md rounded-lg'>
                             <div className='flex items-center gap-2 cursor-pointer rounded-lg px-2 py-2 hover:bg-gray-100'>
