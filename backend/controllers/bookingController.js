@@ -1,10 +1,10 @@
 const bookingModel = require('../models/bookingModel');
 const roomModel = require('../models/roomModel');
 
-const checkAvailability = async ({checkInDate, checkOutDate, room}) => {
+const checkAvailability = async ({checkInDate, checkOutDate, roomId}) => {
     try {
         const booking = await bookingModel.find({
-            room,
+            room: roomId,
             checkInDate: {$lte: checkOutDate},
             checkOutDate: {$gte: checkInDate}
         })
@@ -16,9 +16,9 @@ const checkAvailability = async ({checkInDate, checkOutDate, room}) => {
 }
 
 const checkAvailabilityApi = async (req, res) => {
-    const {room, checkInDate, checkOutDate} = req.body
+    const {roomId, checkInDate, checkOutDate} = req.body
     try {
-        const isAvailable = await checkAvailability({room, checkInDate, checkOutDate})
+        const isAvailable = await checkAvailability({roomId, checkInDate, checkOutDate})
         
         return res.json({success: true, isAvailable})
     } catch (error) {
@@ -27,19 +27,19 @@ const checkAvailabilityApi = async (req, res) => {
 }
 
 const createBooking = async (req, res) => {
-    const {room, checkInDate ,checkOutDate} = req.body
+    const {roomId, checkInDate ,checkOutDate, guests} = req.body
 
     try {
-        if (!hotel || !room || !checkOutDate) {
+        if (!roomId || !checkOutDate || !checkInDate || !guests) {
             return res.json({success: false, message: 'Please provide all fields'})
         }
 
-        const isAvailable = await checkAvailability({room, checkInDate, checkOutDate})
+        const isAvailable = await checkAvailability({roomId, checkInDate, checkOutDate})
         if (!isAvailable) {
             return res.json({success: false, message: 'Room is not available'})
         }    
 
-        const roomData = await roomModel.findById(room).populate('hotel')
+        const roomData = await roomModel.findById(roomId).populate('hotel')
 
         const checkIn = new Date(checkInDate)
         const checkOut = new Date(checkOutDate)
@@ -50,7 +50,7 @@ const createBooking = async (req, res) => {
 
         const newBooking = new bookingModel({
             user: req.user.id,
-            room,
+            room: roomData._id,
             hotel: roomData.hotel._id,
             guests: +guests,
             checkInDate,
