@@ -13,7 +13,7 @@ export const ExclusiveOffers = () => {
                 </div>
                 <div className='flex items-center gap-2 cursor-pointer group'>
                     <p className='text-sm font-bold'>View All Offers</p>
-                    <img className='group-hover:translate-x-2 duration-300' src={assets.arrowIcon} alt="arrow" />
+                    <img loading='lazy' className='group-hover:translate-x-2 duration-300' src={assets.arrowIcon} alt="arrow" />
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">

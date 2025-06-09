@@ -147,19 +147,19 @@ export const Rooms = () => {
                         return (
                             <Link key={room._id} to={`/rooms/${room._id}`}>
                                 <div className='flex flex-col sm:flex-row gap-10 pt-5 pb-10 border-b-1 border-gray-200'>
-                                    <img className='max-h-65 max-w-90 rounded-xl' src={room.images[0]} alt="room image" />
+                                    <img loading='lazy' className='max-h-65 max-w-90 rounded-xl' src={room.images[0]} alt="room image" />
                                     <div>
                                         <h2 className='text-gray-500 mb-3'>{room.hotel.city}</h2>
                                         <p className='text-2xl font-serif mb-3'>{room.hotel.name}</p>
                                         <div className='flex items-center gap-1 mb-3'>
                                             {Array(5).fill(0).map((_, index) => (
-                                                <img key={index} src={4 > index ?  assets.starIconFilled 
+                                                <img loading='lazy' key={index} src={4 > index ?  assets.starIconFilled 
                                                     : assets.starIconOutlined
                                                 } alt="rating" />
                                             ))}
                                         </div>
                                         <div className='flex items-center gap-1 text-gray-500 mb-5'>
-                                            <img src={assets.locationIcon} alt="location " />
+                                            <img loading='lazy' src={assets.locationIcon} alt="location " />
                                             <p>{room.hotel.address}</p>
                                         </div>
                                         <div className='flex items-center gap-3 mb-5 flex-wrap'>
@@ -167,7 +167,7 @@ export const Rooms = () => {
                                                 return (
                                                     <div className='flex items-center gap-1 bg-gray-100 text-nowrap py-2 px-3 rounded-xl w-fit ' 
                                                         key={amenity}>
-                                                        <img src={facilityIcons[amenity]} alt={amenity} />
+                                                        <img loading='lazy' src={facilityIcons[amenity]} alt={amenity} />
                                                         <p className='text-sm '>{amenity}</p>
                                                     </div>
                                                 )

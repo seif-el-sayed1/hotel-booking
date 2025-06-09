@@ -48,14 +48,14 @@ export const Dashboard = () => {
             </div>
             <div className='px-5 flex items-center gap-5'>
                 <div className='flex gap-5 px-5 py-5 bg-blue-50/40 border border-gray-200 rounded'>
-                    <img className='hidden md:block h-10' src={assets.totalBookingIcon} alt="total booking" />
+                    <img loading='lazy' className='hidden md:block h-10' src={assets.totalBookingIcon} alt="total booking" />
                     <div>
                         <p className='text-blue-500 text-lg'>Total Bookings</p>
                         <span className='text-gray-500 font-bold'>{dashboard.totalBookings}</span>
                     </div>
                 </div>
                 <div className='flex  gap-5 px-5 py-5 bg-blue-50/40 border border-gray-200 rounded'>
-                    <img className='hidden md:block h-10' src={assets.totalRevenueIcon} alt="total revenue" />
+                    <img loading='lazy' className='hidden md:block h-10' src={assets.totalRevenueIcon} alt="total revenue" />
                     <div>
                         <p className='text-blue-500 text-lg'>Total Revenue</p>
                         <span className='text-gray-500 font-bold'>$ {dashboard.totalRevenue}</span>

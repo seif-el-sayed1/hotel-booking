@@ -51,7 +51,7 @@ export const Home = () => {
                 className=' bg-white text-gray-500 rounded-lg px-6 py-4   flex flex-col md:flex-row max-md:items-start gap-4 max-md:mx-auto'>
                 <div>
                     <div className='flex items-center gap-2'>
-                        <img src={assets.calenderIcon} alt="calenderIcon" />
+                        <img loading='lazy' src={assets.calenderIcon} alt="calenderIcon" />
                         <label htmlFor="destinationInput">Destination</label>
                     </div>
                     <input onChange={(e) => setDestination(e.target.value)} value={destination}
@@ -64,7 +64,7 @@ export const Home = () => {
                 </div>
 
                 <button className='flex items-center justify-center gap-1 rounded-md bg-black py-3 px-4 text-white my-auto cursor-pointer max-md:w-full max-md:py-1' >
-                    <img src={assets.searchIcon} alt="calender icon" />
+                    <img loading='lazy' src={assets.searchIcon} alt="calender icon" />
                     <span>Search</span>
                 </button>
             </form>

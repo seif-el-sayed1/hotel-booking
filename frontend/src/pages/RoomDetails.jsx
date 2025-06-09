@@ -82,7 +82,7 @@ export const RoomDetails = () => {
             <div className='flex items-center gap-5 mt-3'>
                 <div className='flex items-center gap-1'>
                     {Array(5).fill(0).map((_, index) => (
-                        <img key={index} src={4 > index ?  assets.starIconFilled 
+                        <img loading='lazy' key={index} src={4 > index ?  assets.starIconFilled 
                             : assets.starIconOutlined
                         } alt="rating" />
                     ))}
@@ -91,19 +91,19 @@ export const RoomDetails = () => {
             </div>
             
             <div className='flex items-center gap-1 text-gray-500 mt-4'>
-                <img src={assets.locationIcon} alt="location " />
+                <img loading='lazy' src={assets.locationIcon} alt="location " />
                 <p>{room.hotel.address}</p>
             </div>
 
             <div className='flex flex-col px-5 md:px-0 md:flex-row mt-7 gap-5'>
                 <div className='md:w-1/2'>
-                    <img className='w-full rounded-2xl'
+                    <img loading='lazy' className='w-full rounded-2xl'
                         src={mainImage} alt="Main IMage" />
                 </div>
                 <div className='grid grid-cols-2 gap-4 md:w-1/2'>
                     {room?.images.length > 1 && room.images.map((image, index) => {
                         return (
-                            <img key={index} onClick={() => setMainImage(image)} 
+                            <img loading='lazy' key={index} onClick={() => setMainImage(image)} 
                                 className={`rounded-2xl w-full cursor-pointer ${mainImage == image && "outline-3 outline-orange-500"}`}
                                 src={image} alt="IMAGE" />
                         )
@@ -127,7 +127,7 @@ export const RoomDetails = () => {
                             return (
                                 <div className='flex items-center gap-1 bg-gray-100 text-nowrap py-2 px-3 rounded-xl w-fit ' 
                                     key={index}>
-                                    <img src={facilityIcons[amenity]} alt={amenity} />
+                                    <img loading='lazy' src={facilityIcons[amenity]} alt={amenity} />
                                     <p className='text-sm '>{amenity}</p>
                                 </div>
                             )
@@ -167,7 +167,7 @@ export const RoomDetails = () => {
             {roomCommonData.map((data, index) => {
                     return (
                         <div key={index} className='flex items-center gap-3' >
-                            <img src={data.icon} alt="dataIcon" />
+                            <img loading='lazy' src={data.icon} alt="dataIcon" />
                             <div className='mt-5'>
                                 <h2 className=''>{data.title}</h2>
                                 <p className='text-gray-500 '>{data.description}</p>
@@ -180,7 +180,7 @@ export const RoomDetails = () => {
             </p>
             <div className='my-20'>
                 <div className='flex items-center gap-5'>
-                    <img src={room.hotel.owner.image} className='w-20 cursor-pointer rounded-full' alt="ownerImage" />
+                    <img loading='lazy' src={room.hotel.owner.image} className='w-20 cursor-pointer rounded-full' alt="ownerImage" />
                     <div>
                         <p className='text-xl'>Hosted By {room.hotel.owner.name}</p>
                         <div className='flex items-center gap-3 mt-1'>

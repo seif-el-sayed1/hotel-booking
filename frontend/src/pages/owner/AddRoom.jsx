@@ -96,7 +96,7 @@ export const AddRoom = () => {
                         return (
                             <div key={index}>
                                 <label htmlFor={`roomImages${ele}`}>
-                                    <img className='w-30 cursor-pointer' 
+                                    <img loading='lazy' className='w-30 cursor-pointer' 
                                         src={images[ele] ? URL.createObjectURL(images[ele]) : assets.uploadArea} alt="upload" />
                                 </label>
                                 <input id={`roomImages${ele}`} 

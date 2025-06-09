@@ -51,11 +51,11 @@ export const Bookings = () => {
                                                     <p className="text-xs">({item.room.roomType})</p>
                                                 </div>
                                                 <div className="flex gap-2 text-gray-500 mb-1">
-                                                    <img src={assets.locationIcon} alt="location" />
+                                                    <img loading='lazy' src={assets.locationIcon} alt="location" />
                                                     <p>{item.hotel.address}</p>
                                                 </div>
                                                 <div className="flex gap-2 text-gray-500 mb-1">
-                                                    <img src={assets.guestsIcon} alt="guests" />
+                                                    <img loading='lazy' src={assets.guestsIcon} alt="guests" />
                                                     <p>Guests: {item.guests}</p>
                                                 </div>
                                                 <p>Total Price: ${item.totalPrice}</p>
@@ -107,7 +107,7 @@ export const Bookings = () => {
                     <div className="md:hidden flex flex-col gap-5">
                         {bookings.map((item, index) => (
                             <div key={index} className="border-b border-gray-300 p-4 ">
-                                <img
+                                <img loading='lazy'
                                     className="w-fit mb-5 rounded object-cover"
                                     src={item.room.images[0]}
                                     alt="room"
@@ -119,11 +119,11 @@ export const Bookings = () => {
                                             <p className="text-xs text-gray-500 ">({item.room.roomType})</p>
                                         </div>
                                         <div className='flex gap-2 items-center mb-2'>
-                                            <img src={assets.locationIcon} alt="location" />
+                                            <img loading='lazy' src={assets.locationIcon} alt="location" />
                                             <p className="text-sm text-gray-500 ">{item.hotel.address}</p>
                                         </div>
                                         <div className='flex gap-2 items-center mb-2'>
-                                            <img src={assets.guestsIcon} alt="guest" />
+                                            <img loading='lazy' src={assets.guestsIcon} alt="guest" />
                                             <p className="text-sm text-gray-500 ">Guests: {item.guests}</p>
                                         </div>
                                         <p className="text-sm font-medium">Total: ${item.totalPrice}</p>

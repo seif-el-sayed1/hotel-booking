@@ -68,7 +68,7 @@ export const Navbar = () => {
             : "py-4 md:py-6"}`}>
 
             <Link to="/" className="flex items-center gap-2">
-                <img src={assets.logo} alt="logo" className={`${isScrolled || window.location.pathname !== "/" ? "invert opacity-80" : ""}`} />
+                <img loading='lazy' src={assets.logo} alt="logo" className={`${isScrolled || window.location.pathname !== "/" ? "invert opacity-80" : ""}`} />
             </Link>
 
             <div className="hidden md:flex items-center gap-4 lg:gap-8">
@@ -93,35 +93,35 @@ export const Navbar = () => {
             </div>
 
             <div className="hidden md:flex items-center gap-4">
-                <img src={assets.searchIcon}
+                <img loading='lazy' src={assets.searchIcon}
                     alt="search icon" className={`h-8 w-8 cursor-pointer ${isScrolled || window.location.pathname !== "/" ? "invert" : ""}`} />
 
                 {userData && isLoggedin ?
                     (<>
-                        <img onClick={() => setMenu(!menu)}
+                        <img loading='lazy' onClick={() => setMenu(!menu)}
                             className='w-10 cursor-pointer rounded-full' src={userData.image || assets.avatar} alt="user" />
                         {menu &&
                             <div className='flex flex-col absolute top-18 right-20  bg-white shadow-md rounded-lg'>
                                 <p className='text-sm font-bold text-gray-500 pr-5 border-b-1 border-gray-200 pl-3 py-2 '>{userData.email}</p>
                                 <div className='flex items-center gap-2 border-b-1 border-gray-200 cursor-pointer  pr-5 pl-3 py-2 hover:bg-gray-100'>
-                                    <img className='w-4 invert ' src={assets.userIcon} alt="edit" />
+                                    <img loading='lazy' className='w-4 invert ' src={assets.userIcon} alt="edit" />
                                     <p>Edit Profile</p>
                                 </div>
                                 <div  onClick={() => navigate("/my-bookings")}
                                     className='flex items-center gap-2 border-b-1 border-gray-200 cursor-pointer  pr-5 pl-3 py-2 hover:bg-gray-100'>
-                                    <img className='w-4' src={assets.bookings} alt="edit" />
+                                    <img loading='lazy' className='w-4' src={assets.bookings} alt="edit" />
                                     <p>My Bookings</p>
                                 </div>
                                 {!userData.isVerified &&
                                     <div onClick={sentVerifyOtp}
                                         className='flex items-center gap-2 border-b-1 border-gray-200 cursor-pointer  pr-5 pl-3 py-2 hover:bg-gray-100'>
-                                        <img className='w-4' src={assets.verify} alt="verify" />
+                                        <img loading='lazy' className='w-4' src={assets.verify} alt="verify" />
                                         <p>Verify Email</p>
                                     </div>
                                 }
                                 <div onClick={logout}
                                     className='flex items-center gap-2 rounded-b-lg cursor-pointer  pr-5 pl-3 py-2 hover:bg-red-100'>
-                                    <img className='w-4' src={assets.logOut} alt="logout" />
+                                    <img loading='lazy' className='w-4' src={assets.logOut} alt="logout" />
                                     <p className='font-bold text-red-600'>Logout</p>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@ export const Navbar = () => {
 
             {/* Mobil Screen */}
             <div className="flex items-center gap-3 md:hidden">
-                <img src={assets.menuIcon} alt="menu" onClick={() => setIsMenuOpen(!isMenuOpen)}
+                <img loading='lazy' src={assets.menuIcon} alt="menu" onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className={`h-6 w-6 cursor-pointer ${isScrolled || window.location.pathname !== "/" ? "invert" : ""}`} />
             </div>
 
@@ -145,7 +145,7 @@ export const Navbar = () => {
                             transition-all duration-500 
                             ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
                 <button className="absolute top-4 right-4" onClick={() => setIsMenuOpen(false)}>
-                    <img src={assets.closeIcon} alt="close" className="h-6 w-6 cursor-pointer" />
+                    <img loading='lazy' src={assets.closeIcon} alt="close" className="h-6 w-6 cursor-pointer" />
                 </button>
 
                 {navLinks.map((link, i) => (
@@ -165,23 +165,23 @@ export const Navbar = () => {
                 
                 {userData && isLoggedin ?
                     <>
-                        <img className='w-15 cursor-pointer rounded-full' src={userData.image || assets.avatar} alt="user" />
+                        <img loading='lazy' className='w-15 cursor-pointer rounded-full' src={userData.image || assets.avatar} alt="user" />
                         <p className='font-bold text-gray-500 px-2 pt-1 rounded-lg'>{userData.email}</p>
                         <div className='flex items-center bg-white shadow-md rounded-lg'>
                             <div className='flex items-center gap-2 cursor-pointer rounded-lg px-2 py-2 hover:bg-gray-100'>
-                                <img className='w-4' src={assets.edit} alt="edit" />
+                                <img loading='lazy' className='w-4' src={assets.edit} alt="edit" />
                                 <p>Edit Profile</p>
                             </div>
                             {!userData.isVerified &&
                                 <div onClick={sentVerifyOtp}
                                     className='flex items-center gap-2 cursor-pointer rounded-lg px-2 py-2 hover:bg-gray-100'>
-                                    <img className='w-4' src={assets.verify} alt="verify" />
+                                    <img loading='lazy' className='w-4' src={assets.verify} alt="verify" />
                                     <p>Verify Email</p>
                                 </div>
                             }
                             <div onClick={logout}
                                 className='flex items-center gap-2 cursor-pointer rounded-lg px-2 py-2 hover:bg-red-100'>
-                                <img className='w-4' src={assets.logOut} alt="logout" />
+                                <img loading='lazy' className='w-4' src={assets.logOut} alt="logout" />
                                 <p className='font-bold text-red-600'>Logout</p>
                             </div>
                         </div>

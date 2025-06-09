@@ -47,9 +47,9 @@ export const HotelRegister = () => {
             }
 
             <div className="z-50 flex fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white w-80 sm:w-100  md:w-185">
-                <img  onClick={() => setOverlay(!overlay)}
+                <img loading='lazy' onClick={() => setOverlay(!overlay)}
                     className=' absolute right-5 cursor-pointer top-5 ' src={assets.closeIcon} alt="close" />
-                <img className=" hidden md:block w-1/2 rounded-l-2xl object-cover" src={assets.regImage} alt="image" />
+                <img loading='lazy' className=" hidden md:block w-1/2 rounded-l-2xl object-cover" src={assets.regImage} alt="image" />
                 
                 <form onSubmit={handleSubmit}  
                     className="md:w-1/2 w-full ">

@@ -34,16 +34,16 @@ export const Recommended = () => {
                 {recommended.slice(0, 4).map((room) => {
                     return (
                         <div key={room._id} className='rounded-lg shadow-lg bg-white'>
-                            <img className='w-80 rounded-t-lg' src={room.images[0]} alt="room image" />
+                            <img loading='lazy' className='w-80 rounded-t-lg' src={room.images[0]} alt="room image" />
                             <div className='flex items-center justify-between px-3 pt-4'>
                                 <p>{room.hotel.name}</p>
                                 <div className='flex items-center gap-1'>
-                                    <img src={assets.starIconFilled} alt="stat" />
+                                    <img loading='lazy' src={assets.starIconFilled} alt="stat" />
                                     <span className='text-gray-500'>4.5</span>
                                 </div>
                             </div>
                             <div className='flex items-center gap-2 px-3 pt-1'>
-                                <img src={assets.locationIcon} alt="location" />
+                                <img loading='lazy' src={assets.locationIcon} alt="location" />
                                 <p className='text-gray-500'>{room.hotel.address}</p>
                             </div>
                             <div className='flex items-center justify-between px-3 p-5'>
