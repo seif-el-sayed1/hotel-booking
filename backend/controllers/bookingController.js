@@ -76,6 +76,20 @@ const getUserBookings = async (req, res) => {
         return res.json({success:false, message: error.message})
     }
 }
+const stripePayment = async (req, res) => {
+    try {
+        const {bookingId} = req.body
+
+        const booking = await bookingModel.findById(bookingId)
+        const roomData = await roomModel.findById(booking.room).populate("hotel")
+        const totalPrice = booking.totalPrice
+
+        const {origin} = req.headers
+        
+    } catch (error) {
+        
+    }
+}
 
 
 module.exports = {
