@@ -39,7 +39,7 @@ import totalBookingIcon from "./totalBookingIcon.svg";
 import totalRevenueIcon from "./totalRevenueIcon.svg";
 import edit from "./edit.png";
 import verify from "./verify.png";
-import logOut from "./logout.png";
+import logOut from "./logOut.png";
 import bookings from "./booking.svg"
 import avatar from "./avatar.png";
 
