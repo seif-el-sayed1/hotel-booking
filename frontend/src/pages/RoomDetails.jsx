@@ -34,7 +34,7 @@ export const RoomDetails = () => {
                 toast.error("Check out date must be after check in date")
                 return
             }
-            const {data} = await axios.post(backendUrl + "booking/check-availability", {roomId: room._id, checkInDate, checkOutDate, guests})
+            const {data} = await axios.post(backendUrl + "/api/booking/check-availability", {roomId: room._id, checkInDate, checkOutDate, guests})
             if (data.success) {
                 if (data.isAvailable) {
                     setIsAvailability(true)
@@ -56,7 +56,7 @@ export const RoomDetails = () => {
             if (!isAvailable) {
                 return checkAvailability()
             } else {
-                const {data} = await axios.post(backendUrl + "booking/create-booking", {roomId: room._id, checkInDate, checkOutDate, guests})
+                const {data} = await axios.post(backendUrl + "/api/booking/create-booking", {roomId: room._id, checkInDate, checkOutDate, guests})
                 if (data.success) {
                     toast.success(data.message)
                     navigate("/my-bookings")

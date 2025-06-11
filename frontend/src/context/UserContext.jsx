@@ -23,7 +23,7 @@ export const UserContextProvider = (props) => {
 
     const authState = async () => {
         try {
-            const {data} = await axios.get(backendUrl + "user/is-auth")
+            const {data} = await axios.get(backendUrl + "/api/user/is-auth")
             if(data.Success) {
                 setIsLoggedin(true)
                 getUserData()
@@ -37,7 +37,7 @@ export const UserContextProvider = (props) => {
     }
     
     const getUserData = async () => {
-        const {data} = await axios.get(backendUrl + "user/getUser")
+        const {data} = await axios.get(backendUrl + "/api/user/getUser")
         if(data.Success) {
             setUserData(data.userData)
             setIsOwner(data.userData.role == "owner");

@@ -44,7 +44,7 @@ export const ResetPassword = () => {
     const submitEmail = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post(backendUrl + "user/send-reset-otp", { email });
+            const { data } = await axios.post(backendUrl + "/api/user/send-reset-otp", { email });
             if (data.Success) {
                 toast.success(data.message, { position: "top-center" });
                 setIsEmail(true);
@@ -67,7 +67,7 @@ export const ResetPassword = () => {
     const resetPassword = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post(backendUrl + "user/reset-password", {
+            const { data } = await axios.post(backendUrl + "/api/user/reset-password", {
                 email,
                 otp,
                 newPassword,

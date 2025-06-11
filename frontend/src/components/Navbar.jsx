@@ -25,7 +25,7 @@ export const Navbar = () => {
     const logout = async () => {
         try {
             axios.defaults.withCredentials = true;
-            const { data } = await axios.post(backendUrl + "user/logout");
+            const { data } = await axios.post(backendUrl + "/api/user/logout");
             if (data.Success) {
                 toast.success(data.message, { position: "top-center" });
                 window.location.reload();
@@ -41,7 +41,7 @@ export const Navbar = () => {
     const sentVerifyOtp = async () => {
         try {
             axios.defaults.withCredentials = true;
-            const { data } = await axios.post(backendUrl + "user/send-verify-otp");
+            const { data } = await axios.post(backendUrl + "/api/user/send-verify-otp");
             if (data.Success) {
                 navigate('/verifyEmail');
                 toast.success(data.message, { position: "top-center" });

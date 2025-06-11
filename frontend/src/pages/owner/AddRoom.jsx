@@ -40,7 +40,7 @@ export const AddRoom = () => {
                 images[key] && formData.append("images", images[key]);
             });
 
-            const {data} = await axios.post(backendUrl + 'ownerHotel/add-room', formData)
+            const {data} = await axios.post(backendUrl + '/api/ownerHotel/add-room', formData)
 
             if(data.success) {
                 toast.success(data.message)

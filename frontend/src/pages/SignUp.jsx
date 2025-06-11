@@ -26,7 +26,7 @@ export const SignUp = () => {
                 formData.append("password", password);
                 formData.append("image", image);
 
-                const { data } = await axios.post(backendUrl + "user/register", formData);
+                const { data } = await axios.post(backendUrl + "/api/user/register", formData);
                 if (data.Success) {
                     setIsLoggedin(true);
                     getUserData();
@@ -37,7 +37,7 @@ export const SignUp = () => {
                     toast.error(data.message, { position: "top-center" });
                 }
             } else {
-                const { data } = await axios.post(backendUrl + "user/login", { email, password });
+                const { data } = await axios.post(backendUrl + "/api/user/login", { email, password });
 
                 if (data.Success) {
                     setIsLoggedin(true);

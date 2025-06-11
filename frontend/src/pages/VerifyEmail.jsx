@@ -38,7 +38,7 @@ export const VerifyEmail = () => {
         try {
             const otpArray = inputsRef.current.map(input => input.value);
             const otp = otpArray.join("");
-            const { data } = await axios.post(backendUrl + "user/verify-email", { otp });
+            const { data } = await axios.post(backendUrl + "/api/user/verify-email", { otp });
 
             if (data.Success) {
                 toast.success(data.message, { position: "top-center" });

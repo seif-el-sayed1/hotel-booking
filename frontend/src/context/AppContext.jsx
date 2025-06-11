@@ -17,7 +17,7 @@ export const AppContextProvider = (props) => {
     
     const getRoomsData = async () => {
         try {
-            const { data } = await axios.get(backendUrl + "ownerHotel/get-rooms");
+            const { data } = await axios.get(backendUrl + "/api/ownerHotel/get-rooms");
             if (data.success) {
                 setAllRooms(data.rooms);
             } else {
@@ -32,7 +32,7 @@ export const AppContextProvider = (props) => {
 
     const getUserBookings = async () => {
         try {
-            const {data} = await axios.get(backendUrl + "booking/get-bookings");    
+            const {data} = await axios.get(backendUrl + "/api/booking/get-bookings");    
             if (data.success) {
                 setBookings(data.bookings);
             } else {

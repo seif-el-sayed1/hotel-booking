@@ -17,7 +17,7 @@ export const Dashboard = () => {
     const getDashboardData = async () => {
         try {
             setLoading(true)
-            const {data} = await axios.get(backendUrl + 'ownerHotel/bookings')
+            const {data} = await axios.get(backendUrl + '/api/ownerHotel/bookings')
             if (data.success) {
                 setDashboard({
                     bookings: data.bookings,

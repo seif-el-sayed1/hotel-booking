@@ -16,7 +16,7 @@ export const Home = () => {
     const onSearch = async (e) => {
         e.preventDefault()
         navigate(`/rooms?destination=${destination}`)
-        const  {data} =  await axios.post(backendUrl + "user/search-history", {destination})
+        const  {data} =  await axios.post(backendUrl + "/api/user/search-history", {destination})
         if(data.Success) {
             setSearchHistory((prev) => {
                 const updatedHistory = [...prev, destination]

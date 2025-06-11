@@ -16,7 +16,7 @@ export const HotelRegister = () => {
         e.preventDefault()
         setLoading(true)
         try {
-            const {data} = await axios.post(backendUrl + 'ownerHotel/register', {hotelName, contact, city, address}) 
+            const {data} = await axios.post(backendUrl + '/api/ownerHotel/register', {hotelName, contact, city, address}) 
             if (data.success) {
                 toast.success(data.message)
                 setOverlay(!overlay)

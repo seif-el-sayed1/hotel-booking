@@ -10,7 +10,7 @@ export const ListRoom = () => {
 
     const getRooms = async () => {
         try {
-            const { data } = await axios.get(backendUrl + 'ownerHotel/rooms')
+            const { data } = await axios.get(backendUrl + '/api/ownerHotel/rooms')
             if (data.success) {
                 setRooms(data.rooms)
             }
@@ -22,7 +22,7 @@ export const ListRoom = () => {
     }
     const changeAvailability = async (roomId) => {
         try {
-            const {data} = await axios.put(backendUrl + 'ownerHotel/toggle-availability', {roomId})
+            const {data} = await axios.put(backendUrl + '/api/ownerHotel/toggle-availability', {roomId})
             if (data.success) {
                 getRooms()
             }
