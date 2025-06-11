@@ -14,7 +14,7 @@ const bookingRouter = require('./routes/bookingRouter');
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 
-const allowedOrigins = ["http://localhost:5173", "https://hotel-booking-frontend-ly8a6h81f-seif-el-sayed1s-projects.vercel.app"];
+const allowedOrigins = ["http://localhost:5173", "https://hotel-booking-frontend-sage.vercel.app/"];
 app.use(cors({
     origin: allowedOrigins,
     credentials: true
