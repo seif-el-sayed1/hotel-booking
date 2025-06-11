@@ -64,14 +64,14 @@ export const SignUp = () => {
                 <form className="flex flex-col" onSubmit={handleSubmit} encType="multipart/form-data">
                     {state === "signUp" && (
                         <>
-                            <div className="flex flex-col items-center justify-center mb-4 
+                            {/* <div className="flex flex-col items-center justify-center mb-4 
                                         border-2 rounded-2xl p-2">
                                 <label htmlFor="image">
                                     <img loading='lazy' className='cursor-pointer w-20 h-20 rounded-full ' 
                                         src={image ? URL.createObjectURL(image) : upload } alt="UPLOAD" />
                                 </label>
                                 <input onChange={(e) => setImage(e.target.files[0])} type="file" id='image' hidden required />
-                            </div>
+                            </div> */}
                             <input
                                 onChange={(e) => setName(e.target.value)}
                                 placeholder="Full Name"
