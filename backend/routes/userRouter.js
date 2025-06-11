@@ -31,7 +31,7 @@ const upload = multer({
     fileFilter
 })
 
-router.route('/register').post(upload.single('image'), setImage.setUserImage, userController.register)
+router.route('/register').post(userController.register)
 
 router.route('/login').post(userController.login)
 
