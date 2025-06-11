@@ -27,9 +27,10 @@ const register = async (req, res) => {
         const hashPassword = await bcrypt.hash(password, 10)
         
         const user = new users({
+            // image: req.image,
             name,
             email, 
-            role,
+            // role,
             password: hashPassword
         })
         await user.save()
