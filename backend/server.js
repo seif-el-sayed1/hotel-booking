@@ -10,6 +10,11 @@ const userRouter = require('./routes/userRouter');
 const ownerHotelRouter = require('./routes/ownerHotelRouter');
 const bookingRouter = require('./routes/bookingRouter');
 
+const multer = require("multer");
+const upload = multer();
+
+app.use(upload.none());
+
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
