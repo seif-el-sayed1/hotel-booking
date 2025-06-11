@@ -7,7 +7,7 @@ const users = require("../models/userModels")
 const {EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE} = require("../config/emailTemplates")
 
 const register = async (req, res) => {
-    const {name, email, password, role} = req.body
+    const {name, email, password} = req.body
     try {
         const existUser = await users.findOne({email: email})        
         if(!name || !email || !password) {
@@ -27,7 +27,6 @@ const register = async (req, res) => {
         const hashPassword = await bcrypt.hash(password, 10)
         
         const user = new users({
-            image: req.image,
             name,
             email, 
             role,
