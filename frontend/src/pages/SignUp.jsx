@@ -12,7 +12,7 @@ export const SignUp = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [image, setImage] = useState(null);
+    // const [image, setImage] = useState(null);
     const { backendUrl, setIsLoggedin, getUserData } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
@@ -24,14 +24,14 @@ export const SignUp = () => {
                 formData.append("name", name);
                 formData.append("email", email);
                 formData.append("password", password);
-                formData.append("image", image);
+                // formData.append("image", image);
 
                 const { data } = await axios.post(backendUrl + "/api/user/register", formData);
                 if (data.Success) {
                     setIsLoggedin(true);
                     getUserData();
                     navigate("/");
-                    setImage(null);
+                    // setImage(null);
                     toast.success(data.message, { position: "top-center" });
                 } else {
                     toast.error(data.message, { position: "top-center" });
