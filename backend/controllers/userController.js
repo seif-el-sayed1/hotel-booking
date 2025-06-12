@@ -5,6 +5,8 @@ const nodemailer = require("nodemailer")
 const transporter = require("../config/nodemailer")
 const users = require("../models/userModels")
 const {EMAIL_VERIFY_TEMPLATE, PASSWORD_RESET_TEMPLATE} = require("../config/emailTemplates")
+const cloudinary = require('cloudinary').v2;
+
 
 const register = async (req, res) => {
     const {name, email, password} = req.body
@@ -24,13 +26,15 @@ const register = async (req, res) => {
             return res.json({Success: false, message: "Please Enter Strong Password"})
         }
         
+        const response = await cloudinary.uploader.upload(req.file.path);
+        const image = response.secure_url;
+        
         const hashPassword = await bcrypt.hash(password, 10)
         
         const user = new users({
-            // image: req.image,
+            image,
             name,
             email, 
-            // role,
             password: hashPassword
         })
         await user.save()

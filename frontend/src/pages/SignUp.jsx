@@ -3,7 +3,7 @@ import axios from 'axios';
 import { UserContext } from "../context/UserContext";
 import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom"
-// import upload from "../assets/upload.png" 
+import upload from "../assets/upload.png" 
 
 export const SignUp = () => {
     const navigate = useNavigate()
@@ -12,7 +12,7 @@ export const SignUp = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    // const [image, setImage] = useState(null);
+    const [image, setImage] = useState(null);
     const { backendUrl, setIsLoggedin, getUserData } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
@@ -24,14 +24,14 @@ export const SignUp = () => {
                 formData.append("name", name);
                 formData.append("email", email);
                 formData.append("password", password);
-                // formData.append("image", image);
+                formData.append("image", image);
 
                 const { data } = await axios.post(backendUrl + "/api/user/register", formData);
                 if (data.Success) {
                     setIsLoggedin(true);
                     getUserData();
                     navigate("/");
-                    // setImage(null);
+                    setImage(null);
                     toast.success(data.message, { position: "top-center" });
                 } else {
                     toast.error(data.message, { position: "top-center" });
@@ -64,14 +64,14 @@ export const SignUp = () => {
                 <form className="flex flex-col" onSubmit={handleSubmit} encType="multipart/form-data">
                     {state === "signUp" && (
                         <>
-                            {/* <div className="flex flex-col items-center justify-center mb-4 
+                            <div className="flex flex-col items-center justify-center mb-4 
                                         border-2 rounded-2xl p-2">
                                 <label htmlFor="image">
                                     <img loading='lazy' className='cursor-pointer w-20 h-20 rounded-full ' 
                                         src={image ? URL.createObjectURL(image) : upload } alt="UPLOAD" />
                                 </label>
                                 <input onChange={(e) => setImage(e.target.files[0])} type="file" id='image' hidden required />
-                            </div> */}
+                            </div>
                             <input
                                 onChange={(e) => setName(e.target.value)}
                                 placeholder="Full Name"

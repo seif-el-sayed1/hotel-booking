@@ -30,7 +30,7 @@ export const FeaturedDestination = () => {
                         <div key={room._id} className='rounded-lg shadow-lg bg-white'>
                             <img loading='lazy' className='w-80 rounded-t-lg' src={room.images[0]} alt="room image" />
                             <div className='flex items-center justify-between px-3 pt-4'>
-                                <p>{room.hotel.name}</p>
+                                <p>{room.hotel.hotelName}</p>
                                 <div className='flex items-center gap-1'>
                                     <img loading='lazy' src={assets.starIconFilled} alt="stat" />
                                     <span className='text-gray-500'>4.5</span>

@@ -2,6 +2,8 @@ const hotelModel = require('../models/hotelModel')
 const roomModel = require('../models/roomModel')
 const bookingModel = require('../models/bookingModel')
 const users = require('../models/userModels')
+const cloudinary = require('cloudinary').v2;
+
 
 // Hotel controller 
 const registerHotel = async (req, res) => {
@@ -88,19 +90,23 @@ const addRoom = async (req, res) => {
         if (!hotel) {
             return res.json({success: false, message: 'Hotel not found'})
         }
+        const uploadImages = req.files.map(async (file) => {
+            const response = await cloudinary.uploader.upload(file.path)
+            return response.secure_url
+        })
+        const images = await Promise.all(uploadImages)
+
         if(!roomType || !pricePerNight) {
             return res.json({success: false, message: 'Please fill all the fields'})
         }
-        if (req.images.length !== 4) {
-            return res.json({success: false, message: 'Please upload 4 images'})
-        }
+        
         const parsedAmenities = JSON.parse(amenities);
         const room = new roomModel({
             hotel: hotel._id,
             roomType,
-            pricePerNight,
+            pricePerNight: +pricePerNight,
             amenities: parsedAmenities,
-            images: req.images,
+            images,
         })
         await room.save()
         return res.json({success: true, message: 'Room added successfully'})
