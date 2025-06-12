@@ -135,12 +135,12 @@ export const Navbar = () => {
             </div>
 
             {/* Mobil Screen */}
-            <div className="flex items-center gap-3 md:hidden z-10">
+            <div className="flex items-center gap-3 md:hidden ">
                 <img loading='lazy' src={assets.menuIcon} alt="menu" onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className={`h-6 w-6 cursor-pointer ${isScrolled || window.location.pathname !== "/" ? "invert" : ""}`} />
             </div>
 
-            <div className={`fixed top-0 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden 
+            <div className={`fixed top-0 z-10 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden 
                             items-center justify-center gap-6 font-medium text-gray-800 
                             transition-all duration-500 
                             ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>

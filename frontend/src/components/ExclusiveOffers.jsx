@@ -4,14 +4,14 @@ import { assets, exclusiveOffers } from '../assets/assets'
 export const ExclusiveOffers = () => {
     return (
         <div className='pt-20 px-6 md:px-16 lg:px-24 pb-15'>
-            <div className='flex flex-wrap gap-10 justify-center'>
+            <div className='flex flex-wrap md:gap-10 justify-center'>
                 <div>
                     <h1 className='font-light text-4xl mb-3'>Exclusive Offers</h1>
                     <p className='text-gray-500 pb-10'>
                         Take advantage of our limited-time offers and special packages to enhance your stay and create unforgettable memories.
                     </p>
                 </div>
-                <div className='flex items-center gap-2 cursor-pointer group'>
+                <div className='flex items-center gap-2 mb-5 cursor-pointer group'>
                     <p className='text-sm font-bold'>View All Offers</p>
                     <img loading='lazy' className='group-hover:translate-x-2 duration-300' src={assets.arrowIcon} alt="arrow" />
                 </div>
