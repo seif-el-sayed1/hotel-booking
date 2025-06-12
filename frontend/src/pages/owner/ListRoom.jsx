@@ -37,7 +37,7 @@ export const ListRoom = () => {
         getRooms()
         const interval = setInterval(() => {
             authState()
-        }, 1000)
+        }, 10*60*1000)
         return () => clearInterval(interval)
     }, [])
 
