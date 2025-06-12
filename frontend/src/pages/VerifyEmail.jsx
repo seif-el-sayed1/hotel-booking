@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect} from "react"
+import { use, useContext, useEffect} from "react"
 import { UserContext } from "../context/UserContext"
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRef } from "react";
 
 export const VerifyEmail = () => {    
-    const {backendUrl, isLoggedin, getUserData, userData} = useContext(UserContext)
+    const {backendUrl, isLoggedin, getUserData, userData, authState} = useContext(UserContext)
     const navigate = useNavigate();
 
     const inputsRef = useRef([]);
@@ -55,9 +55,10 @@ export const VerifyEmail = () => {
     };
 
     useEffect(() => {
-        userData && userData.isVerified && navigate("/");
-    },[isLoggedin, userData])
-
+        if (userData && userData.isVerified || !isLoggedin) {
+            navigate("/");
+        }
+    },[isLoggedin, userData, navigate])
 
     return (
         <div

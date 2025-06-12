@@ -27,7 +27,7 @@ import { Recommended } from './components/Recommended.jsx'
 
 
 function App() {
-  const { overlay, userData } = useContext(UserContext)
+  const { overlay} = useContext(UserContext)
 
   return (
     <>
@@ -75,48 +75,36 @@ function App() {
         } />
 
         <Route path='/owner' element={
-          userData.role === 'owner' ? (
-            <>
-              <OwnerNavbar />
-              <div className='flex'>
-                <SideBar />
-                <Dashboard />
-              </div>
-              <Footer />
-            </>
-          ) : (
-            <Navigate to="/" />
-          )
+          <>
+            <OwnerNavbar />
+            <div className='flex'>
+              <SideBar />
+              <Dashboard />
+            </div>
+            <Footer />
+          </>
         } />
 
         <Route path='/owner/add-room' element={
-          userData.role === 'owner' ? (
-            <>
-              <OwnerNavbar />
-              <div className='flex'>
-                <SideBar />
-                <AddRoom />
-              </div>
-              <Footer />
-            </>
-          ) : (
-            <Navigate to="/" />
-          )
+          <>
+            <OwnerNavbar />
+            <div className='flex'>
+              <SideBar />
+              <AddRoom />
+            </div>
+            <Footer />
+          </>
         } />
 
         <Route path='/owner/list-room' element={
-          userData.role === 'owner' ? (
-            <>
-              <OwnerNavbar />
-              <div className='flex'>
-                <SideBar />
-                <ListRoom />
-              </div>
-              <Footer />
-            </>
-          ) : (
-            <Navigate to="/" />
-          )
+          <>
+            <OwnerNavbar />
+            <div className='flex'>
+              <SideBar />
+              <ListRoom />
+            </div>
+            <Footer />
+          </>
         } />
 
       </Routes>

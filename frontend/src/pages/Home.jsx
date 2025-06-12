@@ -8,11 +8,9 @@ import { toast } from 'react-toastify'
 
 export const Home = () => {
     const navigate = useNavigate()
-
     const {setSearchHistory, backendUrl} = useContext(UserContext)
     const [destination, setDestination] = useState('')
     
-
     const onSearch = async (e) => {
         e.preventDefault()
         navigate(`/rooms?destination=${destination}`)

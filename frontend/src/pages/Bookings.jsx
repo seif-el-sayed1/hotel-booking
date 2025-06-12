@@ -1,13 +1,22 @@
 import React, { useContext, useEffect } from 'react';
 import { assets } from '../assets/assets';
 import { AppContext } from '../context/AppContext';
-
+import { UserContext } from '../context/UserContext';
 export const Bookings = () => {
     const {loading, getUserBookings, bookings} = useContext(AppContext)
+    const {authState} = useContext(UserContext)
     
     useEffect(() => {
         getUserBookings()
-    },[bookings])
+    },[bookings, getUserBookings])
+
+    useEffect(() => {
+        authState() 
+        const interval = setInterval(() => {
+            authState()
+        }, 1000)
+        return () => clearInterval(interval)
+    },[])
     
     return (
         <div className="pt-35 px-6 md:px-16 lg:px-24 xl:px-32 pb-15">
