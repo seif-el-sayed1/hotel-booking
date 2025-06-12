@@ -29,8 +29,6 @@ import { Recommended } from './components/Recommended.jsx'
 function App() {
   const { overlay, userData } = useContext(UserContext)
 
-  // const isOwner = window.location.pathname.includes("/owner");
-
   return (
     <>
     <Toaster
