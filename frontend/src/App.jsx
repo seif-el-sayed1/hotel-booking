@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import {ToastContainer} from "react-toastify"
+// import {ToastContainer} from "react-toastify"
+import { Navigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar.jsx'
 import { Home } from './pages/Home.jsx'
 import { SignUp } from './pages/SignUp.jsx'
@@ -28,7 +29,7 @@ import { Recommended } from './components/Recommended.jsx'
 function App() {
   const { overlay, userData } = useContext(UserContext)
 
-  const isOwner = window.location.pathname.includes("/owner");
+  // const isOwner = window.location.pathname.includes("/owner");
 
   return (
     <>
@@ -37,61 +38,90 @@ function App() {
       reverseOrder={false}
     />
     {overlay && <HotelRegister />}
-    <Routes>
-      <Route path='/' element={
-        <>
-          <Navbar />
-          <Home />
-          <Recommended />
-          <FeaturedDestination />
-          <ExclusiveOffers />
-          <Testimonials />
-          <NewsLetter />
-          <Footer />
-        </>
-      } />
-      <Route path='/signUp' element={<SignUp />} />
-      <Route path='/verifyEmail' element={<VerifyEmail />} />
-      <Route path='/resetPassword' element={<ResetPassword />} />
-      <Route path='/rooms' element={
-        <>
-          <Navbar />
-          <Rooms /> 
-          <Footer />
-        </>
-      } />
-      <Route path='/rooms/:id' element={
-        <>
-          <Navbar />
-          <RoomDetails /> 
-          <Footer />
-        </>
-      } />
-      <Route path='/my-bookings' element={
-        <>
-          <Navbar />
-          <Bookings /> 
-          <Footer />
-        </>
-      } />
-      
-      
+      <Routes>
+        <Route path='/' element={
+          <>
+            <Navbar />
+            <Home />
+            <Recommended />
+            <FeaturedDestination />
+            <ExclusiveOffers />
+            <Testimonials />
+            <NewsLetter />
+            <Footer />
+          </>
+        } />
+        <Route path='/signUp' element={<SignUp />} />
+        <Route path='/verifyEmail' element={<VerifyEmail />} />
+        <Route path='/resetPassword' element={<ResetPassword />} />
+        <Route path='/rooms' element={
+          <>
+            <Navbar />
+            <Rooms /> 
+            <Footer />
+          </>
+        } />
+        <Route path='/rooms/:id' element={
+          <>
+            <Navbar />
+            <RoomDetails /> 
+            <Footer />
+          </>
+        } />
+        <Route path='/my-bookings' element={
+          <>
+            <Navbar />
+            <Bookings /> 
+            <Footer />
+          </>
+        } />
 
-    </Routes>
-    {isOwner &&  userData.role == "owner" &&
-      <>
-        <OwnerNavbar />
-        <div className='flex'>
-          <SideBar />
-          <Routes>
-            <Route path='/owner' element={<Dashboard />} />
-            <Route path='/owner/add-room' element={<AddRoom />} />
-            <Route path='/owner/list-room' element={<ListRoom />} />
-          </Routes>
-        </div>
-        <Footer />
-      </>
-    } 
+        <Route path='/owner' element={
+          userData.role === 'owner' ? (
+            <>
+              <OwnerNavbar />
+              <div className='flex'>
+                <SideBar />
+                <Dashboard />
+              </div>
+              <Footer />
+            </>
+          ) : (
+            <Navigate to="/" />
+          )
+        } />
+
+        <Route path='/owner/add-room' element={
+          userData.role === 'owner' ? (
+            <>
+              <OwnerNavbar />
+              <div className='flex'>
+                <SideBar />
+                <AddRoom />
+              </div>
+              <Footer />
+            </>
+          ) : (
+            <Navigate to="/" />
+          )
+        } />
+
+        <Route path='/owner/list-room' element={
+          userData.role === 'owner' ? (
+            <>
+              <OwnerNavbar />
+              <div className='flex'>
+                <SideBar />
+                <ListRoom />
+              </div>
+              <Footer />
+            </>
+          ) : (
+            <Navigate to="/" />
+          )
+        } />
+
+      </Routes>
     </>
   )
 }
