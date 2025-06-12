@@ -25,7 +25,7 @@ export const ExclusiveOffers = () => {
                             style={{ backgroundImage: `url(${offer.image})` }}
                         >
 
-                            <div className="relative z-10 h-full flex flex-col justify-between p-4">
+                            <div className="relative h-full flex flex-col justify-between p-4">
                                 <div>
                                     <p className="bg-white/90 px-3 py-1 rounded-full text-xs font-semibold text-gray-700 w-fit shadow-sm">
                                     {offer.priceOff}% OFF

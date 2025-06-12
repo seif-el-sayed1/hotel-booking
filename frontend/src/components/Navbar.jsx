@@ -62,7 +62,7 @@ export const Navbar = () => {
     }, []);
 
     return (
-        <nav className={`fixed top-0 left-0 w-full flex items-center justify-between px-4
+        <nav className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 z-10
                         md:px-16 lg:px-24 xl:px-32 transition-all duration-500  
                         ${isScrolled || window.location.pathname !== "/"? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4"
             : "py-4 md:py-6"}`}>
@@ -135,7 +135,7 @@ export const Navbar = () => {
             </div>
 
             {/* Mobil Screen */}
-            <div className="flex items-center gap-3 md:hidden">
+            <div className="flex items-center gap-3 md:hidden z-10">
                 <img loading='lazy' src={assets.menuIcon} alt="menu" onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className={`h-6 w-6 cursor-pointer ${isScrolled || window.location.pathname !== "/" ? "invert" : ""}`} />
             </div>
@@ -156,9 +156,8 @@ export const Navbar = () => {
 
                 {userData && isLoggedin &&
                     <button onClick={() => {isOwner ?  navigate("/owner") : setOverlay(!overlay)}} 
-                        className={`border px-4 py-1 text-sm hover:text-black hover:bg-white
-                                        font-light rounded-full cursor-pointer duration-500 text-nowrap
-                                ${isScrolled || window.location.pathname !== "/" ? 'text-black' : 'text-white'} transition-all`}>
+                        className={`border px-4 py-1 text-sm  
+                                        font-light rounded-full cursor-pointer duration-500 text-nowrap transition-all`}>
                         {isOwner  ? "Dashboard" : "List Your Hotel"}
                     </button>
                 }
