@@ -11,4 +11,6 @@ router.post('/create-booking', verifyToken, bookingController.createBooking);
 // Route to get user bookings
 router.get('/get-bookings', verifyToken, bookingController.getUserBookings);
 
+// Route to stripe payment
+router.post('/stripe-payment', verifyToken, bookingController.stripePayment);
 module.exports = router;

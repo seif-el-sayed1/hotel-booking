@@ -2,9 +2,11 @@ import React, { useContext, useEffect } from 'react';
 import { assets } from '../assets/assets';
 import { AppContext } from '../context/AppContext';
 import { UserContext } from '../context/UserContext';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 export const Bookings = () => {
     const {loading, getUserBookings, bookings} = useContext(AppContext)
-    const {authState} = useContext(UserContext)
+    const {authState, backendUrl} = useContext(UserContext)
     
     useEffect(() => {
         getUserBookings()
@@ -17,7 +19,20 @@ export const Bookings = () => {
         }, 10*60*1000)
         return () => clearInterval(interval)
     },[])
-    
+
+    const handlePayment = async (bookingId) => {
+        try {
+            const {data} = await axios.post(backendUrl + "/api/booking/stripe-payment", {bookingId})
+            if (data.success) {
+                window.location.href = data.url
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     return (
         <div className="pt-35 px-6 md:px-16 lg:px-24 xl:px-32 pb-15">
             <div>
@@ -103,7 +118,8 @@ export const Bookings = () => {
                                             </p>
                                         </div>
                                         {!item.isPaid && (
-                                            <button className="mt-3 text-nowrap px-5 py-2 border border-gray-300 text-xs hover:bg-gray-100 transition text-gray-500 rounded-2xl cursor-pointer">
+                                            <button onClick={() => handlePayment(item._id)}
+                                                className="mt-3 text-nowrap px-5 py-2 border border-gray-300 text-xs hover:bg-gray-100 transition text-gray-500 rounded-2xl cursor-pointer">
                                                 Pay now
                                             </button>
                                         )}
@@ -158,7 +174,8 @@ export const Bookings = () => {
                                     </p>
                                 </div>
                                 {!item.isPaid && (
-                                    <button className="mt-3 px-5 py-2 border border-gray-300 text-xs hover:bg-gray-100 transition text-gray-500 rounded-2xl cursor-pointer w-full">
+                                <button onClick={() => handlePayment(item._id)} 
+                                        className="mt-3 px-5 py-2 border border-gray-300 text-xs hover:bg-gray-100 transition text-gray-500 rounded-2xl cursor-pointer w-full">
                                         Pay now
                                     </button>
                                 )}

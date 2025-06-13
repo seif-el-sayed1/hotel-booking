@@ -4,13 +4,12 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const path = require('path');
 
 const userRouter = require('./routes/userRouter');
 const ownerHotelRouter = require('./routes/ownerHotelRouter');
 const bookingRouter = require('./routes/bookingRouter');
 const connectCloudinary = require('./config/cloudinary');
-
+const stripeWebhooks = require('./controllers/stripeWebhooks');
 connectCloudinary()
 mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log("Connected to MongoDB"))
@@ -22,6 +21,7 @@ app.use(cors({
     credentials: true
 }));
 
+app.post("/api/stripe", express.raw({type: 'application/json'}), stripeWebhooks);
 
 app.use(express.json());
 

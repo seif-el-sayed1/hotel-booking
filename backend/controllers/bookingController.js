@@ -1,5 +1,6 @@
 const bookingModel = require('../models/bookingModel');
 const roomModel = require('../models/roomModel');
+const stripe = require('stripe')
 
 const checkAvailability = async ({checkInDate, checkOutDate, roomId}) => {
     try {
@@ -83,11 +84,34 @@ const stripePayment = async (req, res) => {
         const booking = await bookingModel.findById(bookingId)
         const roomData = await roomModel.findById(booking.room).populate("hotel")
         const totalPrice = booking.totalPrice
-
         const {origin} = req.headers
-        
+
+        const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY)
+
+        const line_items = [
+            {
+                price_data: {
+                        currency: "usd",
+                        product_data: {
+                            name: roomData.hotel.hotelName,
+                        },
+                        unit_amount: totalPrice * 100
+                },
+                quantity: 1
+            }
+        ]
+        const session = await stripeInstance.checkout.sessions.create({
+            line_items,
+            mode: 'payment',
+            success_url: `${origin}/loader/my-bookings`,
+            cancel_url: `${origin}/my-bookings`,
+            metadata: {
+                bookingId,
+            }
+        })
+        return res.json({success: true, url: session.url})
     } catch (error) {
-        
+        return res.json({success:false, message: error.message})
     }
 }
 
@@ -95,5 +119,6 @@ const stripePayment = async (req, res) => {
 module.exports = {
     checkAvailabilityApi,
     createBooking,
-    getUserBookings
+    getUserBookings,
+    stripePayment   
 }

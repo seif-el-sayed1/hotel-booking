@@ -24,6 +24,7 @@ import { AddRoom } from './pages/owner/AddRoom.jsx'
 import { ListRoom } from './pages/owner/ListRoom.jsx'
 import { Toaster } from "react-hot-toast";
 import { Recommended } from './components/Recommended.jsx'
+import { Loader } from './components/Loader.jsx';
 
 
 function App() {
@@ -73,7 +74,7 @@ function App() {
             <Footer />
           </>
         } />
-
+        <Route path='/loader/:nextUrl' element={<Loader />} key='loader' />
         <Route path='/owner' element={
           <>
             <OwnerNavbar />
