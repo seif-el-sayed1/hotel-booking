@@ -34,8 +34,7 @@ export const Home = () => {
         <main
             role="main"
             aria-label="Home page"
-            className="flex flex-col gap-5 items-start justify-center px-6 md:px-16 lg:px-24 xl:px-32 text-white bg-no-repeat bg-cover bg-center h-screen"
-            style={{ backgroundImage: "url('/src/assets/heroImage.png')" }}
+            className="flex flex-col gap-5 bg-[url('/src/assets/heroImage.png')]  items-start justify-center px-6 md:px-16 lg:px-24 xl:px-32 text-white bg-no-repeat bg-cover bg-center h-screen"
         >
             <header>
                 <p
