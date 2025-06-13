@@ -62,6 +62,7 @@ export const HotelRegister = () => {
                         <input onChange={(e) => setHotelName(e.target.value)}
                             className="outline-blue-600 py-2 rounded px-2 border border-gray-200 w-full"
                             id="name"
+                            name="name"
                             type="text"
                             required
                             placeholder="Type Here"
@@ -73,6 +74,7 @@ export const HotelRegister = () => {
                         <input onChange={(e) => setContact(e.target.value)}
                             className="outline-blue-600 py-2 rounded px-2 border border-gray-200 w-full"
                             id="phone"
+                            name="phone"
                             type="text"
                             required
                             placeholder="Type Here"
@@ -84,6 +86,7 @@ export const HotelRegister = () => {
                         <input onChange={(e) => setAddress(e.target.value)}
                             className="pb-10 pt-2 rounded px-2 outline-blue-600 border border-gray-200 w-full"
                             id="address"
+                            name="address"
                             type="text"
                             required
                             placeholder="Type Here"
@@ -95,6 +98,7 @@ export const HotelRegister = () => {
                         <input  onChange={(e) => setCity(e.target.value)}
                             list="destinations"
                             id="destinationInput"
+                            name="destination"
                             type="text"
                             className="py-2 rounded px-2 outline-blue-600 border border-gray-200 w-40"
                             placeholder="Select City"

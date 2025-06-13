@@ -3,42 +3,61 @@ import { assets } from '../assets/assets'
 
 export const Footer = () => {
     return (
-        <footer className="px-6 md:px-16 lg:px-24 xl:px-32 pt-8 w-full bg-gray-100 text-gray-500">
-            <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500/30 pb-6">
-                <div className="md:max-w-96">
-                    <img loading='lazy' className="h-9 invert" src={assets.logo} alt="LOGO" />
-                    <p className="mt-6 text-sm">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+        <footer className="px-6 md:px-16 lg:px-24 xl:px-32 pt-10 w-full bg-gray-100 text-gray-600">
+            <div className="flex flex-col md:flex-row justify-between gap-10 border-b border-gray-300 pb-10">
+                <div className="md:max-w-md">
+                    <img
+                        loading='lazy'
+                        className="h-9 invert"
+                        src={assets.logo}
+                        alt="QuickStay logo"
+                    />
+                    <p className="mt-6 text-sm leading-relaxed">
+                        QuickStay is your trusted platform for booking luxury stays around the world.
+                        From curated destinations to exclusive offers, we help you create unforgettable experiences.
                     </p>
                 </div>
-                <div className="flex-1 flex items-start md:justify-end gap-20">
+
+                <div className="flex flex-col sm:flex-row gap-12 flex-1 md:justify-end">
                     <div>
-                        <h2 className="font-semibold mb-5 text-gray-800">Company</h2>
-                        <ul className="text-sm space-y-2">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Contact us</a></li>
-                            <li><a href="#">Privacy policy</a></li>
+                        <h2 className="font-semibold text-gray-800 mb-4 text-base">Company</h2>
+                        <ul className="space-y-2 text-sm">
+                            <li><a href="#" className="hover:text-gray-900 transition">Home</a></li>
+                            <li><a href="#" className="hover:text-gray-900 transition">About us</a></li>
+                            <li><a href="#" className="hover:text-gray-900 transition">Contact us</a></li>
+                            <li><a href="#" className="hover:text-gray-900 transition">Privacy policy</a></li>
                         </ul>
                     </div>
+
                     <div>
-                        <h2 className="font-semibold text-gray-800 mb-5">Subscribe to our newsletter</h2>
-                        <div className="text-sm space-y-2">
-                            <p>The latest news, articles, and resources, sent to your inbox weekly.</p>
-                            <div className="flex items-center gap-2 pt-4">
-                                <input className="border border-gray-500/30 placeholder-gray-500 outline-none w-full max-w-64 h-9 rounded px-2" type="email" placeholder="Enter your email" />
-                                <button className="bg-blue-600 w-24 h-9 text-white rounded">Subscribe</button>
-                            </div>
-                        </div>
+                        <h2 className="font-semibold text-gray-800 mb-4 text-base">Subscribe to our newsletter</h2>
+                        <p className="text-sm max-w-xs">
+                            Get the latest news, articles, and exclusive offers straight to your inbox.
+                        </p>
+                        <form className="mt-4 flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
+                            <label htmlFor="email" className="sr-only">Email address</label>
+                            <input
+                                name="email"
+                                id="email"
+                                type="email"
+                                required
+                                placeholder="Enter your email"
+                                className="border border-gray-300 placeholder-gray-400 rounded px-3 h-10 w-full sm:w-64 outline-none"
+                            />
+                            <button
+                                type="submit"
+                                className="bg-blue-600 hover:bg-blue-700 text-white text-sm rounded px-4 h-10 transition"
+                            >
+                                Subscribe
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-            <p className="pt-4 text-center text-xs md:text-sm pb-5">
-                Copyright {new Date().getFullYear()}  © SEIF. All Right Reserved.
-            </p>
+
+            <div className="pt-6 pb-5 text-center text-xs md:text-sm text-gray-400">
+                &copy; {new Date().getFullYear()} SEIF. All rights reserved.
+            </div>
         </footer>
     )
 }
-    
