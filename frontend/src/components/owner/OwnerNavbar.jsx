@@ -59,6 +59,11 @@ export const OwnerNavbar = () => {
                                     <img loading='lazy' className='w-4 invert ' src={assets.userIcon} alt="edit" />
                                     <p>Edit Profile</p>
                                 </div>
+                                <div  onClick={() => navigate("/my-bookings")}
+                                    className='flex items-center gap-2 border-b-1 border-gray-200 cursor-pointer  pr-5 pl-3 py-2 hover:bg-gray-100'>
+                                    <img loading='lazy' className='w-4' src={assets.bookings} alt="edit" />
+                                    <p>My Bookings</p>
+                                </div>
                                 {!userData.isVerified &&
                                     <div onClick={sentVerifyOtp}
                                         className='flex items-center gap-2 border-b-1 border-gray-200 cursor-pointer  pr-5 pl-3 py-2 hover:bg-gray-100'>
@@ -83,7 +88,7 @@ export const OwnerNavbar = () => {
             </div>
             
             {/* Mobil Screen */}
-            <div className={`fixed top-0 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden 
+            <div className={`fixed top-0 left-0 w-full z-10 h-screen bg-white text-base flex flex-col md:hidden 
                             items-center justify-center gap-6 font-medium text-gray-800 
                             transition-all duration-500 
                             ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
@@ -95,10 +100,15 @@ export const OwnerNavbar = () => {
                     <>
                         <img loading='lazy' className='w-15 cursor-pointer rounded-full' src={userData.image || assets.avatar} alt="user" />
                         <p className='font-bold text-gray-500 px-2 pt-1 rounded-lg'>{userData.email}</p>
-                        <div className='flex items-center bg-white shadow-md rounded-lg'>
+                        <div className='flex items-center justify-center text-nowrap flex-wrap bg-white shadow-md rounded-lg'>
                             <div className='flex items-center gap-2 cursor-pointer rounded-lg px-2 py-2 hover:bg-gray-100'>
                                 <img loading='lazy' className='w-4' src={assets.edit} alt="edit" />
                                 <p>Edit Profile</p>
+                            </div>
+                            <div  onClick={() => navigate("/my-bookings")}
+                                className='flex items-center gap-2 border-b-1 border-gray-200 cursor-pointer  pr-5 pl-3 py-2 hover:bg-gray-100'>
+                                <img loading='lazy' className='w-4' src={assets.bookings} alt="edit" />
+                                <p>My Bookings</p>
                             </div>
                             {!userData.isVerified &&
                                 <div onClick={sentVerifyOtp}
