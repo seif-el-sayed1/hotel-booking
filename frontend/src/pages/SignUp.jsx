@@ -1,19 +1,18 @@
-import { useContext, useState } from "react"
-import axios from 'axios';
+import { useContext, useState } from "react";
+import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import toast from "react-hot-toast";
-import { useNavigate, Link } from "react-router-dom"
-import upload from "../assets/upload.png" 
+import { useNavigate, Link } from "react-router-dom";
+import upload from "../assets/upload.png";
 
 export const SignUp = () => {
-    const navigate = useNavigate()
-
-    const [state, setState] = useState('login')
+    const navigate = useNavigate();
+    const [state, setState] = useState("login");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [image, setImage] = useState(null);
-    const { backendUrl, setIsLoggedin, getUserData } = useContext(UserContext)
+    const { backendUrl, setIsLoggedin, getUserData } = useContext(UserContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,7 +37,6 @@ export const SignUp = () => {
                 }
             } else {
                 const { data } = await axios.post(backendUrl + "/api/user/login", { email, password });
-
                 if (data.Success) {
                     setIsLoggedin(true);
                     getUserData();
@@ -55,27 +53,39 @@ export const SignUp = () => {
     };
 
     return (
-        <div className="bg-no-repeat bg-[url('/src/assets/signUp.png')] bg-cover 
-                    bg-center flex flex-col items-center justify-center h-screen">
-            <div className="w-80 max-w-md backdrop-blur-sm bg-white/10 border border-white/20 rounded-2xl shadow-xl p-8">
-                <h2 className="text-3xl font-bold text-black mb-4 text-center">
+        <div className="min-h-screen bg-no-repeat bg-[url('src/assets/signUp.png')] bg-cover bg-center flex items-center justify-center px-4">
+            <div className="w-full max-w-sm backdrop-blur-sm bg-white/10 border border-white/20 rounded-2xl shadow-xl p-6">
+                <h2 className="text-2xl font-bold text-white mb-4 text-center">
                     {state === "signUp" ? "Create Account" : "Welcome Back"}
                 </h2>
                 <form className="flex flex-col" onSubmit={handleSubmit} encType="multipart/form-data">
                     {state === "signUp" && (
                         <>
-                            <div className="flex flex-col items-center justify-center mb-4 
-                                        border-2 rounded-2xl p-2">
-                                <label htmlFor="image">
-                                    <img loading='lazy' className='cursor-pointer w-20 h-20 rounded-full ' 
-                                        src={image ? URL.createObjectURL(image) : upload } alt="UPLOAD" />
+                            <div className="flex flex-col items-center justify-center mb-4 border-2 border-white/30 rounded-2xl p-2">
+                                <label htmlFor="image" className="cursor-pointer" aria-label="Upload Profile Image">
+                                    <img
+                                        loading="lazy"
+                                        className="w-20 h-20 rounded-full object-cover"
+                                        src={image ? URL.createObjectURL(image) : upload}
+                                        alt="Upload Profile"
+                                    />
                                 </label>
-                                <input onChange={(e) => setImage(e.target.files[0])} type="file" id='image' hidden required />
+                                <input
+                                    onChange={(e) => setImage(e.target.files[0])}
+                                    type="file"
+                                    id="image"
+                                    name="image"
+                                    hidden
+                                    accept="image/*"
+                                    required
+                                />
                             </div>
                             <input
                                 onChange={(e) => setName(e.target.value)}
                                 placeholder="Full Name"
-                                className="bg-white/20 text-black placeholder:text-white/70 border border-white/30 rounded-md p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                id="name"
+                                name="name"
+                                className="bg-white/30  placeholder:text-white/80 border border-white/50 rounded-md p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                                 type="text"
                                 value={name}
                                 required
@@ -85,7 +95,10 @@ export const SignUp = () => {
                     <input
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
-                        className="bg-white/20 text-black placeholder:text-white/70 border border-white/30 rounded-md p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        id="email"
+                        name="email"
+                        autoComplete="email"
+                        className="bg-white/30  placeholder:text-white/80 border border-white/50 rounded-md p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                         type="email"
                         value={email}
                         required
@@ -93,28 +106,31 @@ export const SignUp = () => {
                     <input
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"
-                        className="bg-white/20 text-black placeholder:text-white/70 border border-white/30 rounded-md p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                        className="bg-white/30  placeholder:text-white/80 border border-white/50 rounded-md p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                         type="password"
+                        id="password"
+                        name="password"
                         value={password}
                         required
                     />
-
                     <div className="flex items-center justify-between mb-4 text-sm">
-                        <Link to={"/resetPassword"} className="text-black-300 hover:underline">Forgot password?</Link>
+                        <Link to="/resetPassword" className="text-white/80 hover:underline">
+                            Forgot password?
+                        </Link>
                     </div>
                     <button
                         type="submit"
-                        className="bg-black text-white font-semibold py-2 rounded-md cursor-pointer transition"
+                        className="bg-black text-white font-semibold py-2 rounded-md cursor-pointer hover:bg-gray-900 transition"
                     >
                         {state === "signUp" ? "Sign Up" : "Login"}
                     </button>
-                    <div className="text-center text-white mt-2">
+                    <div className="text-center text-white mt-4 text-sm">
                         {state === "signUp" ? (
                             <p>
                                 Already have an account?{" "}
                                 <span
                                     onClick={() => setState("login")}
-                                    className="text-black cursor-pointer hover:underline"
+                                    className="text-yellow-300 cursor-pointer hover:underline"
                                 >
                                     Login
                                 </span>
@@ -124,7 +140,7 @@ export const SignUp = () => {
                                 Don't have an account?{" "}
                                 <span
                                     onClick={() => setState("signUp")}
-                                    className="text-black cursor-pointer hover:underline"
+                                    className="text-yellow-300 cursor-pointer hover:underline"
                                 >
                                     Sign Up
                                 </span>
@@ -135,4 +151,4 @@ export const SignUp = () => {
             </div>
         </div>
     );
-}
+};

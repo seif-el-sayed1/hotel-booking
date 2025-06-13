@@ -6,14 +6,13 @@ import toast from "react-hot-toast"
 import { useNavigate } from 'react-router-dom'
 
 export const AddRoom = () => {
-    const {backendUrl, loading, setLoading, authState, isOwner} = useContext(UserContext)
+    const { backendUrl, loading, setLoading, authState, isOwner } = useContext(UserContext)
     const navigate = useNavigate()
+
     const [images, setImages] = useState({
-        1: null,
-        2: null,
-        3: null,
-        4: null
+        1: null, 2: null, 3: null, 4: null
     })
+
     const [inputs, setInputs] = useState({
         roomType: "",
         pricePerNight: 0,
@@ -28,30 +27,29 @@ export const AddRoom = () => {
 
     useEffect(() => {
         authState()
-        const interval = setInterval(() => {
-            authState()
-        }, 10*60*1000)
-        return () => clearInterval(interval)
-    },[])
-    
-    const handleSubmit = async (e) => {
-        try {
-            setLoading(true)
-            e.preventDefault();
-            const formData = new FormData();
-            formData.append("roomType", inputs.roomType);
-            formData.append("pricePerNight", inputs.pricePerNight);
+    }, [])
 
-            const amenities = Object.keys(inputs.amenities).filter(key => inputs.amenities[key]);
-            formData.append("amenities", JSON.stringify(amenities));
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+
+        try {
+            const formData = new FormData()
+            formData.append("roomType", inputs.roomType)
+            formData.append("pricePerNight", inputs.pricePerNight)
+
+            const amenities = Object.keys(inputs.amenities).filter(key => inputs.amenities[key])
+            formData.append("amenities", JSON.stringify(amenities))
 
             Object.keys(images).forEach(key => {
-                images[key] && formData.append("images", images[key]);
-            });
+                if (images[key]) {
+                    formData.append("images", images[key])
+                }
+            })
 
-            const {data} = await axios.post(backendUrl + '/api/ownerHotel/add-room', formData)
+            const { data } = await axios.post(`${backendUrl}/api/ownerHotel/add-room`, formData)
 
-            if(data.success) {
+            if (data.success) {
                 toast.success(data.message)
                 setInputs({
                     roomType: "",
@@ -64,12 +62,8 @@ export const AddRoom = () => {
                         "Pool Access": false
                     }
                 })
-                setImages({
-                    1: null,
-                    2: null,
-                    3: null,
-                    4: null
-                })
+                setImages({ 1: null, 2: null, 3: null, 4: null })
+                navigate("/owner/rooms")
             } else {
                 toast.error(data.message)
             }
@@ -78,104 +72,144 @@ export const AddRoom = () => {
         } finally {
             setLoading(false)
         }
-
     }
-    
+
     return isOwner ? (
-        <div className='w-4/5'>
-            <div className='py-10 pl-5 text-center lg:text-start'>
-                <h1 className='font-light text-4xl mb-3'>Add Room</h1>
-                <p className='text-gray-500 text-sm md:text-lg'>
-                    Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience.
+        <div className='w-4/5 max-w-screen-xl mx-auto px-4'>
+            <div className='py-10 text-center lg:text-left'>
+                <h1 className='text-4xl font-light mb-3'>Add Room</h1>
+                <p className='text-gray-500 text-base md:text-lg'>
+                    Fill in the details accurately to improve the user booking experience.
                 </p>
             </div>
-                {loading &&
-                    <div className="fixed z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                        <div className="flex flex-row gap-2">
-                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
-                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]" />
-                            <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
-                        </div>
+
+            {loading && (
+                <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
+                    <div className="flex gap-2">
+                        <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
+                        <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.3s]" />
+                        <div className="w-5 h-5 rounded-full bg-blue-700 animate-bounce [animation-delay:.7s]" />
                     </div>
-                }
-            <form  onSubmit={handleSubmit} className='pb-5'>
-                <h2 className='pl-5 mb-2 text-black/80 text-lg'>Images</h2>
-                <div className='flex items-center flex-wrap gap-3 pl-5 mb-10'>
-                    {Object.keys(images).map((ele, index) => {
-                        return (
-                            <div key={index}>
-                                <label htmlFor={`roomImages${ele}`}>
-                                    <img loading='lazy' className='w-30 cursor-pointer' 
-                                        src={images[ele] ? URL.createObjectURL(images[ele]) : assets.uploadArea} alt="upload" />
-                                </label>
-                                <input id={`roomImages${ele}`} 
-                                        onChange={e => setImages({ ...images, [ele]: e.target.files[0] })}
-                                        type="file" required hidden />
-                            </div>
-                        )
-                    })}
                 </div>
-                <div className='flex items-center flex-wrap gap-5 pl-5'>
+            )}
+
+            <form onSubmit={handleSubmit} className='pb-5' aria-label="Add Room Form">
+                <fieldset>
+                    <legend className="pl-5 mb-2 text-lg text-black/80">Images</legend>
+                    <div className='flex flex-wrap items-center gap-4 pl-5 mb-10'>
+                        {Object.keys(images).map((ele, index) => (
+                            <div key={index}>
+                                <label htmlFor={`roomImages${ele}`} className="block text-sm font-medium text-gray-700 sr-only">
+                                    Upload Image {ele}
+                                </label>
+                                <label htmlFor={`roomImages${ele}`} className="cursor-pointer block">
+                                    <img
+                                        className='w-20 h-20 object-cover border border-gray-300 rounded'
+                                        src={images[ele] ? URL.createObjectURL(images[ele]) : assets.uploadArea}
+                                        alt={images[ele] ? `Uploaded Image ${ele}` : `Upload placeholder ${ele}`}
+                                    />
+                                </label>
+                                <input
+                                    id={`roomImages${ele}`}
+                                    type="file"
+                                    accept="image/*"
+                                    required={ele === "1"}
+                                    hidden
+                                    onChange={(e) => setImages({ ...images, [ele]: e.target.files[0] })}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </fieldset>
+
+                <div className='flex flex-wrap gap-6 pl-5'>
                     <div className='flex flex-col gap-2'>
-                        <label className='text-lg text-black/80' htmlFor="types">Room Type</label>
-                        <input value={inputs.roomType} 
-                            onChange={(e) => setInputs({...inputs, roomType:e.target.value})}
-                            className='outline-none py-2 px-1 w-45 border border-gray-200 rounded'
-                            list='types' type="text" placeholder='Select Room Type' required />
-                        <datalist id='types' >
-                            <option value="Single Bed"></option>
-                            <option value="Double Bed"></option>
-                            <option value="Luxury Room"></option>
-                            <option value="Family Suit"></option>
+                        <label htmlFor="roomType" className='text-lg text-black/80'>Room Type</label>
+                        <input
+                            id="roomType"
+                            name="roomType"
+                            value={inputs.roomType}
+                            onChange={(e) => setInputs({ ...inputs, roomType: e.target.value })}
+                            className='py-2 px-3 w-52 border border-gray-300 rounded outline-none'
+                            list="types"
+                            type="text"
+                            placeholder='Select Room Type'
+                            required
+                            aria-required="true"
+                        />
+                        <datalist id="types">
+                            <option value="Single Bed" />
+                            <option value="Double Bed" />
+                            <option value="Luxury Room" />
+                            <option value="Family Suit" />
                         </datalist>
                     </div>
+
                     <div className='flex flex-col gap-2'>
-                        <label className='text-lg text-black/80' htmlFor="price">Price</label>
-                        <input value={inputs.pricePerNight}
-                            onChange={(e) => setInputs({...inputs, pricePerNight:e.target.value})}
-                            className='outline-none py-2 px-1 w-30 border border-gray-200 rounded'
-                            id='price' type="number" required placeholder='$'/>
+                        <label htmlFor="pricePerNight" className='text-lg text-black/80'>Price Per Night</label>
+                        <input
+                            id="pricePerNight"
+                            name="pricePerNight"
+                            value={inputs.pricePerNight}
+                            onChange={(e) => setInputs({ ...inputs, pricePerNight: e.target.value })}
+                            className='py-2 px-3 w-40 border border-gray-300 rounded outline-none'
+                            type="number"
+                            placeholder='$'
+                            min={1}
+                            step={0.01}
+                            required
+                            aria-required="true"
+                        />
                     </div>
                 </div>
-                <div>
-                    <h2 className=' pl-5 mb-2 mt-5 text-lg text-black/80'>Amenities</h2>
-                    {Object.keys(inputs.amenities).map((ele, index) => {
-                        return (
-                            <div key={index} className='pl-5 flex items-center gap-2'>
-                                <input type="checkbox" id={index + 1} 
-                                        onChange={() => setInputs({...inputs, 
-                                            amenities: {...inputs.amenities, [ele]: !inputs.amenities[ele]
-                                        }})}
-                                        checked={inputs.amenities[ele]} />
-                                <label className='text-black/50' htmlFor={index + 1}>{ele}</label>
+
+                <fieldset className='mt-6 pl-5'>
+                    <legend className='mb-2 text-lg text-black/80'>Amenities</legend>
+                    <div className="flex flex-col gap-2">
+                        {Object.entries(inputs.amenities).map(([key, value], index) => (
+                            <div key={index} className="flex items-center gap-2">
+                                <input
+                                    id={`amenity-${index}`}
+                                    type="checkbox"
+                                    checked={value}
+                                    onChange={() =>
+                                        setInputs({
+                                            ...inputs,
+                                            amenities: {
+                                                ...inputs.amenities,
+                                                [key]: !value
+                                            }
+                                        })
+                                    }
+                                />
+                                <label htmlFor={`amenity-${index}`} className="text-gray-700">{key}</label>
                             </div>
-                        )
-                    })}
-                </div>
-                <button disabled={loading} className='text-white ml-5 mt-3 w-40 py-2 bg-blue-600 cursor-pointer rounded-md'>
+                        ))}
+                    </div>
+                </fieldset>
+
+                <button
+                    disabled={loading}
+                    type="submit"
+                    className={`mt-5 ml-5 w-40 py-2 rounded-md text-white ${loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
+                >
                     {loading ? 'Adding...' : 'Add Room'}
                 </button>
             </form>
         </div>
     ) : (
-        <main className=" w-3/4 grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
-            <div className="text-center">
+        <main className="w-4/5 grid min-h-screen place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+            <div className="text-center max-w-md">
                 <p className="text-base font-semibold text-indigo-600">404</p>
-                <h1 className="mt-4 text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">
-                    Page not found
-                </h1>
-                <p className="mt-6 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-                    Sorry, we couldn’t find the page you’re looking for.
-                </p>
-                <div className="mt-10 flex items-center justify-center gap-x-6">
-                    <p onClick={() => navigate("/")}
-                        className=" cursor-pointer rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                <h1 className="mt-4 text-5xl font-bold text-gray-900 sm:text-6xl">Page not found</h1>
+                <p className="mt-6 text-lg text-gray-600">Sorry, we couldn’t find the page you’re looking for.</p>
+                <div className="mt-10 flex justify-center gap-4">
+                    <button onClick={() => navigate("/")} className="bg-indigo-600 text-white px-4 py-2 rounded-md text-sm hover:bg-indigo-500">
                         Go back home
-                    </p>
-                    <p onClick={() => navigate("/")} 
-                        className="text-sm font-semibold text-gray-900 cursor-pointer ">
-                        Contact support <span aria-hidden="true">&rarr;</span>
-                    </p>
+                    </button>
+                    <button onClick={() => navigate("/")} className="text-sm text-gray-900 underline">
+                        Contact support →
+                    </button>
                 </div>
             </div>
         </main>

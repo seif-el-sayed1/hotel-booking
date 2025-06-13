@@ -25,7 +25,7 @@ export const Testimonials = () => {
                 {testimonials.map((testimonial) => (
                     <article
                         key={testimonial.id}
-                        className="bg-white p-6 rounded-xl shadow max-w-xs"
+                        className="bg-white p-6 rounded-xl shadow w-full sm:max-w-xs"
                         role="listitem"
                         aria-label={`Testimonial by ${testimonial.name} from ${testimonial.address}`}
                     >
@@ -42,7 +42,10 @@ export const Testimonials = () => {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-1 mt-4" aria-label={`Rating: ${testimonial.rating} out of 5`}>
+                        <div
+                            className="flex items-center gap-1 mt-4"
+                            aria-label={`Rating: ${testimonial.rating} out of 5`}
+                        >
                             {Array.from({ length: 5 }).map((_, index) => (
                                 <img
                                     key={index}
@@ -50,7 +53,7 @@ export const Testimonials = () => {
                                     src={testimonial.rating > index
                                         ? assets.starIconFilled
                                         : assets.starIconOutlined}
-                                    alt={testimonial.rating > index ? "Filled star" : "Empty star"}
+                                    alt="" // decorative
                                     className="w-4 h-4"
                                 />
                             ))}

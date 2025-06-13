@@ -1,13 +1,20 @@
 import React from 'react'
 import { assets } from '../assets/assets'
+import { Link } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 export const Footer = () => {
+    const handleSubscribe = (e) => {
+        e.preventDefault()
+        toast.success("Thanks for subscribing!")
+    }
+
     return (
-        <footer className="px-6 md:px-16 lg:px-24 xl:px-32 pt-10 w-full bg-gray-100 text-gray-600">
+        <footer className="px-6 md:px-16 lg:px-24 xl:px-32 pt-10 w-full bg-[#f9fafb] text-gray-600">
             <div className="flex flex-col md:flex-row justify-between gap-10 border-b border-gray-300 pb-10">
                 <div className="md:max-w-md">
                     <img
-                        loading='lazy'
+                        loading="lazy"
                         className="h-9 invert"
                         src={assets.logo}
                         alt="QuickStay logo"
@@ -22,23 +29,24 @@ export const Footer = () => {
                     <div>
                         <h2 className="font-semibold text-gray-800 mb-4 text-base">Company</h2>
                         <ul className="space-y-2 text-sm">
-                            <li><a href="#" className="hover:text-gray-900 transition">Home</a></li>
-                            <li><a href="#" className="hover:text-gray-900 transition">About us</a></li>
-                            <li><a href="#" className="hover:text-gray-900 transition">Contact us</a></li>
-                            <li><a href="#" className="hover:text-gray-900 transition">Privacy policy</a></li>
+                            <li><Link to="/" className="hover:text-gray-900 transition">Home</Link></li>
+                            <li><Link to="/about" className="hover:text-gray-900 transition">About us</Link></li>
+                            <li><Link to="/contact" className="hover:text-gray-900 transition">Contact us</Link></li>
+                            <li><Link to="/privacy-policy" className="hover:text-gray-900 transition">Privacy policy</Link></li>
                         </ul>
                     </div>
 
-                    <div>
-                        <h2 className="font-semibold text-gray-800 mb-4 text-base">Subscribe to our newsletter</h2>
+                    <section aria-labelledby="newsletter">
+                        <h2 id="newsletter" className="font-semibold text-gray-800 mb-4 text-base">Subscribe to our newsletter</h2>
                         <p className="text-sm max-w-xs">
                             Get the latest news, articles, and exclusive offers straight to your inbox.
                         </p>
-                        <form className="mt-4 flex flex-col sm:flex-row gap-3" onSubmit={(e) => e.preventDefault()}>
-                            <label htmlFor="email" className="sr-only">Email address</label>
+                        <form className="mt-4 flex flex-col sm:flex-row gap-3" onSubmit={handleSubscribe}>
+                            <label htmlFor="footerEmail" className="sr-only">Email address</label>
                             <input
-                                name="email"
-                                id="email"
+                                autoComplete="off"
+                                name="footerEmail"
+                                id="footerEmail"
                                 type="email"
                                 required
                                 placeholder="Enter your email"
@@ -51,7 +59,7 @@ export const Footer = () => {
                                 Subscribe
                             </button>
                         </form>
-                    </div>
+                    </section>
                 </div>
             </div>
 

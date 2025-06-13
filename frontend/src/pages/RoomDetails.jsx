@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { assets, facilityIcons ,roomCommonData } from '../assets/assets'
+import { assets, facilityIcons, roomCommonData } from '../assets/assets'
 import { AppContext } from '../context/AppContext'
 import { UserContext } from '../context/UserContext'
-import toast from "react-hot-toast";
+import toast from "react-hot-toast"
 import axios from 'axios'
 
 export const RoomDetails = () => {
@@ -14,40 +14,36 @@ export const RoomDetails = () => {
     const [room, setRoom] = useState(null)
     const [mainImage, setMainImage] = useState(null)
 
-    const [checkInDate, setCheckInDate] = useState(null)
-    const [checkOutDate, setCheckOutDate] = useState(null)
-    const [guests, setGuests] = useState(0)
+    const [checkInDate, setCheckInDate] = useState("")
+    const [checkOutDate, setCheckOutDate] = useState("")
+    const [guests, setGuests] = useState(1)
 
     const [isAvailable, setIsAvailability] = useState(false)
 
     useEffect(() => {
         setLoading(true)
-        try {
-            const foundRoom = allRooms.find(room => room._id == id)
-            if (foundRoom) {
-                setRoom(foundRoom)
-                setMainImage(prev => prev || foundRoom.images[0])
-            }
-        } catch (error) {
-            toast.error(error.message)
-        } finally {
-            setLoading(false)
+        const foundRoom = allRooms.find(room => room._id === id)
+        if (foundRoom) {
+            setRoom(foundRoom)
+            setMainImage(prev => prev || foundRoom.images[0])
         }
+        setLoading(false)
     }, [allRooms, id])
 
     const checkAvailability = async () => {
+        if (new Date(checkInDate) >= new Date(checkOutDate)) {
+            toast.error("Check out date must be after check in date")
+            return
+        }
         try {
-            if (checkInDate >= checkOutDate) {
-                toast.error("Check out date must be after check in date")
-                return
-            }
-            const { data } = await axios.post(backendUrl + "/api/booking/check-availability", { roomId: room._id, checkInDate, checkOutDate, guests })
-            if (data.success) {
-                setIsAvailability(data.isAvailable)
-                toast[data.isAvailable ? "success" : "error"](data.isAvailable ? "Room is available" : "Room is not available")
-            } else {
-                toast.error(data.message)
-            }
+            const { data } = await axios.post(`${backendUrl}/api/booking/check-availability`, {
+                roomId: room._id,
+                checkInDate,
+                checkOutDate,
+                guests
+            })
+            setIsAvailability(data.isAvailable)
+            toast.success("Room is available")
         } catch (error) {
             toast.error(error.message)
         }
@@ -55,21 +51,26 @@ export const RoomDetails = () => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault()
+        if (!isAvailable) {
+            return checkAvailability()  
+        } 
+
         try {
-            if (!isAvailable) {
-                return checkAvailability()
+            const { data } = await axios.post(`${backendUrl}/api/booking/create-booking`, {
+                roomId: room._id,
+                checkInDate,
+                checkOutDate,
+                guests
+            })
+            if (data.success) {
+                toast.success(data.message)
+                navigate("/my-bookings")
+                window.scrollTo({ top: 0, behavior: "smooth" })
             } else {
-                const { data } = await axios.post(backendUrl + "/api/booking/create-booking", { roomId: room._id, checkInDate, checkOutDate, guests })
-                if (data.success) {
-                    toast.success(data.message)
-                    navigate("/my-bookings")
-                    scrollTo(0, 0)
-                } else {
-                    toast.error(data.message)
-                }
+                toast.error(data.message)
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.response?.data?.message || error.message)
         } finally {
             setLoading(false)
         }
@@ -77,136 +78,180 @@ export const RoomDetails = () => {
 
     if (loading || !room) {
         return (
-            <div className="min-h-[60vh] flex items-center justify-center">
+            <div role="status" aria-label="Loading" className="min-h-[60vh] flex items-center justify-center">
                 <div className="flex gap-2">
-                    <div className="w-5 h-5 rounded-full bg-blue-600 animate-bounce [animation-delay:.1s]" />
-                    <div className="w-5 h-5 rounded-full bg-blue-600 animate-bounce [animation-delay:.3s]" />
-                    <div className="w-5 h-5 rounded-full bg-blue-600 animate-bounce [animation-delay:.5s]" />
+                    {[...Array(3)].map((_, i) => (
+                        <div key={i} className="w-5 h-5 rounded-full bg-blue-600 animate-bounce" style={{ animationDelay: `${i * 0.2}s` }}></div>
+                    ))}
                 </div>
             </div>
         )
     }
 
-
     return (
-        <div className='px-4 pt-35 md:px-16 lg:px-24 xl:px-32 '>
-            <div className='flex items-center gap-2 flex-wrap'>
-                <h1 className='text-2xl'>{room.hotel.name}</h1>
-                <span className='text-sm'>({room.roomType})</span>
-                <p className='text-xs bg-orange-500 rounded-xl p-1 text-white '>20% OFF</p>
-            </div>
+        <div className="px-4 pt-30 md:px-16 lg:px-24 xl:px-32">
+            <header>
+                <h1 className="text-2xl font-semibold flex items-center gap-2 flex-wrap">
+                    {room.hotel.name} <span className="text-sm font-normal">({room.roomType})</span>
+                    <span className="text-xs bg-orange-500 rounded-xl px-2 py-0.5 text-white">20% OFF</span>
+                </h1>
 
-            <div className='flex items-center gap-5 mt-3'>
-                <div className='flex items-center gap-1'>
-                    {Array(5).fill(0).map((_, index) => (
-                        <img loading='lazy' key={index} src={4 > index ?  assets.starIconFilled 
-                            : assets.starIconOutlined
-                        } alt="rating" />
+                <div className="flex items-center gap-5 mt-2">
+                    <div className="flex items-center gap-1" aria-label="Rating">
+                        {Array(5).fill(0).map((_, index) => (
+                            <img
+                                loading="lazy"
+                                key={index}
+                                src={index < 4 ? assets.starIconFilled : assets.starIconOutlined}
+                                alt={index < 4 ? "Filled Star" : "Empty Star"}
+                            />
+                        ))}
+                    </div>
+                    <p className="text-sm">200+ reviews</p>
+                </div>
+
+                <div className="flex items-center gap-1 text-gray-500 mt-2">
+                    <img loading="lazy" src={assets.locationIcon} alt="Location Icon" />
+                    <p>{room.hotel.address}</p>
+                </div>
+            </header>
+
+            <section className="flex flex-col md:flex-row mt-7 gap-5">
+                <img
+                    loading="lazy"
+                    className="w-full md:w-1/2 rounded-2xl"
+                    src={mainImage}
+                    alt="Main room view"
+                />
+
+                <div className="grid grid-cols-2 gap-4 md:w-1/2">
+                    {room.images.map((image, index) => (
+                        <img
+                            loading="lazy"
+                            key={index}
+                            onClick={() => setMainImage(image)}
+                            className={`rounded-2xl w-full cursor-pointer ${mainImage === image ? "outline-4 outline-orange-500" : ""}`}
+                            src={image}
+                            alt={`Room preview ${index + 1}`}
+                        />
                     ))}
                 </div>
-                <p>200+ reviews</p>
-            </div>
+            </section>
 
-            <div className='flex items-center gap-1 text-gray-500 mt-4'>
-                <img loading='lazy' src={assets.locationIcon} alt="location " />
-                <p>{room.hotel.address}</p>
-            </div>
-
-            <div className='flex flex-col px-5 md:px-0 md:flex-row mt-7 gap-5'>
-                <div className='md:w-1/2'>
-                    <img loading='lazy' className='w-full rounded-2xl'
-                        src={mainImage} alt="Main Image" />
-                </div>
-                <div className='grid grid-cols-2 gap-4 md:w-1/2'>
-                    {room?.images.length > 1 && room.images.map((image, index) => {
-                        return (
-                            <img loading='lazy' key={index} onClick={() => setMainImage(image)} 
-                                className={`rounded-2xl w-full cursor-pointer ${mainImage == image && "outline-3 outline-orange-500"}`}
-                                src={image} alt="IMAGE" />
-                        )
-                    })}
-                </div>
-            </div>
-
-            <div className='flex flex-wrap justify-between mt-7'>
-                <div>
-                    <h1 className='mb-5 text-2xl'>Experience Luxury Like Never Before</h1>
-                    <div className='flex items-center gap-3 mb-5 flex-wrap'>
-                        {room.amenities.map((amenity, index) => {
-                            return (
-                                <div className='flex items-center gap-1 bg-gray-100 text-nowrap py-2 px-3 rounded-xl w-fit ' 
-                                    key={index}>
-                                    <img loading='lazy' src={facilityIcons[amenity]} alt={amenity} />
-                                    <p className='text-sm '>{amenity}</p>
-                                </div>
-                            )
-                        })}
+            <section className="flex flex-wrap justify-between mt-7">
+                <div className="max-w-xl">
+                    <h2 className="mb-4 text-xl font-medium">Experience Luxury Like Never Before</h2>
+                    <div className="flex items-center gap-3 flex-wrap">
+                        {room.amenities.map((amenity, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center gap-1 bg-gray-100 py-2 px-3 rounded-xl text-nowrap"
+                            >
+                                <img loading="lazy" src={facilityIcons[amenity]} alt={amenity} />
+                                <span className="text-sm">{amenity}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <p className='font-bold text-2xl'>$399/night</p>
-            </div>
+                <p className="font-bold text-2xl mt-4 md:mt-0">$399/night</p>
+            </section>
 
-            <form onSubmit={onSubmitHandler}
-                className=' w-full flex flex-col gap-5 justify-around items-start md:items-center md:flex-row flex-wrap shadow-[0px_0px_20px_rgba(0,0,0,0.15)] p-5 rounded-xl my-10'>
-                <div className='flex flex-col gap-1 w-fit md:border-r-2 border-gray-200 pr-10'>
-                    <label htmlFor="checkIn" className='text-gray-500'>Check-In</label>
-                    <input onChange={(e) => setCheckInDate(e.target.value)}
+            <form
+                onSubmit={onSubmitHandler}
+                className="w-full bg-white rounded-xl shadow-[0px_0px_20px_rgba(0,0,0,0.1)] p-6 md:p-10 flex flex-col md:flex-row justify-between items-center gap-6 flex-wrap my-10"
+                >
+                    <div className="flex flex-col gap-2 w-full md:w-auto">
+                        <label htmlFor="checkIn" className="text-gray-600 font-medium">Check-In</label>
+                        <input
+                        onChange={(e) => setCheckInDate(e.target.value)}
                         min={new Date().toISOString().split("T")[0]}
-                        type="Date" id='checkIn' required className='outline-none border-1 border-gray-200 p-2 text-gray-500 rounded' />
-                </div>
-                <div className='flex flex-col gap-1 w-fit md:border-r-2 border-gray-200 pr-10'>
-                    <label htmlFor="checkOut" className='text-gray-500'>Check-Out</label>
-                    <input onChange={(e) => setCheckOutDate(e.target.value)} min={checkInDate} disabled={!checkInDate}  
-                        type="Date" id='checkOut' required className='outline-none border-1 border-gray-200 p-2 text-gray-500 rounded' />
-                </div>
-                <div className='flex flex-col gap-s1 w-20'>
-                    <label htmlFor="guests" className='text-gray-500'>Guests</label>
-                    <input onChange={(e) => setGuests(e.target.value)} value={guests}
-                        type="number" id='guests' placeholder='0' required
-                        className='outline-none border-1 border-gray-200 p-2 text-gray-500 rounded '/>
-                </div>
-                <button type='submit' className='bg-blue-600 xl:w-70 w-full rounded py-4 text-white cursor-pointer'>
-                    {isAvailable ? "Book Now" : " Check Availability"}
-                </button>
-            </form>
+                        type="date"
+                        id="checkIn"
+                        required
+                        className="border border-gray-300 rounded-lg p-3 w-full md:min-w-[180px]"
+                        />
+                    </div>
 
-            {roomCommonData.map((data, index) => {
-                return (
-                    <div key={index} className='flex items-center gap-3'>
-                        <img loading='lazy' src={data.icon} alt="dataIcon" />
-                        <div className='mt-5'>
-                            <h2>{data.title}</h2>
-                            <p className='text-gray-500 '>{data.description}</p>
+                    <div className="flex flex-col gap-2 w-full md:w-auto">
+                        <label htmlFor="checkOut" className="text-gray-600 font-medium">Check-Out</label>
+                        <input
+                        onChange={(e) => setCheckOutDate(e.target.value)}
+                        min={checkInDate}
+                        disabled={!checkInDate}
+                        type="date"
+                        id="checkOut"
+                        required
+                        className="border border-gray-300 rounded-lg p-3 w-full md:min-w-[180px]"
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-2 w-full md:w-auto">
+                        <label htmlFor="guests" className="text-gray-600 font-medium">Guests</label>
+                        <input
+                        onChange={(e) => setGuests(e.target.value)}
+                        value={guests}
+                        type="number"
+                        id="guests"
+                        placeholder="0"
+                        required
+                        className="border border-gray-300 rounded-lg p-3 w-full md:min-w-[100px]"
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="bg-blue-600 mt-5 cursor-pointer hover:bg-blue-700 transition text-white px-10 py-4 rounded-lg w-full md:w-auto"
+                    >
+                        {isAvailable ? "Book Now" : "Check Availability"}
+                    </button>
+                </form>
+
+
+            <section aria-label="Room Details">
+                {roomCommonData.map((data, index) => (
+                    <div key={index} className="flex items-start gap-3 mb-4">
+                        <img loading="lazy" src={data.icon} alt={data.title} className="mt-1" />
+                        <div>
+                            <h3 className="font-medium">{data.title}</h3>
+                            <p className="text-gray-500 text-sm">{data.description}</p>
                         </div>
                     </div>
-                )
-            })}
+                ))}
+            </section>
 
-            <p className='py-10 my-10 border-y-1 max-w-200 border-gray-300 text-gray-500'>
-                Guests will be allocated on the ground floor according to availability. You get a comfortable Two bedroom apartment has a true city feeling. The price quoted is for two guest, at the guest slot please mark the number of guests to get the exact price for groups. The Guests will be allocated ground floor according to availability. You get the comfortable two bedroom apartment that has a true city feeling.
+            <p className="py-10 border-y border-gray-300 text-gray-600">
+                Guests will be allocated on the ground floor according to availability. The quoted price is for two guests. Please select the number of guests to get the correct price. Enjoy a true city feeling in our two-bedroom apartment.
             </p>
 
-            <div className='my-20'>
-                <div className='flex items-center gap-5'>
-                    <img loading='lazy' src={room.hotel.owner.image} className='w-20 cursor-pointer rounded-full' alt="ownerImage" />
+            <section className="my-20">
+                <div className="flex items-center gap-5">
+                    <img
+                        loading="lazy"
+                        src={room.hotel.owner.image}
+                        className="w-20 h-20 rounded-full object-cover"
+                        alt={`Owner: ${room.hotel.owner.name}`}
+                    />
                     <div>
-                        <p className='text-xl'>Hosted By {room.hotel.owner.name}</p>
-                        <div className='flex items-center gap-3 mt-1'>
-                            <div className='flex items-center gap-1'>
+                        <p className="text-xl font-medium">Hosted by {room.hotel.owner.name}</p>
+                        <div className="flex items-center gap-3 mt-1">
+                            <div className="flex items-center gap-1">
                                 {Array(5).fill(0).map((_, index) => (
-                                    <img loading='lazy' key={index} src={4 > index ?  assets.starIconFilled 
-                                        : assets.starIconOutlined
-                                    } alt="rating" />
+                                    <img
+                                        loading="lazy"
+                                        key={index}
+                                        src={index < 4 ? assets.starIconFilled : assets.starIconOutlined}
+                                        alt={index < 4 ? "Filled Star" : "Empty Star"}
+                                    />
                                 ))}
                             </div>
-                            <p>200+ reviews</p>
+                            <p className="text-sm">200+ reviews</p>
                         </div>
                     </div>
                 </div>
-                <button className='bg-blue-600 px-7 rounded py-3 mt-7 text-white cursor-pointer'>
+                <button className="bg-blue-600 text-white px-6 py-3 mt-6 rounded hover:bg-blue-700">
                     Contact Now
                 </button>
-            </div>
+            </section>
         </div>
     )
 }

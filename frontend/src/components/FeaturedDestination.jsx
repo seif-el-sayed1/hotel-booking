@@ -26,7 +26,7 @@ export const FeaturedDestination = () => {
 
             {loading && (
                 <div
-                    className="fixed z-[100] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                    className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                     role="status"
                     aria-label="Loading destinations"
                 >
@@ -46,7 +46,7 @@ export const FeaturedDestination = () => {
                 {allRooms.slice(0, 4).map((room) => (
                     <article
                         key={room._id}
-                        className='rounded-lg shadow-lg bg-white w-80'
+                        className='rounded-lg shadow-lg bg-white w-80 hover:shadow-xl transition-all duration-300'
                         role="listitem"
                         aria-label={`Hotel ${room.hotel.hotelName} in ${room.hotel.address}`}
                     >
@@ -55,6 +55,8 @@ export const FeaturedDestination = () => {
                             className='w-80 h-48 object-cover rounded-t-lg'
                             src={room.images[0]}
                             alt={`Room at ${room.hotel.hotelName}`}
+                            width={320}
+                            height={192}
                         />
                         <div className='flex items-center justify-between px-3 pt-4'>
                             <p className='font-medium text-gray-700'>{room.hotel.hotelName}</p>
@@ -71,13 +73,13 @@ export const FeaturedDestination = () => {
 
                         <div className='flex items-center justify-between px-3 p-5'>
                             <p className='text-xl'>
-                                ${room.pricePerNight}
+                                ${room.pricePerNight.toFixed(2)}
                                 <span className='text-gray-500 text-sm'> /night</span>
                             </p>
                             <button
                                 onClick={() => navigate(`/rooms/${room._id}`)}
                                 className='border cursor-pointer border-gray-500 hover:bg-gray-200 duration-200
-                                    rounded-md text-gray-700 px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400'
+                                    rounded-md text-gray-700 px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-95'
                                 aria-label={`Book room at ${room.hotel.hotelName}`}
                             >
                                 Book Now
@@ -93,7 +95,7 @@ export const FeaturedDestination = () => {
                     window.scrollTo({ top: 0, behavior: 'smooth' })
                 }}
                 className='text-sm border border-gray-300 hover:bg-gray-200 duration-200 px-4 py-2
-                    cursor-pointer my-10 font-bold focus:outline-none focus:ring-2 focus:ring-gray-400'
+                    cursor-pointer my-10 font-bold focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-95'
                 aria-label="View all destinations"
             >
                 View All Destinations

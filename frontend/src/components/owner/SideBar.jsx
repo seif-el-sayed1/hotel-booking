@@ -1,36 +1,52 @@
 import React from 'react'
 import { assets } from '../../assets/assets'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 export const SideBar = () => {
     const navigate = useNavigate()
+    const location = useLocation()
+
+    const menuItems = [
+        {
+            label: 'Dashboard',
+            path: '/owner',
+            icon: assets.dashboardIcon
+        },
+        {
+            label: 'Add Room',
+            path: '/owner/add-room',
+            icon: assets.addIcon
+        },
+        {
+            label: 'List Room',
+            path: '/owner/list-room',
+            icon: assets.listIcon
+        }
+    ]
+
     return (
-        <div className='w-fit lg:w-1/5 border-r-1 border-gray-200 py-3 h-screen'>
-            <div onClick={() => navigate("/owner")} 
-                className={`flex items-center gap-5 px-5 md:px-10 py-3 cursor-pointer border-blue-600
-                                ${window.location.pathname === "/owner" ?
-                                                "bg-blue-100 text-blue-600 border-r-7 border-blue-600" : "hover:bg-gray-200"}
-                            `}>
-                <img loading='lazy' src={assets.dashboardIcon} alt="dashboard" />
-                <p className='hidden md:block text-nowrap'>Dashboard</p>
-            </div>
-            <div onClick={() => navigate("/owner/add-room")} 
-                className={`flex items-center gap-5 px-5 md:px-10 py-3 cursor-pointer border-blue-600
-                                ${window.location.pathname === "/owner/add-room" ?
-                                                "bg-blue-100 text-blue-600 border-r-7 border-blue-600" : "hover:bg-gray-200"}
-                            `}>
-                <img loading='lazy' src={assets.addIcon} alt="add" />
-                <p className='hidden md:block text-nowrap'>Add Room</p>
-            </div>
-            <div onClick={() => navigate("/owner/list-room")} 
-                className={`flex items-center gap-5 px-5 md:px-10 py-3 cursor-pointer border-blue-600
-                                ${window.location.pathname === "/owner/list-room" ?
-                                                "bg-blue-100 text-blue-600 border-r-7 border-blue-600" : "hover:bg-gray-200"}
-                            `}>
-                <img loading='lazy' src={assets.listIcon} alt="rooms" />
-                <p className='hidden md:block text-nowrap'>List Room</p>
-            </div>
-        </div>
-        
+        <aside className='w-1/5 lg:w-1/5 border-r border-gray-200 py-3 h-screen' aria-label="Sidebar Navigation">
+            {menuItems.map((item, index) => {
+                const isActive = location.pathname === item.path
+
+                return (
+                    <button
+                        key={index}
+                        onClick={() => navigate(item.path)}
+                        className={`flex items-center gap-5 w-full text-left px-5 md:px-10 py-3 
+                                    cursor-pointer  
+                                    ${isActive
+                                ? 'bg-blue-100 text-blue-600 border-r-4 border-blue-600 font-medium'
+                                : 'hover:bg-gray-200 text-gray-700'
+                            }`}
+                        aria-current={isActive ? 'page' : undefined}
+                        aria-label={item.label}
+                    >
+                        <img loading="lazy" src={item.icon} alt={`${item.label} icon`} />
+                        <span className='hidden md:inline-block text-nowrap'>{item.label}</span>
+                    </button>
+                )
+            })}
+        </aside>
     )
 }

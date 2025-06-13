@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 export const Recommended = () => {
     const { allRooms } = useContext(AppContext)
     const { searchHistory } = useContext(UserContext)
-
     const navigate = useNavigate()
     const [recommended, setRecommended] = useState([])
 
@@ -43,19 +42,21 @@ export const Recommended = () => {
                 {recommended.slice(0, 4).map((room) => (
                     <article
                         key={room._id}
-                        className='rounded-lg shadow-lg bg-white w-80'
+                        className='rounded-lg shadow-lg bg-white w-80 hover:shadow-xl transition-all duration-300'
                         role="listitem"
-                        aria-label={`Hotel ${room.hotel.name} in ${room.hotel.address}`}
+                        aria-label={`Hotel ${room.hotel.hotelName} in ${room.hotel.address}`}
                     >
                         <img
                             loading='lazy'
                             className='w-80 h-48 object-cover rounded-t-lg'
                             src={room.images[0]}
-                            alt={`Room at ${room.hotel.name}`}
+                            alt={`Room at ${room.hotel.hotelName}`}
+                            width={320}
+                            height={192}
                         />
 
                         <div className='flex items-center justify-between px-3 pt-4'>
-                            <p className='font-medium text-gray-700'>{room.hotel.name}</p>
+                            <p className='font-medium text-gray-700'>{room.hotel.hotelName}</p>
                             <div className='flex items-center gap-1'>
                                 <img loading='lazy' src={assets.starIconFilled} alt="rating star" />
                                 <span className='text-gray-500 text-sm'>4.5</span>
@@ -69,14 +70,14 @@ export const Recommended = () => {
 
                         <div className='flex items-center justify-between px-3 p-5'>
                             <p className='text-xl'>
-                                ${room.pricePerNight}
+                                ${room.pricePerNight.toFixed(2)}
                                 <span className='text-gray-500 text-sm'> /night</span>
                             </p>
                             <button
                                 onClick={() => navigate(`/rooms/${room._id}`)}
                                 className='border border-gray-500 hover:bg-gray-200 duration-200
-                                    rounded-md text-gray-700 px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400'
-                                aria-label={`Book room at ${room.hotel.name}`}
+                                    rounded-md text-gray-700 px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-95'
+                                aria-label={`Book room at ${room.hotel.hotelName}`}
                             >
                                 Book Now
                             </button>
@@ -91,7 +92,7 @@ export const Recommended = () => {
                     window.scrollTo({ top: 0, behavior: 'smooth' })
                 }}
                 className='text-sm border border-gray-300 hover:bg-gray-200 duration-200 px-4 py-2
-                    cursor-pointer my-10 font-bold focus:outline-none focus:ring-2 focus:ring-gray-400'
+                    cursor-pointer my-10 font-bold focus:outline-none focus:ring-2 focus:ring-gray-400 active:scale-95'
                 aria-label="View all destinations"
             >
                 View All Destinations
