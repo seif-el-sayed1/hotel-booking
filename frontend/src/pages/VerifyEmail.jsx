@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { use, useContext, useEffect} from "react"
+import { useContext, useEffect} from "react"
 import { UserContext } from "../context/UserContext"
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRef } from "react";
 
 export const VerifyEmail = () => {    
-    const {backendUrl, isLoggedin, getUserData, userData, authState} = useContext(UserContext)
+    const {backendUrl, isLoggedin, getUserData, userData} = useContext(UserContext)
     const navigate = useNavigate();
 
     const inputsRef = useRef([]);
@@ -62,8 +62,7 @@ export const VerifyEmail = () => {
 
     return (
         <div
-            className="bg-no-repeat bg-cover bg-center h-screen flex items-center justify-center"
-            style={{ backgroundImage: "url('/src/assets/signUp.png')" }}
+            className="bg-no-repeat bg-[url('/src/assets/signUp.png')] bg-cover bg-center h-screen flex items-center justify-center"
         >
             <form
                 onSubmit={handleSubmit}

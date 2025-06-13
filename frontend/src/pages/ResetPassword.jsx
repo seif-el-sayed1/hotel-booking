@@ -85,8 +85,8 @@ export const ResetPassword = () => {
 
     return (
         <div
-            className="bg-no-repeat bg-cover bg-center h-screen flex items-center justify-center"
-            style={{ backgroundImage: "url('/src/assets/signUp.png')" }}
+            className="bg-no-repeat bg-[url('/src/assets/signUp.png')] bg-cover bg-center h-screen flex items-center justify-center"
+            // style={{ backgroundImage: "url('/src/assets/signUp.png')" }}
         >
             {!isEmail && (
                 <form onSubmit={submitEmail} >
