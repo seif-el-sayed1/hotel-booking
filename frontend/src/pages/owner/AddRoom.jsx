@@ -9,6 +9,8 @@ export const AddRoom = () => {
     const { backendUrl, loading, setLoading, authState, isOwner } = useContext(UserContext)
     const navigate = useNavigate()
 
+    const [isDragging, setIsDragging] = useState(false)
+
     const [images, setImages] = useState({
         1: null, 2: null, 3: null, 4: null
     })
@@ -63,7 +65,6 @@ export const AddRoom = () => {
                     }
                 })
                 setImages({ 1: null, 2: null, 3: null, 4: null })
-                navigate("/owner/rooms")
             } else {
                 toast.error(data.message)
             }
@@ -75,7 +76,7 @@ export const AddRoom = () => {
     }
 
     return isOwner ? (
-        <div className='w-4/5 max-w-screen-xl mx-auto px-4'>
+        <div className='w-4/5 max-w-screen-xl mx-auto px-5'>
             <div className='py-10 text-center lg:text-left'>
                 <h1 className='text-4xl font-light mb-3'>Add Room</h1>
                 <p className='text-gray-500 text-base md:text-lg'>
@@ -94,35 +95,71 @@ export const AddRoom = () => {
             )}
 
             <form onSubmit={handleSubmit} className='pb-5' aria-label="Add Room Form">
-                <fieldset>
-                    <legend className="pl-5 mb-2 text-lg text-black/80">Images</legend>
-                    <div className='flex flex-wrap items-center gap-4 pl-5 mb-10'>
-                        {Object.keys(images).map((ele, index) => (
-                            <div key={index}>
-                                <label htmlFor={`roomImages${ele}`} className="block text-sm font-medium text-gray-700 sr-only">
-                                    Upload Image {ele}
-                                </label>
-                                <label htmlFor={`roomImages${ele}`} className="cursor-pointer block">
+                <fieldset className='mb-5 w-fit '>
+                    <legend className="mb-2 text-lg text-black/80">Images</legend>
+
+                    <div
+                        onDragOver={(e) => {
+                            e.preventDefault()
+                            setIsDragging(true)
+                        }}
+                        onDragLeave={() => setIsDragging(false)}
+                        onDrop={(e) => {
+                            e.preventDefault()
+                            setIsDragging(false)
+                            const droppedFiles = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'))
+                            const newImages = { ...images }
+
+                            for (let i = 1; i <= 4; i++) {
+                                if (!newImages[i] && droppedFiles.length) {
+                                    newImages[i] = droppedFiles.shift()
+                                }
+                            }
+
+                            setImages(newImages)
+                        }}
+                        className={`w-full min-h-[150px] border-2 border-dashed rounded-md px-4 py-8 text-center transition ${
+                            isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
+                        }`}
+                    >
+                        <div className="flex flex-wrap justify-center gap-5 mt-4">
+                            {Object.keys(images).map((key) => (
+                                <label key={key} htmlFor={`upload-${key}`} className='cursor-pointer relative group'>
                                     <img
-                                        className='w-20 h-20 object-cover border border-gray-300 rounded'
-                                        src={images[ele] ? URL.createObjectURL(images[ele]) : assets.uploadArea}
-                                        alt={images[ele] ? `Uploaded Image ${ele}` : `Upload placeholder ${ele}`}
+                                        src={
+                                            images[key]
+                                                ? URL.createObjectURL(images[key])
+                                                : assets.uploadArea
+                                        }
+                                        alt={`Image ${key}`}
+                                        className="w-20 h-20 object-cover border border-gray-300 rounded"
                                     />
+                                    <input
+                                        id={`upload-${key}`}
+                                        type="file"
+                                        accept="image/*"
+                                        hidden
+                                        onChange={(e) =>
+                                            setImages({ ...images, [key]: e.target.files[0] })
+                                        }
+                                        disabled={!!images[key]}
+                                    />
+                                    {images[key] && (
+                                        <button
+                                            type="button"
+                                            onClick={() => setImages({ ...images, [key]: null })}
+                                            className="absolute top-[-8px] right-[-8px] w-5 h-5 bg-red-500 text-white rounded-full text-xs hidden group-hover:flex items-center justify-center"
+                                            aria-label={`Remove image ${key}`}
+                                        >
+                                            ×
+                                        </button>
+                                    )}
                                 </label>
-                                <input
-                                    id={`roomImages${ele}`}
-                                    type="file"
-                                    accept="image/*"
-                                    required={ele === "1"}
-                                    hidden
-                                    onChange={(e) => setImages({ ...images, [ele]: e.target.files[0] })}
-                                />
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </fieldset>
-
-                <div className='flex flex-wrap gap-6 pl-5'>
+                <div className='flex flex-wrap gap-6 '>
                     <div className='flex flex-col gap-2'>
                         <label htmlFor="roomType" className='text-lg text-black/80'>Room Type</label>
                         <input
@@ -163,7 +200,7 @@ export const AddRoom = () => {
                     </div>
                 </div>
 
-                <fieldset className='mt-6 pl-5'>
+                <fieldset className='mt-6'>
                     <legend className='mb-2 text-lg text-black/80'>Amenities</legend>
                     <div className="flex flex-col gap-2">
                         {Object.entries(inputs.amenities).map(([key, value], index) => (
@@ -191,7 +228,7 @@ export const AddRoom = () => {
                 <button
                     disabled={loading}
                     type="submit"
-                    className={`mt-5 ml-5 w-40 py-2 rounded-md text-white ${loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
+                    className={`mt-5  w-40 py-2 rounded-md text-white ${loading ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}
                 >
                     {loading ? 'Adding...' : 'Add Room'}
                 </button>

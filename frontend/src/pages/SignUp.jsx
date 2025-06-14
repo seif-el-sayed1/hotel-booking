@@ -12,6 +12,8 @@ export const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [image, setImage] = useState(null);
+    const [isDragging, setIsDragging] = useState(false);
+
     const { backendUrl, setIsLoggedin, getUserData } = useContext(UserContext);
 
     const handleSubmit = async (e) => {
@@ -61,7 +63,25 @@ export const SignUp = () => {
                 <form className="flex flex-col" onSubmit={handleSubmit} encType="multipart/form-data">
                     {state === "signUp" && (
                         <>
-                            <div className="flex flex-col items-center justify-center mb-4 border-2 border-white/30 rounded-2xl p-2">
+                            <div
+                                className={`flex flex-col items-center justify-center mb-4 border-2 rounded-2xl p-2 transition
+                                ${isDragging ? "border-yellow-400 bg-white/20" : "border-white/30"}`}
+                                onDragOver={(e) => {
+                                    e.preventDefault();
+                                    setIsDragging(true);
+                                }}
+                                onDragLeave={() => setIsDragging(false)}
+                                onDrop={(e) => {
+                                    e.preventDefault();
+                                    setIsDragging(false);
+                                    const file = e.dataTransfer.files[0];
+                                    if (file && file.type.startsWith("image/")) {
+                                        setImage(file);
+                                    } else {
+                                        toast.error("Please drop a valid image file", { position: "top-center" });
+                                    }
+                                }}
+                            >
                                 <label htmlFor="image" className="cursor-pointer" aria-label="Upload Profile Image">
                                     <img
                                         loading="lazy"
