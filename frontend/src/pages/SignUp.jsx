@@ -55,7 +55,7 @@ export const SignUp = () => {
     };
 
     return (
-        <div className="min-h-screen bg-no-repeat bg-[url('src/assets/signUp.png')] bg-cover bg-center flex items-center justify-center px-4">
+        <div className="min-h-screen bg-no-repeat bg-[url('/src/assets/signUp.png')] bg-cover bg-center flex items-center justify-center px-4">
             <div className="w-full max-w-sm backdrop-blur-sm bg-white/10 border border-white/20 rounded-2xl shadow-xl p-6">
                 <h2 className="text-2xl font-bold text-white mb-4 text-center">
                     {state === "signUp" ? "Create Account" : "Welcome Back"}
