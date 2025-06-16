@@ -76,7 +76,7 @@ export const AddRoom = () => {
     }
 
     return isOwner ? (
-        <div className='w-4/5 max-w-screen-xl mx-auto px-5'>
+        <div className='w-4/5 sm:w-full  max-w-screen-xl mx-auto px-5'>
             <div className='py-10 text-center lg:text-left'>
                 <h1 className='text-4xl font-light mb-3'>Add Room</h1>
                 <p className='text-gray-500 text-base md:text-lg'>

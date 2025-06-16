@@ -25,7 +25,7 @@ export const SideBar = () => {
     ]
 
     return (
-        <aside className='w-1/5 lg:w-1/5 border-r border-gray-200 py-3 h-screen' aria-label="Sidebar Navigation">
+        <aside className='w-1/5  sm:w-fit border-r border-gray-200 py-3 h-screen' aria-label="Sidebar Navigation">
             {menuItems.map((item, index) => {
                 const isActive = location.pathname === item.path
 
@@ -33,7 +33,7 @@ export const SideBar = () => {
                     <button
                         key={index}
                         onClick={() => navigate(item.path)}
-                        className={`flex items-center gap-5 w-full text-left px-5 md:px-10 py-3 
+                        className={`flex items-center gap-5 w-full text-left px-5 sm:px-10 py-3 
                                     cursor-pointer  
                                     ${isActive
                                 ? 'bg-blue-100 text-blue-600 border-r-4 border-blue-600 font-medium'
@@ -43,7 +43,7 @@ export const SideBar = () => {
                         aria-label={item.label}
                     >
                         <img loading="lazy" src={item.icon} alt={`${item.label} icon`} />
-                        <span className='hidden md:inline-block text-nowrap'>{item.label}</span>
+                        <span className='hidden sm:inline-block text-nowrap'>{item.label}</span>
                     </button>
                 )
             })}

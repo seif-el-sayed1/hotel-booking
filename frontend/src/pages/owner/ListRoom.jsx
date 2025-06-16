@@ -45,7 +45,7 @@ export const ListRoom = () => {
     }, [])
 
     return isOwner ? (
-        <div className='w-4/5'>
+        <div className='w-4/5 sm:w-full'>
             <div className='py-10 pl-5 text-center lg:text-start'>
                 <h1 className='font-light text-4xl mb-3'>Rooms List</h1>
                 <p className='text-gray-500 text-sm md:text-lg'>
